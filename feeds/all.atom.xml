@@ -3,7 +3,7 @@
 &lt;h2&gt;Chapter 1 - Newton's Laws of Motion&lt;/h2&gt;
 &lt;p&gt;A key point seems to be: view Newton's second law &lt;span class="math"&gt;\(F = ma\)&lt;/span&gt; as a differential equation:&lt;/p&gt;
 &lt;div class="math"&gt;$$m \ddot x = F$$&lt;/div&gt;
-&lt;p&gt;I'm understanding this as follows: You know what forces are acting on the body in question. You want to know how the position of the body will evolve through time: &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt;. This is a function satisfying the following differential equation: the second derivative with respect to time of &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt; is equal to the net force acting on the body, divided by &lt;span class="math"&gt;\(m\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;I'm understanding this as follows: You know what forces are acting on the body in question. You want to know how the position of the body will evolve through time: &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt;. This is a function satisfying the following differential equation: the second derivative with respect to time of &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt;, times &lt;span class="math"&gt;\(m\)&lt;/span&gt;, is equal to the net force acting on the body.&lt;/p&gt;
 &lt;p&gt;In practice: in a typical problem you have some expression for &lt;span class="math"&gt;\(F\)&lt;/span&gt; derived from consideration of a diagram showing forces acting on the body. You might be able to discover &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt; by finding a function whose second derivative is &lt;span class="math"&gt;\(F\)&lt;/span&gt;.&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
