@@ -36,3 +36,6 @@ DEFAULT_PAGINATION = False
 
 PLUGIN_PATHS = ['plugins']
 PLUGINS = ['render_math']
+
+THEME = 'themes/aboutwilson'
+
