@@ -10,6 +10,7 @@ My notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John
 
 
 ### The second law as a differential equation
+
 A key point seems to be: view Newton's second law $F = ma$ as a differential equation<sup>1</sup>:
 
 $$m \ddot r = F$$
@@ -23,7 +24,7 @@ In practice: in a typical problem you have some expression for $F$ derived from 
 
 Momentum is $p = m\dot r$, so another way of stating the second law is: rate of change of momentum is equal to force. In a multi-particle system the forces-and-reaction-forces of the third law cancel each other out when summing the rate of change of momentum of the whole system. So, total momentum doesn't change due to internal forces (but it does if there are external forces).
 
-pp 21-23 show that conservation of momentum does not hold when considering magnetic and electrostatic forces between charged particles moving close to the speed of light. However I am unfamiliar with those forces and with the "right-hand rule" for fields/forces and I haven't tried to understand this section.
+pp 21-23 show that conservation of momentum does not hold when considering magnetic and electrostatic forces between charged particles moving close to the speed of light. However I am unfamiliar with those forces and with the "right-hand rule" for fields/forces and I haven't understood this section.
 
 ----------------------------------------------------------------------------
 
