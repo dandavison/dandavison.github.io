@@ -28,13 +28,38 @@ explaining.
 
 -------------------------------------------------------------------------------
 
-The basic object of interest is a moving particle. It's position vector at time
-$t$ is $\r(t)$: an arrow from the origin pointing to the current
-position. We're going to want to deal with its velocity and acceleration.
+#### Basics
+
+The basic object of interest is a moving particle. Its position at time $t$ is
+$\r$. $\r$ is written in bold because it is a vector. A vector is something
+that specifies a direction and a magnitude. Think of $\r$ as an arrow from the
+origin pointing to the current position. Don't think of $\r$ yet as a column
+vector containing numbers, because we haven't said what coordinate system
+we're using. Regardless of what coordinate system we use, bold $\r$ is always
+a vector pointing from the origin to the current position.
+
+The particle is moving, i.e. the position changes over time. So instead of just
+writing $\r$, we write $\r(t)$ which says that it's a function of time. Think
+of that as giving the answer to a question: "At a given time $t$, what is the
+position?". The answer (position) is a vector, so we can say that this is a
+"vector-valued function" (i.e. whatever output it gives, it's always a vector).
 
 Its velocity is a function $\v(t)$ whose value is also a vector (at time $t$
-it's going at some speed in some direction). The function $\v(t)$ is the
-derivative with respect to time of $\r(t)$. The "derivative with respect to
+it's going at some speed in some direction). The velocity function $\v(t)$ is
+the derivative with respect to time of the position function $\r(t)$. That
+sounds very familiar, but what exactly is the derivative of a vector-valued
+function?
+
+In normal, non-vector, calculus we imagine some curve like $y = x^2$. So $y$ is
+a function of $x$. The value of that function is not a vector; it's just a
+number (a scalar). The derivative of the function with respect to $x$ is
+saying: at a particular point along the x-axis, if I start advancing $x$ a tiny
+bit, how fast is $y$ changing? So it's the slope of the curve at that point
+(also just a number, not a vector). In vector calculus, the derivative of
+$\r(t)$ with respect to $t$ is saying: at some particular time $t$, if I start
+advance time a tiny bit, where is the position going and how fast is it going
+there? So the derivative of a vector-valued function is a vector -- an arrow
+with direction and magnitude (speed).
 time" of a vector means, basically, you advance time an infinitesimally small
 amount and look at how the position changed. The velocity is an arrow pointing
 in the direction that the particle is moving and its length represents speed --
