@@ -7,7 +7,11 @@ My notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John
 
 
 $$
-\newcommand{\pos}{r}
+\newcommand{\vec}{\mathbf}
+\newcommand{\ehat}{\vec{\hat e}}
+\newcommand{\r}{\vec{r}}
+\newcommand{\v}{\vec{v}}
+\newcommand{\a}{\vec{a}}
 \newcommand{\vector}[1]{\begin{bmatrix}#1\end{bmatrix}}
 $$
 
@@ -44,11 +48,11 @@ for the position?
 
 Consider the harder case first: polar coordinates. This means that we give the
 particle's position by saying how far away it currently is ($r$) and in what
-direction ($\phi$). To write this as a vector, we define a unit vector $\hat
-e_r$ of length 1 pointing in the particle's current direction, in which case
-the position vector is $r$ times this unit vector:
+direction ($\phi$). To write this as a vector, we define a unit vector
+$\ehat_r$ of length 1 pointing in the particle's current direction, in which
+case the position vector is $r$ times this unit vector:
 
-$$\r(t) = r\hat e_r.$$
+$$\r(t) = r~\ehat_r.$$
 
 Note that bold $\r$ is the position (a vector) whereas $r$ (a scalar) is its
 distance from the origin, without any information about angle.
@@ -59,11 +63,12 @@ moving, and the direction of the unit vector also changes because the particle
 is moving. So two things multiplied together, neither of them constant; that
 means "product rule" for differentiation:
 
-$$\v(t) = r \frac{d \hat e_r}{dt} + \frac{dr}{dt}\hat e_r$$
+$$\v(t) = r \frac{d \ehat_r}{dt} + \frac{dr}{dt}\ehat_r$$
 
 The thing on the right is fine. The fact that we're "using polar coordinates"
 means that we are happy dealing with $r$ or its derivative $\frac{dr}{dt}$. But
-what is $\frac{d \hat e_r}{dt}$? That's the derivative of the unit vector.
+what is $\frac{d \ehat_r}{dt}$? That's the derivative of the unit vector.
+
 
 I'd never studied polar coordinates and I was confronted with the fact that I was being mathematically naive/lazy previously when thinking about Cartesian coordinates.
 
