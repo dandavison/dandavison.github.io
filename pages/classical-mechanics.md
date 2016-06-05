@@ -17,7 +17,55 @@ $$
 
 ### Coordinate systems
 
-This is the hard part of the first chapter. I'd never studied polar coordinates and I was confronted with the fact that I was being mathematically naive/lazy previously when thinking about Cartesian coordinates.
+This was the hard part of the first chapter for me. It's not that there's any
+difficult math, just that I hadn't understood previously that unit vectors are
+constant in Cartesian but not in other coordinate systems. Here's an attempt at
+explaining.
+
+-------------------------------------------------------------------------------
+
+The basic object of interest is a moving particle. It's position vector at time
+$t$ is $\r(t)$: an arrow from the origin pointing to the current
+position. We're going to want to deal with its velocity and acceleration.
+
+Its velocity is a function $\v(t)$ whose value is also a vector (at time $t$
+it's going at some speed in some direction). The function $\v(t)$ is the
+derivative with respect to time of $\r(t)$. The "derivative with respect to
+time" of a vector means, basically, you advance time an infinitesimally small
+amount and look at how the position changed. The velocity is an arrow pointing
+in the direction that the particle is moving and its length represents speed --
+how far it got in that infinitesimally small amount of time.
+
+The acceleration $\a(t)$ is the time derivative of velocity (second derivative
+of position). Also a vector.
+
+How do you calculate these derivatives if you have a mathematical expression
+for the position?
+
+Consider the harder case first: polar coordinates. This means that we give the
+particle's position by saying how far away it currently is ($r$) and in what
+direction ($\phi$). To write this as a vector, we define a unit vector $\hat
+e_r$ of length 1 pointing in the particle's current direction, in which case
+the position vector is $r$ times this unit vector:
+
+$$\r(t) = r\hat e_r.$$
+
+Note that bold $\r$ is the position (a vector) whereas $r$ (a scalar) is its
+distance from the origin, without any information about angle.
+
+To get the velocity we differentiate this. Both the things multiplied together
+are changing as $t$ changes: the distance $r$ changes because the particle is
+moving, and the direction of the unit vector also changes because the particle
+is moving. So two things multiplied together, neither of them constant; that
+means "product rule" for differentiation:
+
+$$\v(t) = r \frac{d \hat e_r}{dt} + \frac{dr}{dt}\hat e_r$$
+
+The thing on the right is fine. The fact that we're "using polar coordinates"
+means that we are happy dealing with $r$ or its derivative $\frac{dr}{dt}$. But
+what is $\frac{d \hat e_r}{dt}$? That's the derivative of the unit vector.
+
+I'd never studied polar coordinates and I was confronted with the fact that I was being mathematically naive/lazy previously when thinking about Cartesian coordinates.
 
 The naive version says that the position function is vector-valued:
 
