@@ -9,6 +9,10 @@ My notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John
 $$
 \newcommand{\vec}{\mathbf}
 \newcommand{\ehat}{\vec{\hat e}}
+\newcommand{\xhat}{\vec{\hat x}}
+\newcommand{\yhat}{\vec{\hat y}}
+\newcommand{\rhat}{\vec{\hat r}}
+\newcommand{\phihat}{\vec{\hat \phi}}
 \newcommand{\r}{\vec{r}}
 \newcommand{\v}{\vec{v}}
 \newcommand{\a}{\vec{a}}
@@ -55,11 +59,48 @@ a function of $x$. The value of that function is not a vector; it's just a
 number (a scalar). The derivative of the function with respect to $x$ is
 saying: at a particular point along the x-axis, if I start advancing $x$ a tiny
 bit, how fast is $y$ changing? So it's the slope of the curve at that point
-(also just a number, not a vector). In vector calculus, the derivative of
-$\r(t)$ with respect to $t$ is saying: at some particular time $t$, if I start
-advance time a tiny bit, where is the position going and how fast is it going
-there? So the derivative of a vector-valued function is a vector -- an arrow
-with direction and magnitude (speed).
+(also just a number, not a vector).
+
+In vector calculus, the derivative of $\r(t)$ with respect to $t$ is saying: at
+some particular time $t$, if I start advance time a tiny bit, where is the
+position going and how fast is it going there? So the derivative of a
+vector-valued function is a vector -- an arrow with direction and magnitude
+(speed).
+
+
+#### Coordinate systems
+
+Thinking of $\r(t)$ as an arrow with direction and magnitude is correct but a
+bit abstract. How specifically do we use numbers to represent position? The
+chapter covers two main coordinate systems. Let's say the particle is moving in
+2D space for now.
+
+- **Cartesian coordinates**: we write down how far the particle is in the
+  x-direction ($x$), and how far it is in the y-direction ($y$).
+
+- **Polar coordinates**: we write down how far the particle is ($r$) in the
+  current direction to the particle.
+
+Note that both coordinate systems involve recording how far it is in some
+direction. The "in some direction" part corresponds to the concept of a *unit
+vector*. A "unit vector" is basically a vector where the direction is of
+interest, but the magnitude is just set to 1 for convenience.
+
+Cartesian coordinates use two directions to specify the position. We'll write
+these directions as the unit vectors $\xhat$ and $\yhat$. So in Cartesian
+coordinates, the position is
+
+$$\r(t) = x\xhat + y\yhat$$
+
+(Go $x$ units in the $\xhat$ direction and $y$ units in the $\yhat$ direction.)
+
+In contrast, polar coordinates just use one direction to specify the position:
+the direction of a direct line to the particle's current position. This
+direction is the unit vector $\rhat$. So in polar coordinates, the position is
+
+$$\r(t) = r\rhat$$
+
+(Go $r$ units in the $\rhat$ direction)
 time" of a vector means, basically, you advance time an infinitesimally small
 amount and look at how the position changed. The velocity is an arrow pointing
 in the direction that the particle is moving and its length represents speed --
