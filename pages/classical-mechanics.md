@@ -62,7 +62,7 @@ bit, how fast is $y$ changing? So, it's the slope of the curve at that point
 (also just a number, not a vector).
 
 In vector calculus, the derivative of $\r(t)$ with respect to $t$ is saying: at
-some particular time $t$, if I start advance time a tiny bit, where is the
+some particular time $t$, if I start advancing time a tiny bit, where is the
 position going and how fast is it going there? So the derivative of a
 vector-valued function is a vector -- an arrow with direction and magnitude
 (speed).
@@ -149,7 +149,7 @@ That's a product of two things that are both a function of time, so we use the
 
 $$\frac{d}{dt}\bigg(r(t)\rhat(t)\bigg) = \dot r(t) \rhat(t) + r(t)\frac{d \rhat(t)}{dt}$$
 
-OK so there's quite a few $r$s and it's important at this stage not to get lost
+There's quite a few $r$s there and it's important at this stage not to get lost
 in the symbols. We know that the answer (velocity) is a vector. That means we
 can write it as a bunch of things added together, where each thing is a number
 times some unit vector. And we're using polar coordinates, so the unit vectors
@@ -185,7 +185,7 @@ derivative of the radial unit vector is $\dot \phi(t) \phihat(t)$
 
 The conclusion of all that is that in polar coordinates, the velocity vector is
 
-$$\v(t) = \dot r(t) \rhat(t) + r(t) \dot \phi(t) \phihat(t)$$.
+$$\v(t) = \dot r(t) \rhat(t) + r(t) \dot \phi(t) \phihat(t)$$
 
 
 I understand that as follows. At time $t$ the particle might be moving
@@ -198,6 +198,39 @@ sense informally, because if you are further out from the center of a circle,
 and the circle rotates by a few degrees, then you move further in space than if
 you were closer in to the center.
 
+### Newton's second law as a differential equation
+
+A key point seems to be: view Newton's second law $F = ma$ as a differential
+equation<sup>2</sup>:
+
+$$m \ddot r = F$$
+
+I'm understanding this as follows: You know what forces are acting on the body
+in question. You want to know how the position of the body will evolve through
+time: $r(t)$. This is a function satisfying the following differential
+equation: the second derivative with respect to time of $r(t)$, times $m$, is
+equal to the net force acting on the body.
+
+In practice: in a typical problem you have some expression for $F$ derived from
+consideration of a diagram showing forces acting on the body. You might be able
+to discover $r(t)$ by finding a function whose second derivative is $F$.
+
+
+### Conservation of momentum
+
+Momentum is mass times velocity, $p = m\dot r$, so another way of stating the
+second law is: rate of change of momentum is equal to force. In a
+multi-particle system the forces-and-reaction-forces of the third law cancel
+each other out when summing the rate of change of momentum of the whole
+system. So, total momentum doesn't change due to internal forces (but it does
+if there are external forces).
+
+pp 21-23 show that conservation of momentum does not hold when considering
+magnetic and electrostatic forces between charged particles moving close to the
+speed of light. However I am unfamiliar with those forces and with the
+"right-hand rule" for fields/forces and I haven't understood this section.
+
+
 ----------------------------------------------------------------------------
 
 <sup>1</sup> You can prove this by writing the unit vector in Cartesian
@@ -205,87 +238,7 @@ coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then differentiating it
 to give $\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)$ which is $\dot \phi$
 times a vector orthogonal to the original one.
 
-time" of a vector means, basically, you advance time an infinitesimally small
-amount and look at how the position changed. The velocity is an arrow pointing
-in the direction that the particle is moving and its length represents speed --
-how far it got in that infinitesimally small amount of time.
 
-The acceleration $\a(t)$ is the time derivative of velocity (second derivative
-of position). Also a vector.
-
-How do you calculate these derivatives if you have a mathematical expression
-for the position?
-
-Consider the harder case first: polar coordinates. This means that we give the
-particle's position by saying how far away it currently is ($r$) and in what
-direction ($\phi$). To write this as a vector, we define a unit vector
-$\ehat_r$ of length 1 pointing in the particle's current direction, in which
-case the position vector is $r$ times this unit vector:
-
-$$\r(t) = r~\ehat_r.$$
-
-Note that bold $\r$ is the position (a vector) whereas $r$ (a scalar) is its
-distance from the origin, without any information about angle.
-
-To get the velocity we differentiate this. Both the things multiplied together
-are changing as $t$ changes: the distance $r$ changes because the particle is
-moving, and the direction of the unit vector also changes because the particle
-is moving. So two things multiplied together, neither of them constant; that
-means "product rule" for differentiation:
-
-$$\v(t) = r \frac{d \ehat_r}{dt} + \frac{dr}{dt}\ehat_r$$
-
-The thing on the right is fine. The fact that we're "using polar coordinates"
-means that we are happy dealing with $r$ or its derivative $\frac{dr}{dt}$. But
-what is $\frac{d \ehat_r}{dt}$? That's the derivative of the unit vector.
-
-
-I'd never studied polar coordinates and I was confronted with the fact that I was being mathematically naive/lazy previously when thinking about Cartesian coordinates.
-
-The naive version says that the position function is vector-valued:
-
-$$r(t) = \vector{r_x(t) \\ r_y(t) \\ r_z(t)},$$
-
-and to get the velocity function you just differentiate the components of the position function:
-
-$$\dot r(t) = \vector{\dot r_x(t) \\ \dot r_y(t) \\ \dot r_z(t)}.$$
-
-That equation is correct, but unfortunately it turns out that you have to actually think about what's going on.
-
-The position vector can be written as a sum over unit basis vectors (e.g. $\hat x$) multiplied by scalar coefficients (e.g. $r_x(t)$):
-
-$$r(t) = r_x(t)\hat x + r_y(t)\hat y + r_z(t)\hat z.$$
-
-Now, what's the analogous thing for (two-dimensional) polar coordinates? Instead of $x$ and $y$ we have angle $\phi$ and radius $r$. The position vector is
-
-$$r(t) = \vector{\phi(t) \\ r(t)}.$$
-
-How do we split that out as a sum of unit vectors?
-
-Well, firstly, what are the unit vectors? They are vectors of unit length, and their direction is the direction you get by holding all other components fixed and allowing just one to increase. So
-$\hat r$ is a unit vector pointing in the direction of the radius ($\phi$ held fixed). Then for $\hat \phi$, imagine holding the radius fixed and you start to increase the angle from whatever it is currently. You're going to travel round a circle, and the initial direction you go in is at a tangent. So that's what the unit vector $\hat \phi$ is: it's length 1, at right angles to $\hat r$.
-
-The point is that those unit vectors change over time. We're considering position, velocity, acceleration as functions of time. In Cartesian coordinates, the unit vectors are constant: they always point in the same direction.
-
-
-### The second law as a differential equation
-
-A key point seems to be: view Newton's second law $F = ma$ as a differential equation<sup>1</sup>:
-
-$$m \ddot r = F$$
-
-I'm understanding this as follows: You know what forces are acting on the body in question. You want to know how the position of the body will evolve through time: $r(t)$. This is a function satisfying the following differential equation: the second derivative with respect to time of $r(t)$, times $m$, is equal to the net force acting on the body.
-
-In practice: in a typical problem you have some expression for $F$ derived from consideration of a diagram showing forces acting on the body. You might be able to discover $r(t)$ by finding a function whose second derivative is $F$.
-
-
-### Conservation of momentum
-
-Momentum is mass times velocity, $p = m\dot r$, so another way of stating the second law is: rate of change of momentum is equal to force. In a multi-particle system the forces-and-reaction-forces of the third law cancel each other out when summing the rate of change of momentum of the whole system. So, total momentum doesn't change due to internal forces (but it does if there are external forces).
-
-pp 21-23 show that conservation of momentum does not hold when considering magnetic and electrostatic forces between charged particles moving close to the speed of light. However I am unfamiliar with those forces and with the "right-hand rule" for fields/forces and I haven't understood this section.
-
-
-----------------------------------------------------------------------------
-
-<sup>1</sup>The dot means "differentiated with respect to time". So if $r$ is position as a function of time then $\dot r$ is velocity and $\ddot r$ is acceleration.
+<sup>2</sup> The dot means "differentiated with respect to time". So if $r$ is
+position as a function of time then $\dot r$ is velocity and $\ddot r$ is
+acceleration.
