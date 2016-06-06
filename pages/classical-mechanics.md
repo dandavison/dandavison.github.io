@@ -254,6 +254,44 @@ In practice: in a typical problem you have some expression for $\F$ derived from
 consideration of a diagram showing forces acting on the body. You might be able
 to discover $\r(t)$ by finding a function whose second derivative is $\F$.
 
+#### Example problems
+
+**Cartesian coordinates**
+
+> 1.37 A student kicks a frictionless puck with initial speed $v_0$, so that it
+> slides up a plane that is inclined at an angle $\theta$ above the
+> horizontal. **(a)** Write down Newton's second law for the puck and solve to
+> give its position as a function of time.
+
+The only force acting on the puck is its weight, i.e. its mass times
+acceleration due to gravity: $mg$. The puck can only move along the surface of
+the plane, so we are only interested in the component of the force that acts
+parallel to the plane. This component is $-mg sin(\theta)$. So taking $x$ as the
+direction up the plane, Newton's second law is
+
+$$ m\ddot x = -mgsin(\theta)$$
+$$ \ddot x = -gsin(\theta)$$
+
+Integrating once gives velocity
+
+$$ \dot x = -g sin(\theta) t + v_0$$
+
+Integrating again gives position
+
+$$ x = -\frac{1}{2} g sin(\theta) t^2 + v_0t + x_0$$
+
+$$ x = -\frac{1}{2} g sin(\theta) t^2 + v_0t$$ since the puck starts from $x_0=0$.
+
+> **(b)** How long will the puck take to return to its starting point?
+
+The puck is at its starting point whenever $x = 0$:
+
+$$0 = t\bigg(-\frac{1}{2} g sin(\theta) t + v_0\bigg)$$
+
+The solutions of that are either $t=0$ (which we already knew) or (the solution
+we want)
+
+$t = \frac{2v_0}{g sin(\theta)}$
 
 ### Conservation of momentum
 
