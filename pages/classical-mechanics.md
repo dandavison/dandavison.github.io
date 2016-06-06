@@ -23,12 +23,23 @@ $$
 # Chapter 1 - Newton's Laws of Motion
 
 
-### Coordinate systems
+#### Summary
 
-This was the hard part of the first chapter for me. It's not that there's any
-difficult math, just that I hadn't understood previously that unit vectors are
-constant in Cartesian but not in other coordinate systems. Here's an attempt at
-explaining.
+This chapter introduces classical mechanics as focusing on using Newton's
+second law to solve problems relating forces acting on a body to the motion of
+that body. We are taught to view Newton's second law as a differential
+equation, and we are forced to familiarize ourselves with basic vector
+calculus. In Cartesian coordinates, the expressions for velocity and
+acceleration are simple, but in e.g. polar coordinates the unit vectors of the
+coordinate system are themselves changing as time evolves and the derivatives
+result in more complex expressions. Nevertheless, some problems are much easier
+to solve using non-Cartesian systems. We are told that more sophisticated
+mathematical frameworks (Lagrangian, Hamiltonian) used by physicists were
+developed precisely because they make it easier to work in non-Cartesian
+coordinate systems. But before addressing anything like that, we have to
+understand the straightforward usage of Newton's second law to solve problems
+in Cartesian and non-Cartesian coordinates.
+
 
 -------------------------------------------------------------------------------
 
@@ -113,10 +124,10 @@ coordinates, the position is
 
 
 Notice (and this is pretty important; it's basically the reason the chapter is
-covering polar coordinates) that in polar coordinates the unit vector is a
-function of time (its direction changes as the particle moves); in contrast, in
-Cartesian coordinates, $\xhat$ and $\yhat$ are constant; they always point in
-the same direction.
+covering polar coordinates) that in polar coordinates the unit vector
+$\rhat(t)$ is a function of time (its direction changes as the particle moves);
+in contrast, in Cartesian coordinates, $\xhat$ and $\yhat$ are constant; they
+always point in the same direction.
 
 #### Velocity
 
@@ -198,22 +209,46 @@ sense informally, because if you are further out from the center of a circle,
 and the circle rotates by a few degrees, then you move further in space than if
 you were closer in to the center.
 
+
+#### Acceleration
+
+
+The acceleration function is the derivative of the velocity function with
+respect to time. Therefore, it is also a vector: at time $t$ the particle is
+accelerating by some amount, in some direction.
+
+**Cartesian coordinates**
+
+Again, because the unit vectors do not change with time, it's as you expect:
+
+$$\a(t) = \ddot x(t) \xhat + \ddot y(t) \yhat$$
+
+**Polar coordinates**
+
+Because the unit vectors change with time, the expression for velocity in polar
+coordinates was slightly more complicated. Differentiating again, it gets more
+complicated. However, the different bits do have physical interpretations.
+
+
+$$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$$
+
+
 ### Newton's second law as a differential equation
 
 A key point seems to be: view Newton's second law $F = ma$ as a differential
 equation<sup>2</sup>:
 
-$$m \ddot r = F$$
+$$m \ddot \r(t) = F$$
 
 I'm understanding this as follows: You know what forces are acting on the body
 in question. You want to know how the position of the body will evolve through
-time: $r(t)$. This is a function satisfying the following differential
-equation: the second derivative with respect to time of $r(t)$, times $m$, is
+time: $\r(t)$. This is a function satisfying the following differential
+equation: the second derivative with respect to time of $\r(t)$, times $m$, is
 equal to the net force acting on the body.
 
 In practice: in a typical problem you have some expression for $F$ derived from
 consideration of a diagram showing forces acting on the body. You might be able
-to discover $r(t)$ by finding a function whose second derivative is $F$.
+to discover $\r(t)$ by finding a function whose second derivative is $F$.
 
 
 ### Conservation of momentum
