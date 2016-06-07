@@ -296,6 +296,27 @@ we want)
 
 $t = \frac{2v_0}{g sin(\theta)}$
 
+**Polar coordinates**
+
+> A "half-pipe" at a skateboard park consists of a concrete trough with a
+> semicircular cross section of radius $R = 5m$. I hold a frictionless
+> skateboard on the side of the trough pointing down toward the bottom and
+> release it. Discuss the subsequent motion using Newton's second law. In
+> particular, if I release the skateboard just a short way from the bottom, how
+> long will it take to come back to the point of release?
+
+The point in questions like this is that the radius is fixed: we measure the
+location of the skateboard by the angle made by a line drawn from the
+skateboard to the centre of the semicircle.
+
+The radius being fixed means that the expression for the acceleration is
+simpler, because $\dot r$ and $\ddot r$ are zero. So the Second Law describing
+how the angle of the skateboard changes is
+
+$$- r(t) \dot\phi(t)^2 = \F_r/m = mgcos(\phi)/m - N/m$$
+
+$$r(t) \ddot \phi(t) = \F_\phi/m = -mgsin(\phi)/m$$
+
 ### Conservation of momentum
 
 Momentum is mass times velocity, $\p(t) = m\dot \r(t)$, so another way of
