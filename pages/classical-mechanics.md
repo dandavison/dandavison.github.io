@@ -12,7 +12,7 @@ $$
 \newcommand{\xhat}{\vec{\hat x}}
 \newcommand{\yhat}{\vec{\hat y}}
 \newcommand{\rhat}{\vec{\hat r}}
-\newcommand{\phihat}{\vec{\hat \phi}}
+\newcommand{\phihat}{\mathbb{ \hat \phi}}
 \newcommand{\r}{\vec{r}}
 \newcommand{\v}{\vec{v}}
 \newcommand{\p}{\vec{p}}
@@ -263,6 +263,10 @@ to discover $\r(t)$ by finding a function whose second derivative is $\F$.
 > horizontal. **(a)** Write down Newton's second law for the puck and solve to
 > give its position as a function of time.
 
+This is a simple example of using the Second Law as a differential equation. We
+write down the forces acting on the particle, set them equal to $m\ddot r(t)$
+and integrate twice to get position.
+
 The only force acting on the puck is its weight, i.e. its mass times
 acceleration due to gravity: $mg$. The puck can only move along the surface of
 the plane, so we are only interested in the component of the force that acts
@@ -270,7 +274,6 @@ parallel to the plane. This component is $-mg sin(\theta)$. So taking $x$ as the
 direction up the plane, Newton's second law is
 
 $$ m\ddot x = -mgsin(\theta)$$
-$$ \ddot x = -gsin(\theta)$$
 
 Integrating once gives velocity
 
@@ -280,7 +283,7 @@ Integrating again gives position
 
 $$ x = -\frac{1}{2} g sin(\theta) t^2 + v_0t + x_0$$
 
-$$ x = -\frac{1}{2} g sin(\theta) t^2 + v_0t$$ since the puck starts from $x_0=0$.
+and $x_0=0$ since we start measuring from its starting position.
 
 > **(b)** How long will the puck take to return to its starting point?
 
