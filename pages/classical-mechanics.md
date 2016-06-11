@@ -229,12 +229,18 @@ $$\a(t) = \ddot x(t) \xhat + \ddot y(t) \yhat$$
 
 **Polar coordinates**
 
-Because the polar unit vectors change with time, the expression for velocity in
-polar coordinates was slightly more complicated. Differentiating again, it only
-gets worse. However, the different bits do have physical interpretations.
+Because, in polar coordinates, the directions of the coordinate system change
+with time, the expression for velocity in polar coordinates was slightly more
+complicated. Differentiating again, it only gets more complicated. It's an
+expression of the form
 
 
-$$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$$
+$$\a(t) = \bigg( \text{Some function of } t \bigg) \rhat(t) + \bigg( \text{Another function of } t \bigg) \phihat(t)$$
+
+
+The functions of $t$ involve the current radius length, the speed and
+acceleration in the current radius direction, and the speed and acceleration of
+the angle parameter $\phi$. The full expression is in the footnote<sup>3</sup>.
 
 
 ### Newton's second law as a differential equation
@@ -339,7 +345,14 @@ coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then differentiating it
 to give $\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)$ which is $\dot \phi$
 times a vector orthogonal to the original one.
 
-
 <sup>2</sup> The dot means "differentiated with respect to time". So if $r$ is
 position as a function of time then $\dot r$ is velocity and $\ddot r$ is
 acceleration.
+
+<sup>3</sup> In polar coordinates, if you suppose that you know functions
+$r(t)$ and $\phi(t)$ giving the angle and distance at time $t$, then the
+accelerations in the two orthogonal directions at time $t$ are
+
+$$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$$
+
+<sup>4</sup>
