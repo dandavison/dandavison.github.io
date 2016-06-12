@@ -158,7 +158,12 @@ y-direction. In other words, it's what you expect.
 $$\v(t) = \frac{d}{dt}\bigg(r(t)\rhat(t)\bigg)$$
 
 That's a product of two things that are both a function of time, so we use the
-"product rule" to differentiate it:
+"product rule"[ref] The product rule is the thing when you studied
+differentiation that says: when you're differentiating the product of two
+functions you differentiate one and keep the other as-is, then you
+differentiate the other while keeping the first as-is, and you add the two
+things together: $\frac{d(f(t)g(t))}{dt} = \dot f(t) g(t) + f(t) \dot g(t)$
+[/ref] to differentiate it:
 
 $$\frac{d}{dt}\bigg(r(t)\rhat(t)\bigg) = \dot r(t) \rhat(t) + r(t)\frac{d \rhat(t)}{dt}$$
 
@@ -193,7 +198,10 @@ $\phihat$, because it points in the direction that you go in when you increase
 the angle $\phi$, as opposed to $\rhat$ which points in the direction you go in
 if you increase the radius $r$. How fast does the radial unit vector move in
 the $\phihat$ direction? The answer is that it moves at the speed that the
-angle is increasing, so $\dot \phi$<sup>1</sup>. In other words, the time
+angle is increasing, so $\dot \phi$[ref]You can prove this by writing the unit vector in Cartesian
+coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then differentiating it
+to give $\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)$ which is $\dot \phi$
+times a vector orthogonal to the original one.[/ref]. In other words, the time
 derivative of the radial unit vector is $\dot \phi(t) \phihat(t)$
 
 The conclusion of all that is that in polar coordinates, the velocity vector is
@@ -240,13 +248,20 @@ $$\a(t) = \bigg( \text{Some function of } t \bigg) \rhat(t) + \bigg( \text{Anoth
 
 The functions of $t$ involve the current radius length, the speed and
 acceleration in the current radius direction, and the speed and acceleration of
-the angle parameter $\phi$. The full expression is in the footnote<sup>3</sup>.
+the angle parameter $\phi$. The full expression is in the footnote[ref]In polar
+coordinates, if you suppose that you know functions $r(t)$ and $\phi(t)$ giving
+the angle and distance at time $t$, then the accelerations in the two
+orthogonal directions at time $t$ are
+$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$
+[/ref].
 
 
 ### Newton's second law as a differential equation
 
 A key point seems to be: view Newton's second law $\F = m\a$ as a differential
-equation<sup>2</sup>:
+equation[ref]The dot means "differentiated with respect to time". So if $r$ is
+position as a function of time then $\dot r$ is velocity and $\ddot r$ is
+acceleration.[/ref]:
 
 $$m \ddot \r(t) = \F$$
 
@@ -324,8 +339,12 @@ only on the tangent force: $-mg sin(\phi)$.
 
 The equation for acceleration says that, at time $t$, acceleration in the
 current tangent direction is $R\ddot \phi(t)$ (halfpipe radius times current
-angular acceleration<sup>4</sup>). So Newton's second law in this context is
-the differential equation
+angular acceleration[ref]To see this, start with the $\phihat(t)$ (tangent
+direction) part of the full expression for acceleration and note that the
+radial distance of the skateboard is fixed by the presence of the half-pipe, so
+speed $\dot r(t)$ (and acceleration) in the radial direction is
+zero.[/ref]). So Newton's second law in this context is the differential
+equation
 
 $$mR \ddot \phi(t) = -mg sin(\phi(t))$$
 
@@ -340,7 +359,10 @@ We read this as saying:
 
 Once we've got to that point, finding the angle function $\phi(t)$ is just
 math. It turns out that the only function for which it is true that the second
-derivative has this property<sup>5</sup> is
+derivative has this property[ref]Actually the solution is a function with
+second derivative having a different property, but one which is very similar to
+the desired property as long as we're restricting ourselves to the angle being
+fairly small.[/ref] is
 
 $$\phi(t) = \phi_0 cos\bigg(\sqrt\frac{g}{R}t\bigg)$$
 
@@ -370,29 +392,4 @@ magnetic and electrostatic forces between charged particles moving close to the
 speed of light. However I am unfamiliar with those forces and with the
 "right-hand rule" for fields/forces and I haven't understood this section.
 
-
-----------------------------------------------------------------------------
-
-<sup>1</sup> You can prove this by writing the unit vector in Cartesian
-coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then differentiating it
-to give $\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)$ which is $\dot \phi$
-times a vector orthogonal to the original one.
-
-<sup>2</sup> The dot means "differentiated with respect to time". So if $r$ is
-position as a function of time then $\dot r$ is velocity and $\ddot r$ is
-acceleration.
-
-<sup>3</sup> In polar coordinates, if you suppose that you know functions
-$r(t)$ and $\phi(t)$ giving the angle and distance at time $t$, then the
-accelerations in the two orthogonal directions at time $t$ are
-
-$$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$$
-
-<sup>4</sup> To see this, start with the $\phihat(t)$ (tangent direction) part
-of the full expression<sup>3</sup> for acceleration and note that the radial
-distance of the skateboard is fixed by the presence of the half-pipe, so speed
-$\dot r(t)$ (and acceleration) in the radial direction is zero.
-
-<sup>5</sup> Actually the solution is a function with second derivative having
-a different property, but one which is very similar to the desired property as
-long as we're restricting ourselves to the angle being fairly small.
+-------------------------------------------------------------------------------

@@ -33,7 +33,7 @@ DEFAULT_PAGINATION = False
 #RELATIVE_URLS = True
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['render_math']
+PLUGINS = ['simple_footnotes', 'render_math']
 
 THEME = 'themes/aboutwilson'
 
