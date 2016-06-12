@@ -7,12 +7,10 @@ My notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John
 
 
 $$
-\newcommand{\vec}{\mathbf}
-\newcommand{\ehat}{\vec{\hat e}}
-\newcommand{\xhat}{\vec{\hat x}}
-\newcommand{\yhat}{\vec{\hat y}}
-\newcommand{\rhat}{\vec{\hat r}}
-\newcommand{\phihat}{\mathbb{ \hat \phi}}
+\newcommand{\xhat}{\vec{e_x}}
+\newcommand{\yhat}{\vec{e_y}}
+\newcommand{\rhat}{\vec{e_r}}
+\newcommand{\phihat}{\vec{e_\phi}}
 \newcommand{\r}{\vec{r}}
 \newcommand{\v}{\vec{v}}
 \newcommand{\p}{\vec{p}}
@@ -48,12 +46,12 @@ non-Cartesian coordinates.
 #### Basics
 
 The basic object of interest is a moving particle. Its position at time $t$ is
-$\r$. $\r$ is written in bold because it is a vector. A vector is something
+$\r$. It has that arrow over it because it is a vector. A vector is something
 that specifies a direction and a magnitude. Think of $\r$ as an arrow from the
 origin pointing to the current position. Don't think of $\r$ yet as a column
-vector containing numbers, because we haven't said what coordinate system
-we're using. Regardless of what coordinate system we use, bold $\r$ is always
-a vector pointing from the origin to the current position.
+vector containing numbers, because we haven't said what coordinate system we're
+using. Regardless of what coordinate system we use, $\r$ is always a vector
+pointing from the origin to the current position.
 
 The particle is moving, i.e. the position changes over time. So instead of just
 writing $\r$, we write $\r(t)$ which says that it's a function of time. Think
@@ -95,10 +93,11 @@ chapter covers two main coordinate systems. Let's say the particle is moving in
 - **Polar coordinates**: we write down how far the particle currently is,
   $r(t)$, in the current direction to the particle.
 
-Note that both coordinate systems involve recording how far it is in some
-direction. The "in some direction" part corresponds to the concept of a *unit
-vector*. A "unit vector" is basically a vector where the direction is of
-interest, but the magnitude is just set to 1 for convenience.
+Note that $x(t)$, $y(t)$, and $r(t)$ were not written with arrows. They are
+just numbers, saying how far the particle is *in some direction*. The "in some
+direction" part corresponds to the concept of a *unit vector*. A "unit vector"
+is basically a vector where the direction is of interest, but the magnitude is
+just set to 1 for convenience.
 
 Cartesian coordinates use two directions to specify the position. We'll write
 these directions as the unit vectors $\xhat$ and $\yhat$. So in Cartesian
@@ -129,13 +128,17 @@ Notice (and this is pretty important; it's basically the reason the chapter is
 covering polar coordinates) that in polar coordinates the unit vector
 $\rhat(t)$ is a function of time (its direction changes as the particle moves);
 in contrast, in Cartesian coordinates, $\xhat$ and $\yhat$ are constant; they
-always point in the same direction.
+always point in the same direction. The polar unit vector is a function of time
+because it is the direction to wherever-the-particle-currently-is. The
+Cartesian unit vectors are not functions of time because they are just the
+x-axis direction and the y-axis direction and these do not change.
 
 #### Velocity
 
 
-We can now differentiate these position functions to get the velocity. We know
-that the answer is going to be a vector.
+We can now differentiate these position functions to get the velocity. Recall
+that the answer is going to be a vector because it is the derivative of a
+vector-valued function.
 
 **Cartesian coordinates**
 
@@ -150,8 +153,8 @@ might write this as
 $$\v(t) =  \dot x(t) \xhat + \dot y(t) \yhat$$
 
 Either way, what this is saying is that in Cartesian coordinates, the velocity
-function is a vector with an x-speed in the x-direction and a y-speed in the
-y-direction. In other words, it's what you expect.
+function is a vector comprised of current x-speed in the x-direction and
+current y-speed in the y-direction. In other words, it's what you expect.
 
 **Polar coordinates**
 
@@ -176,12 +179,13 @@ are going to be the polar unit vectors. So the thing on the left $\dot r(t)
 the current radial speed (a number $\dot r(t)$) in the current radial direction
 (the unit vector $\rhat(t)$).
 
-What about the thing on the right? OK, so it's slightly harder to understand
-but not too bad. We said that in polar coordinates the unit vector $\rhat(t)$
-changes over time (in contrast to the Cartesian unit vectors). If something is
-a function of time then we can talk about its derivative with respect to
-time. The thing on the right clearly involves the derivative of the unit
-vector. So what is that?
+What about the thing on the right? It's the current radial distance times the
+current derivative of the unit vector function. We've said that in polar
+coordinates the unit vector $\rhat(t)$ changes over time, so it does make sense
+that we could ask what its derivative with respect to time is. So what is it?
+The answer is that it's a vector-valued function whose current value always
+points at right-angles to the current radial direction, but that requires
+explaining:
 
 Going back to the informal definition of derivatives above, we're at some point
 $t$ in time, and we imagine starting to advance time a tiny bit, and we look at
@@ -198,26 +202,32 @@ $\phihat$, because it points in the direction that you go in when you increase
 the angle $\phi$, as opposed to $\rhat$ which points in the direction you go in
 if you increase the radius $r$. How fast does the radial unit vector move in
 the $\phihat$ direction? The answer is that it moves at the speed that the
-angle is increasing, so $\dot \phi$[ref]You can prove this by writing the unit vector in Cartesian
-coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then differentiating it
-to give $\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)$ which is $\dot \phi$
-times a vector orthogonal to the original one.[/ref]. In other words, the time
-derivative of the radial unit vector is $\dot \phi(t) \phihat(t)$
+angle is increasing, so $\dot \phi$[ref]You can prove this by writing the unit
+vector in Cartesian coordinates, $cos(\phi) \xhat + sin(\phi) \yhat$, and then
+differentiating it to give $\dot \phi\big(-sin(\phi)\xhat +
+cos(\phi)\yhat\big)$ which is $\dot \phi$ times a vector orthogonal to the
+original one.[/ref]. In other words, the time derivative of the radial unit
+vector is $\dot \phi(t) \phihat(t)$
 
 The conclusion of all that is that in polar coordinates, the velocity vector is
 
 $$\v(t) = \dot r(t) \rhat(t) + r(t) \dot \phi(t) \phihat(t)$$
 
+Compare this with the expression for velocity in Cartesian coordinates
 
-I understand that as follows. At time $t$ the particle might be moving
-radially, and its angle might also be changing. The velocity vector has two
-components, one in the radial direction, and one in the tangent direction. In
-the radial direction, it's moving at whatever speed the radius is changing
-with. In the tangent direction it's moving at the speed that the angle is
-changing, multiplied by the current radius. That multiplication by radius makes
-sense informally, because if you are further out from the center of a circle,
-and the circle rotates by a few degrees, then you move further in space than if
-you were closer in to the center.
+$$\v(t) =  \dot x(t) \xhat + \dot y(t) \yhat$$
+
+and we see it's a bit more complicated in polar coordinates.
+
+I understand the polar coordinates version as follows. At time $t$ the particle
+might be moving radially, and its angle might also be changing. The velocity
+vector has two components, one in the radial direction, and one in the tangent
+direction. In the radial direction, it's moving at whatever speed the radius is
+changing with. In the tangent direction it's moving at the speed that the angle
+is changing, multiplied by the current radius. That multiplication by radius
+makes sense informally, because if you are further out from the center of a
+circle, and the circle rotates by a few degrees, then you move further in space
+than if you were closer in to the center.
 
 
 #### Acceleration
@@ -237,14 +247,13 @@ $$\a(t) = \ddot x(t) \xhat + \ddot y(t) \yhat$$
 
 **Polar coordinates**
 
-Because, in polar coordinates, the directions of the coordinate system change
-with time, the expression for velocity in polar coordinates was slightly more
-complicated. Differentiating again, it only gets more complicated. It's an
-expression of the form
-
+Above we saw that because, in polar coordinates, the directions of the
+coordinate system change with time, the function for velocity was more
+complicated than when using Cartesian coordinates. For acceleration, we
+differentiate the velocity expression and of course it gets even more
+complicated. But basically the answer is still a function of the form
 
 $$\a(t) = \bigg( \text{Some function of } t \bigg) \rhat(t) + \bigg( \text{Another function of } t \bigg) \phihat(t)$$
-
 
 The functions of $t$ involve the current radius length, the speed and
 acceleration in the current radius direction, and the speed and acceleration of
