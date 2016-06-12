@@ -304,24 +304,57 @@ $t = \frac{2v_0}{g sin(\theta)}$
 
 **Polar coordinates**
 
-> A "half-pipe" at a skateboard park consists of a concrete trough with a
+> A "halfpipe" at a skateboard park consists of a concrete trough with a
 > semicircular cross section of radius $R = 5m$. I hold a frictionless
 > skateboard on the side of the trough pointing down toward the bottom and
 > release it. Discuss the subsequent motion using Newton's second law. In
 > particular, if I release the skateboard just a short way from the bottom, how
 > long will it take to come back to the point of release?
 
-The point in questions like this is that the radius is fixed: we measure the
-location of the skateboard by the angle made by a line drawn from the
-skateboard to the centre of the semicircle.
+Conceptually, we do the same thing as for the problem using Cartesian
+coordinates: we write down Newton's second law resolved into two orthogonal
+directions. It's just that with polar coordinates, these orthogonal directions
+are constantly changing.
 
-The radius being fixed means that the expression for the acceleration is
-simpler, because $\dot r$ and $\ddot r$ are zero. So the Second Law describing
-how the angle of the skateboard changes is
+The weight of the skateboard acts downwards. This results in a tangent force
+causing the skateboard to move along the halfpipe, and also presses the
+skateboard into the halfpipe a bit, with an associated reaction force. We
+ignore the force/reaction force between the skateboard and the pipe and focus
+only on the tangent force: $-mg sin(\phi)$.
 
-$$- r(t) \dot\phi(t)^2 = \F_r/m = mgcos(\phi)/m - N/m$$
+The equation for acceleration says that, at time $t$, acceleration in the
+current tangent direction is $R\ddot \phi(t)$ (halfpipe radius times current
+angular acceleration<sup>4</sup>). So Newton's second law in this context is
+the differential equation
 
-$$r(t) \ddot \phi(t) = \F_\phi/m = -mgsin(\phi)/m$$
+$$mR \ddot \phi(t) = -mg sin(\phi(t))$$
+
+We read this as saying:
+
+> We don't know how the angle is changing over time $\phi(t)$ -- that is
+> precisely what we want to know. But what we do know is that whatever that
+> function is, its second derivative at time $t$ is equal to the sin of the
+> current angle (times $g/R$ and with a minus sign because the way we've
+> defined the angle it gets smaller as the weight force takes the skateboard
+> towards the bottom).
+
+Once we've got to that point, finding the angle function $\phi(t)$ is just
+math. It turns out that the only function for which it is true that the second
+derivative has this property<sup>5</sup> is
+
+$$\phi(t) = \phi_0 cos\bigg(\sqrt\frac{g}{R}t\bigg)$$
+
+where $\phi_0$ is the angle that the skateboard was released at at time $t=0$.
+This is the "solution" of the differential equation: a function matching the
+criteria that the differential equation specified.
+
+So we have our answer: the forces acting on the skateboard imply (via Newton's
+second law) that the way the angle of the skateboard changes is a cosine
+function of time. So the skateboard angle does what cosines do: it starts off
+at its maximum, decreases to zero, crosses zero and becomes negative for a
+while, starts turning back towards zero, crosses zero and becomes positive
+again and gets back to its maximum where it turns around again.
+
 
 ### Conservation of momentum
 
@@ -355,4 +388,11 @@ accelerations in the two orthogonal directions at time $t$ are
 
 $$\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)$$
 
-<sup>4</sup>
+<sup>4</sup> To see this, start with the $\phihat(t)$ (tangent direction) part
+of the full expression<sup>3</sup> for acceleration and note that the radial
+distance of the skateboard is fixed by the presence of the half-pipe, so speed
+$\dot r(t)$ (and acceleration) in the radial direction is zero.
+
+<sup>5</sup> Actually the solution is a function with second derivative having
+a different property, but one which is very similar to the desired property as
+long as we're restricting ourselves to the angle being fairly small.
