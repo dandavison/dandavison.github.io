@@ -279,15 +279,15 @@ the plane, so we are only interested in the component of the force that acts
 parallel to the plane. This component is $-mg sin(\theta)$. So taking $x$ as the
 direction up the plane, Newton's second law is
 
-$$ m\ddot x = -mgsin(\theta)$$
+$$ m\ddot x(t) = -mgsin(\theta)$$
 
 Integrating once gives velocity
 
-$$ \dot x = -g sin(\theta) t + v_0$$
+$$ \dot x(t) = -g sin(\theta) t + v_0$$
 
 Integrating again gives position
 
-$$ x = -\frac{1}{2} g sin(\theta) t^2 + v_0t + x_0$$
+$$ x(t) = -\frac{1}{2} g sin(\theta) t^2 + v_0t + x_0$$
 
 and $x_0=0$ since we start measuring from its starting position.
 
