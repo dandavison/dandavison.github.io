@@ -23,25 +23,9 @@ $$
 # Chapter 1 - Newton's Laws of Motion
 
 
-#### Summary
-
-This chapter introduces classical mechanics as using Newton's second law to
-solve problems relating forces acting on a body to the motion of that body. We
-are taught to view Newton's second law as a differential equation, and we are
-forced to familiarize ourselves with basic vector calculus. In Cartesian
-coordinates, the expressions for velocity and acceleration are simple, but in
-e.g. polar coordinates the unit vectors of the coordinate system are themselves
-changing as time evolves and the derivatives result in more complex
-expressions. Nevertheless, some problems are much easier to solve using
-non-Cartesian systems. We are told that more sophisticated mathematical
-frameworks (Lagrangian, Hamiltonian) used by physicists were developed
-precisely because they make it easier to work in non-Cartesian coordinate
-systems. But before addressing anything like that, we have to understand the
-straightforward usage of Newton's second law to solve problems in Cartesian and
-non-Cartesian coordinates.
 
 
--------------------------------------------------------------------------------
+
 
 #### Basics
 
