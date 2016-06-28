@@ -37,3 +37,4 @@ PLUGINS = ['simple_footnotes', 'render_math']
 
 THEME = 'themes/aboutwilson'
 
+STATIC_PATHS = ['images']
