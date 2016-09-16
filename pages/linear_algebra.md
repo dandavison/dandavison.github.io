@@ -38,6 +38,25 @@ $$
        {b}{d} \vector{f}{g} = \vector{fa + gc}{fb + gd}
 $$
 
+
+A matrix represents a linear transformation by offering up some new basis vectors (its columns) for linear combinations of them to be made (a vector in the transformed space).
+
+
+A vector $\vector{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit vectors, this is
+
+$$
+\matrix{1}{0}
+       {0}{1} \vector{f}{g}
+$$
+
+And in the transformed space, $\vector{f}{g}$ is at
+
+$$
+\matrix{a}{c}
+       {b}{d} \vector{f}{g}
+$$
+
+
 - A matrix can represent a linear transformation: it contains the new basis
   vectors as its columns
 
