@@ -2,9 +2,41 @@ Title: Linear Algebra
 Slug: linear-algebra
 Date: 2016-08-14
 
-- To define a linear transformation, you just need to know where the basis
-  vectors are taken to. Any other vector $ai + bj$ is taken to wherever that is
-  using the new $i$ and $j$.
+$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\vector}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\matrix}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
+$$
+
+To specify a linear transformation, you specify:
+
+1. Some basis vectors $\i$ and $\j$
+2. Where those basis vectors are taken to by the transformation.
+
+So $\i$ might be taken to $a\i + b\j$, and $\j$ might be taken to $c\i + d\j$. In
+this case we would use the following matrix to describe the transformation:
+
+$$
+\matrix{a}{c}
+       {b}{d}
+$$
+
+Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the 2-dimensional space that we're considering. But, in physics at least, they will often be unit vectors in "normal 2D space".
+
+So the matrix tells us where the basis vectors have been taken to. Any other vector $f\i + g\j$ is taken to wherever that is using the transformed basis vectors:
+
+$$
+f\i + g\j \longrightarrow f\vector{a}{b} + g\vector{c}{d} = \vector{fa + gc}{fb + gd}
+$$
+
+
+And that's how matrix multiplication is defined:
+
+$$
+\matrix{a}{c}
+       {b}{d} \vector{f}{g} = \vector{fa + gc}{fb + gd}
+$$
 
 - A matrix can represent a linear transformation: it contains the new basis
   vectors as its columns
