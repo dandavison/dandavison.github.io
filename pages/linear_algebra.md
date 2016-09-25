@@ -5,8 +5,8 @@ Date: 2016-08-14
 $$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
-\newcommand{\vector}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
-\newcommand{\matrix}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
+\newcommand{\vec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
 $$
 
 
@@ -25,8 +25,8 @@ In this case we would use the following matrix to describe the
 transformation:
 
 $$
-\matrix{a}{c}
-       {b}{d}
+\mat{a}{c}
+    {b}{d}
 $$
 
 Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the
@@ -38,15 +38,15 @@ vector $f\i + g\j$ is taken to wherever that is using the transformed basis
 vectors:
 
 $$
-f\i + g\j \longrightarrow f\vector{a}{b} + g\vector{c}{d} = \vector{fa + gc}{fb + gd}
+f\i + g\j \longrightarrow f\vec{a}{b} + g\vec{c}{d} = \vec{fa + gc}{fb + gd}
 $$
 
 
 And that's how matrix multiplication is defined:
 
 $$
-\matrix{a}{c}
-       {b}{d} \vector{f}{g} = \vector{fa + gc}{fb + gd}
+\mat{a}{c}
+    {b}{d} \vec{f}{g} = \vec{fa + gc}{fb + gd}
 $$
 
 
@@ -59,22 +59,22 @@ the transformed space).
 
 Suppose person B uses some other basis vectors to describe locations in
 space. Specifically, in our coordinates, their basis vectors are
-$\vector{2}{1}$ and $\vector{-1}{1}$.
+$\vec{2}{1}$ and $\vec{-1}{1}$.
 
 
 **When they state a vector, what is it in our coordinates?**
 
-If they say $\vector{-1}{2}$, what is that in our coordinates?
+If they say $\vec{-1}{2}$, what is that in our coordinates?
 
-Well, if they say $\vector{1}{0}$, that's $\vector{2}{1}$ in our
-coordinates. And if they say $\vector{0}{1}$, that's $\vector{-1}{1}$ in our
+Well, if they say $\vec{1}{0}$, that's $\vec{2}{1}$ in our
+coordinates. And if they say $\vec{0}{1}$, that's $\vec{-1}{1}$ in our
 coordinates. So the matrix containing _their basis vectors expressed in our
 coordinates_ transforms a point expressed in their language into one expressed
 in ours. So, the answer is
 
 $$
-\matrix{2}{-1}
-       {1}{1} \vector{-1}{2} = \vector{-4}{1}.
+\mat{2}{-1}
+    {1}{1} \vec{-1}{2} = \vec{-4}{1}.
 $$
 
 
@@ -83,19 +83,19 @@ $$
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
-A vector $\vector{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit
+A vector $\vec{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit
 vectors, this is
 
 $$
-\matrix{1}{0}
-       {0}{1} \vector{f}{g}
+\mat{1}{0}
+    {0}{1} \vec{f}{g}
 $$
 
-And in the transformed space, $\vector{f}{g}$ is at
+And in the transformed space, $\vec{f}{g}$ is at
 
 $$
-\matrix{a}{c}
-       {b}{d} \vector{f}{g}
+\mat{a}{c}
+    {b}{d} \vec{f}{g}
 $$
 
 
