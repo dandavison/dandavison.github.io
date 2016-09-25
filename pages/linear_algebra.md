@@ -7,6 +7,7 @@ $$
 \newcommand{\j}{\mathbf{j}}
 \newcommand{\vec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
+\newcommand{\svec}[2]{\tiny{\vec{#1}{#2}}}
 $$
 
 
@@ -59,15 +60,15 @@ the transformed space).
 
 Suppose person B uses some other basis vectors to describe locations in
 space. Specifically, in our coordinates, their basis vectors are
-$\vec{2}{1}$ and $\vec{-1}{1}$.
+$\svec{2}{1}$ and $\svec{-1}{1}$.
 
 
 **When they state a vector, what is it in our coordinates?**
 
-If they say $\vec{-1}{2}$, what is that in our coordinates?
+If they say $\svec{-1}{2}$, what is that in our coordinates?
 
-Well, if they say $\vec{1}{0}$, that's $\vec{2}{1}$ in our
-coordinates. And if they say $\vec{0}{1}$, that's $\vec{-1}{1}$ in our
+Well, if they say $\svec{1}{0}$, that's $\svec{2}{1}$ in our
+coordinates. And if they say $\svec{0}{1}$, that's $\svec{-1}{1}$ in our
 coordinates. So the matrix containing _their basis vectors expressed in our
 coordinates_ transforms a point expressed in their language into one expressed
 in ours. So, the answer is
