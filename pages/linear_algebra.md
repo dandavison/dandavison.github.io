@@ -31,8 +31,8 @@ $$
 $$
 
 Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the
-2-dimensional space that we're considering. But, in physics at least, they will
-often be unit vectors in "normal 2D space".
+2-dimensional space that we're considering. But, we can think of them for now
+as the usual unit vectors in 2D space.
 
 So the matrix tells us where the basis vectors have been taken to. Any other
 vector $f\i + g\j$ is taken to wherever that is using the transformed basis
@@ -78,6 +78,60 @@ $$
     {1}{1} \vec{-1}{2} = \vec{-4}{1}.
 $$
 
+
+**When we state a vector, what is it in their coordinates?**
+
+We give the vector $\svec{3}{2}$. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit $\svec{3}{2}$. So, the solution to
+
+$$
+\mat{2}{-1}
+    {1}{1} \vec{a}{b} = \vec{3}{2}.
+$$
+
+
+Computationally, we can see that we can get the solution by multiplying both sides by the inverse:
+
+$$
+\vec{a}{b} = \mat{2}{-1}
+                 {1}{1}^{-1} \vec{3}{2}.
+$$
+
+Conceptually, we have
+
+$$
+\mat{2}{-1}
+    {1}{1} =
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$
+
+and so the role played by the inverse is
+
+$$
+\vec{a}{b} =
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\vec{3}{2}.
+$$
+
+**When we state a transformation, what is it in their coordinates?**
+
+We state a 90° anticlockwise rotation of 2D space:
+
+$$
+\mat{1}{-1}
+    {0}{0}
+$$
+
+what is that transformation in their coordinates? The answer is
+
+$$
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\mat{1}{-1}
+    {0}{0}
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$
+
+Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.
 
 
 -------------------------------------------------------------------------------
