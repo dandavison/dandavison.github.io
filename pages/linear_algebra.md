@@ -9,22 +9,33 @@ $$
 \newcommand{\matrix}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
 $$
 
+
+-------------------------------------------------------------------------------
+### Linear transformations and matrices
 To specify a linear transformation, you specify:
 
 1. Some basis vectors $\i$ and $\j$
 2. Where those basis vectors are taken to by the transformation.
 
-So $\i$ might be taken to $a\i + b\j$, and $\j$ might be taken to $c\i + d\j$. In
-this case we would use the following matrix to describe the transformation:
+How the transformation affects any other point follows from those two pieces of
+information.
+
+So $\i$ might be taken to $a\i + b\j$, and $\j$ might be taken to $c\i + d\j$.
+In this case we would use the following matrix to describe the
+transformation:
 
 $$
 \matrix{a}{c}
        {b}{d}
 $$
 
-Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the 2-dimensional space that we're considering. But, in physics at least, they will often be unit vectors in "normal 2D space".
+Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the
+2-dimensional space that we're considering. But, in physics at least, they will
+often be unit vectors in "normal 2D space".
 
-So the matrix tells us where the basis vectors have been taken to. Any other vector $f\i + g\j$ is taken to wherever that is using the transformed basis vectors:
+So the matrix tells us where the basis vectors have been taken to. Any other
+vector $f\i + g\j$ is taken to wherever that is using the transformed basis
+vectors:
 
 $$
 f\i + g\j \longrightarrow f\vector{a}{b} + g\vector{c}{d} = \vector{fa + gc}{fb + gd}
@@ -39,10 +50,41 @@ $$
 $$
 
 
-A matrix represents a linear transformation by offering up some new basis vectors (its columns) for linear combinations of them to be made (a vector in the transformed space).
+A matrix represents a linear transformation by offering up some new basis
+vectors (its columns) for linear combinations of them to be made (a vector in
+the transformed space).
+
+-------------------------------------------------------------------------------
+### Change of basis
+
+Suppose person B uses some other basis vectors to describe locations in
+space. Specifically, in our coordinates, their basis vectors are
+$\vector{2}{1}$ and $\vector{-1}{1}$.
 
 
-A vector $\vector{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit vectors, this is
+**When they state a vector, what is it in our coordinates?**
+
+If they say $\vector{-1}{2}$, what is that in our coordinates?
+
+Well, if they say $\vector{1}{0}$, that's $\vector{2}{1}$ in our
+coordinates. And if they say $\vector{0}{1}$, that's $\vector{-1}{1}$ in our
+coordinates. So the matrix containing _their basis vectors expressed in our
+coordinates_ transforms a point expressed in their language into one expressed
+in ours. So, the answer is
+
+$$
+\matrix{2}{-1}
+       {1}{1} \vector{-1}{2} = \vector{-4}{1}.
+$$
+
+
+
+-------------------------------------------------------------------------------
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+A vector $\vector{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit
+vectors, this is
 
 $$
 \matrix{1}{0}
@@ -68,7 +110,8 @@ $$
   vector in the input space is taken to b" Careful: Are the keeping the same
   coordinate system or not?
 
-- $A(BC) == (AB)C$ is obviously true since both say "do the C transformation, then B, then A".
+- $A(BC) == (AB)C$ is obviously true since both say "do the C transformation,
+  then B, then A".
 
 - With square matrices, the input space and output space can be represented in
   the same coordinate system. We are discussing things as if the basis vectors
