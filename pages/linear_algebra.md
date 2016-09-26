@@ -135,6 +135,54 @@ Since the composition of those three transformations defines a single transforma
 
 
 -------------------------------------------------------------------------------
+### Eigenbasis Fibonacci proof
+
+Consider the matrix
+
+$$
+A = \mat{0}{1}
+        {1}{1}
+$$
+
+The first few powers are
+
+\begin{align*}
+&A^{1} &= \mat{0}{1}
+              {1}{1}
+\\
+&A^{2} = \mat{0}{1}
+             {1}{1} \mat{0}{1}
+                       {1}{1} &= \mat{1}{1}
+                                     {1}{2}
+\\
+&A^{3} = \mat{0}{1}
+             {1}{1} \mat{1}{1}
+                        {1}{2} &= \mat{1}{2}
+                                      {2}{3}
+\\
+&A^{4} = \mat{0}{1}
+             {1}{1} \mat{1}{2}
+                        {2}{3} &= \mat{2}{3}
+                                      {3}{5}
+\end{align*}
+
+Define the Fibonacci numbers to be $F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...$ = $0, 1, 1, 2, 3, 5, 8, ...$.
+
+The matrix powers are generating the Fibonacci sequence:
+
+$$
+A^{n} = \mat{F_{n-1} }{F_n      }
+            {F_n     }{F_{n+1} }
+$$
+
+So if there were an efficient algorithm for computing the nth power of the matrix, that would also be an efficient algorithm for computing the nth Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers _en route_.
+
+We can do this by changing basis so that the eigenvectors are the new basis vectors, and computing the matrix power in the new basis. This is because in the eigenbasis, the matrix is diagonal, and therefore the matrix power can be computed by simple exponentiation of the numbers on the diagonal.
+
+
+
+
+-------------------------------------------------------------------------------
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
