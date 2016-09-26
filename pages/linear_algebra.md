@@ -8,6 +8,7 @@ $$
 \newcommand{\vec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
 \newcommand{\svec}[2]{\tiny{\vec{#1}{#2}}}
+\newcommand{\nth}{n^{\text{th}}}
 $$
 
 
@@ -137,6 +138,8 @@ Since the composition of those three transformations defines a single transforma
 -------------------------------------------------------------------------------
 ### Eigenbasis Fibonacci proof
 
+#### **Introduction**
+
 Consider the matrix
 
 $$
@@ -175,11 +178,74 @@ A^{n} = \mat{F_{n-1} }{F_n      }
             {F_n     }{F_{n+1} }
 $$
 
-So if there were an efficient algorithm for computing the nth power of the matrix, that would also be an efficient algorithm for computing the nth Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers _en route_.
+So if there were an efficient algorithm for computing the $\nth$ power of the matrix, that would also be an efficient algorithm for computing the $\nth$ Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers _en route_.
 
-We can do this by changing basis so that the eigenvectors are the new basis vectors, and computing the matrix power in the new basis. This is because in the eigenbasis, the matrix is diagonal, and therefore the matrix power can be computed by simple exponentiation of the numbers on the diagonal.
+How can we do this? To state the problem in a different way, we need to construct a new matrix that performs exactly the same transformation as $A^n$, but which somehow does the exponentiation step "in one go" rather than by multiplying $A$ with itself $n$ times.
+
+#### **Solution outline**
+
+Matrices represent transformations, so we can talk about them as taking in some vector and producing some other vector. The approach we're going to take is to re-express the $A^n$ transformation as follows:
+
+1. Convert the input vector to its representation in an alternative basis which uses the eigenvectors as the basis vectors (it's called an "eigenbasis").
+2. In this alternative basis, compute the new position of the vector after carrying out the $A^n$ transformation.
+3. Convert the resulting vector back to its representation in our original basis.
+
+I.e., we're going to compute the overall transformation as this product of matrices:
+
+$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+$$
+
+The key part of all this -- the crux of the trick -- is that the exponentiation is efficient in the eigenbasis. We'll see why below.
+
+#### **Solution details**
+
+Let's suppose we've already found the eigenvectors and that there are two of them and we've arranged them as the two columns of a matrix $V$. So $V$ holds the basis vectors of the alternative basis and therefore we know from the change of basis notes above that $V$ is the matrix that takes as input a vector expressed in the alternative basis and outputs its representation in our basis. So, step (3) is done by $V$, and step (1) is done by $V^{-1}$, and the matrix performing all three steps is going to look like
+
+i.e.
+
+$$
+V
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+V^{-1}
+$$
+
+OK, so what is the matrix in the middle? The change of basis section above tells us that we can compute it as
+
+$$
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+A
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+$$
+
+so in other words the matrix in the middle is
+
+$$
+V^{-1}AV
+$$
+
+and the entire transformation is
 
 
+$$
+V
+\Big(V^{-1}AV\Big)^n
+V^{-1}
+$$
+
+
+Recall that above we observed that the $\nth$ power of $A$ is a matrix with the nth Fibonacci number in its bottom left and top right entries. So the following tasks remain:
+
+1. Find the eigenvectors and put them in a matrix $V$
+2. Find the inverse of $V$
+3. Compute the matrix product $V^{-1}AV$
+4. Compute the result of raising that to the $\nth$ power
+5. Plug the result of that into the overall expression
+6. Take the entry in the bottom left or top right (they should be the same!) and simplify.
+
+The result should be an expression giving the $\nth$ Fibonacci number as a function of $n$. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.
 
 
 -------------------------------------------------------------------------------
