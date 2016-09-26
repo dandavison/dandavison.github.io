@@ -248,6 +248,28 @@ Recall that above we observed that the $\nth$ power of $A$ is a matrix with the 
 The result should be an expression giving the $\nth$ Fibonacci number as a function of $n$. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.
 
 
+##### **1. Find the eigenvectors**
+We just follow the textbook approach: We have
+$$
+A = \mat{0}{1}
+        {1}{1}
+$$
+An eigenvector $v$ satisfies $Av = \lambda v$ for some scalar $\lambda$. That equation can be rearranged as follows
+
+\begin{align*}
+A\vec v &= \lambda I\vec v
+\\
+A\vec v - \lambda I\vec v &= 0
+\\
+(A - \lambda I)\vec v &= 0
+\end{align*}
+which means that the matrix $A - \lambda I$ is a transformation that takes some non-zero vector $v$ to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact:
+
+$$
+\det (A - \lambda I) = 0
+$$
+
+
 -------------------------------------------------------------------------------
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
