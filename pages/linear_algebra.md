@@ -285,9 +285,9 @@ which means that the matrix $A - \lambda I$ is a transformation that takes some 
 \\
 \det \mat{-\lambda}{1}
          {1          }{1 - \lambda} &= 0
-\\
-\\
-(-\lambda)(1 - \lambda) - 1 &= 0
+% \\
+% \\
+% (-\lambda)(1 - \lambda) - 1 &= 0
 \\
 \\
 \lambda^2 - \lambda - 1 = 0
@@ -301,7 +301,9 @@ Using the quadratic formula we have $a=1, b=-1, c=-1$ and
 = \frac{1 ± \sqrt{5}}{2}
 \end{align*}
 
-which are the two eigenvalues. To find the first eigenvector we plug $\frac{1 + \sqrt{5}}{2}$ into the equation above:
+which are the two eigenvalues.
+
+To find eigenvectors associated with the eigenvalues, go back to the equations
 
 \begin{align*}
 (A - \lambda I)\vec v &= \vec 0
@@ -309,26 +311,15 @@ which are the two eigenvalues. To find the first eigenvector we plug $\frac{1 + 
 \\
 \mat{-\lambda}{1}
     {1       }{1 - \lambda} \vec v &= \vec 0
-\\
-\\
-\mat{\frac{-1 - \sqrt{5}}{2} }{1                       }
-    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &= \vec 0
 \end{align*}
 
-Let the eigenvector $v$ be $\scvec{v_1}{v_2}$. So $v1$ and $v2$ satisfy the system of equations
+Let an eigenvector $v$ be $\scvec{v_1}{v_2}$. The matrix equation corresponds to this system of equations:
 
 $$
 \begin{cases}
-v_1\Big(\frac{-1 - \sqrt(5)}{2}\Big) + v_2 = 0 \\
-v_1 + v2\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+-\lambda v_1 &+ v_2               &= 0\\
+v_1          &+ (1 - \lambda) v_2 &= 0
 \end{cases}
-\\
-\\
-v2 = v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)
-\\
-\\
-v_1 + v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
-\\
-\\
-v_1\Big(1 + \frac{-4}{2}\Big) = 0
 $$
+
+From the first equation [ref]Using the second equation gives the same answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many eigenvectors (a line of them) associated with any given eigenvalue, so we can pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$.
