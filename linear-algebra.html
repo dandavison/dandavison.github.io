@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Linear Algebra — Notes</title>
+	<meta name="description" content="Title: Linear Algebra; Date: 2016-08-14; Author: Dan Davison">
+	<meta name="author" content="Dan Davison">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://dandavison.github.io/notes/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://dandavison.github.io/notes/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://dandavison.github.io/notes/theme/css/local.css" rel="stylesheet">
+	<link href="http://dandavison.github.io/notes/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://dandavison.github.io/notes/">Notes</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Linear Algebra</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Dan Davison</h4>
+		</span>
+		<time datetime="2016-08-14T00:00:00-07:00" itemprop="datePublished">Sun 14 August 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://dandavison.github.io/notes/category/misc.html" rel="category">misc</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><div class="math">$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 &amp; #2\\#3 &amp; #4\\ \end{bmatrix}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\nth}{n^{\text{th}}}
+$$</div>
+<hr />
+<h3>Linear transformations and matrices</h3>
+<p>A linear transformation is completely specified by</p>
+<ol>
+<li>Some basis vectors <span class="math">\(\i\)</span> and <span class="math">\(\j\)</span></li>
+<li>Where those basis vectors are taken to by the transformation.</li>
+</ol>
+<p>How the transformation affects any other point follows from those two pieces of
+information.</p>
+<p>So <span class="math">\(\i\)</span> might be taken to <span class="math">\(a\i + b\j\)</span>, and <span class="math">\(\j\)</span> might be taken to <span class="math">\(c\i + d\j\)</span>.
+In this case we would use the following matrix to describe the
+transformation:</p>
+<div class="math">$$
+\mat{a}{c}
+    {b}{d}
+$$</div>
+<p>Some examples are</p>
+<div class="math">$$
+\begin{array}{ll}
+\text{stretch by a in the i-direction} &amp; \mat{a}{0}
+                                             {0}{1}
+\\\\
+\text{stretch by a in the i-direction and shear right} &amp; \mat{a}{b}
+                                                             {0}{1}
+\\\\
+\text{rotate anticlockwise 90°} &amp; \mat{0}{-1}
+                                      {1}{ 0}
+\end{array}
+$$</div>
+<p>Note that we haven't said what <span class="math">\(\i\)</span> and <span class="math">\(\j\)</span> are yet; they <em>define</em> the
+2-dimensional space that we're considering. But, we can think of them for now
+as the usual orthogonal unit vectors in 2D space.</p>
+<p>So the matrix tells us where the basis vectors have been taken to. Any other
+vector <span class="math">\(f\i + g\j\)</span> is taken to wherever that is using the transformed basis
+vectors:</p>
+<div class="math">$$
+f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
+$$</div>
+<p>And that's how matrix multiplication is defined:</p>
+<div class="math">$$
+\mat{a}{c}
+    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
+$$</div>
+<p>A matrix represents a linear transformation by showing where the basis vector are taken to.</p>
+<hr />
+<h3>Change of basis</h3>
+<p>Suppose person B uses some other basis vectors to describe locations in
+space. Specifically, in our coordinates, their basis vectors are
+<span class="math">\(\scvec{2}{1}\)</span> and <span class="math">\(\scvec{-1}{1}\)</span>.</p>
+<p><strong>When they state a vector, what is it in our coordinates?</strong></p>
+<p>If they say <span class="math">\(\scvec{-1}{2}\)</span>, what is that in our coordinates?</p>
+<p>Well, if they say <span class="math">\(\scvec{1}{0}\)</span>, that's <span class="math">\(\scvec{2}{1}\)</span> in our
+coordinates. And if they say <span class="math">\(\scvec{0}{1}\)</span>, that's <span class="math">\(\scvec{-1}{1}\)</span> in our
+coordinates. So the matrix containing <em>their basis vectors expressed in our
+coordinates</em> transforms a point expressed in their language into one expressed
+in ours. So, the answer is</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
+$$</div>
+<p><strong>When we state a vector, what is it in their coordinates?</strong></p>
+<p>We give the vector <span class="math">\(\scvec{3}{2}\)</span>. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit <span class="math">\(\scvec{3}{2}\)</span>. So, the solution to</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
+$$</div>
+<p>Computationally, we can see that we can get the solution by multiplying both sides by the inverse:</p>
+<div class="math">$$
+\cvec{a}{b} = \mat{2}{-1}
+                  {1}{1}^{-1} \cvec{3}{2}.
+$$</div>
+<p>Conceptually, we have</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{1} =
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$</div>
+<p>and so the role played by the inverse is</p>
+<div class="math">$$
+\cvec{a}{b} =
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\cvec{3}{2}.
+$$</div>
+<p><strong>When we state a transformation, what is it in their coordinates?</strong></p>
+<p>We state a 90° anticlockwise rotation of 2D space:</p>
+<div class="math">$$
+\mat{1}{-1}
+    {0}{0}
+$$</div>
+<p>what is that transformation in their coordinates? The answer is</p>
+<div class="math">$$
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\mat{1}{-1}
+    {0}{0}
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$</div>
+<p>Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.</p>
+<hr />
+<h3>Eigenbasis Fibonacci proof</h3>
+<h4><strong>Introduction</strong></h4>
+<p>Consider the matrix</p>
+<div class="math">$$
+A = \mat{0}{1}
+        {1}{1}
+$$</div>
+<p>The first few powers are</p>
+<div class="math">\begin{align*}
+&amp;A^{1} &amp;= \mat{0}{1}
+              {1}{1}
+\\
+&amp;A^{2} = \mat{0}{1}
+             {1}{1} \mat{0}{1}
+                        {1}{1} &amp;= \mat{1}{1}
+                                      {1}{2}
+\\
+&amp;A^{3} = \mat{0}{1}
+             {1}{1} \mat{1}{1}
+                        {1}{2} &amp;= \mat{1}{2}
+                                      {2}{3}
+\\
+&amp;A^{4} = \mat{0}{1}
+             {1}{1} \mat{1}{2}
+                        {2}{3} &amp;= \mat{2}{3}
+                                      {3}{5}
+\end{align*}</div>
+<p>Define the Fibonacci numbers to be <span class="math">\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...\)</span> = <span class="math">\(0, 1, 1, 2, 3, 5, 8, ...\)</span>.</p>
+<p>The matrix powers are generating the Fibonacci sequence:</p>
+<div class="math">$$
+A^{n} = \mat{F_{n-1} }{F_n      }
+            {F_n     }{F_{n+1} }
+$$</div>
+<p>So if there were an efficient algorithm for computing the <span class="math">\(\nth\)</span> power of the matrix, that would also be an efficient algorithm for computing the <span class="math">\(\nth\)</span> Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers <em>en route</em>.</p>
+<p>How can we do this? To state the problem in a different way, we need to construct a new matrix that performs exactly the same transformation as <span class="math">\(A^n\)</span>, but which somehow does the exponentiation step "in one go" rather than by multiplying <span class="math">\(A\)</span> with itself <span class="math">\(n\)</span> times.</p>
+<h4><strong>Solution outline</strong></h4>
+<p>Matrices represent transformations, so we can talk about them as taking in some vector and producing some other vector. The approach we're going to take is to re-express the <span class="math">\(A^n\)</span> transformation as follows:</p>
+<ol>
+<li>Convert the input vector to its representation in an alternative basis which uses the eigenvectors as the basis vectors (it's called an "eigenbasis").</li>
+<li>In this alternative basis, compute the new position of the vector after carrying out the <span class="math">\(A^n\)</span> transformation.</li>
+<li>Convert the resulting vector back to its representation in our original basis.</li>
+</ol>
+<p>I.e., we're going to compute the overall transformation as this product of matrices:</p>
+<div class="math">$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+$$</div>
+<p>The key part of all this -- the crux of the trick -- is that the exponentiation is efficient in the eigenbasis. We'll see why below.</p>
+<h4><strong>Solution details</strong></h4>
+<p>Let's suppose we've already found the eigenvectors and that there are two of them and we've arranged them as the two columns of a matrix <span class="math">\(V\)</span>. So <span class="math">\(V\)</span> holds the basis vectors of the alternative basis and therefore we know from the change of basis notes above that <span class="math">\(V\)</span> is the matrix that takes as input a vector expressed in the alternative basis and outputs its representation in our basis. So, step (3) is done by <span class="math">\(V\)</span>, and step (1) is done by <span class="math">\(V^{-1}\)</span>, and the matrix performing all three steps is going to look like</p>
+<p>i.e.</p>
+<div class="math">$$
+V
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+V^{-1}
+$$</div>
+<p>OK, so what is the matrix in the middle? The change of basis section above tells us that we can compute it as</p>
+<div class="math">$$
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+A
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+$$</div>
+<p>so in other words the matrix in the middle is</p>
+<div class="math">$$
+V^{-1}AV
+$$</div>
+<p>and the entire transformation is</p>
+<div class="math">$$
+V
+\Big(V^{-1}AV\Big)^n
+V^{-1}
+$$</div>
+<p>Recall that above we observed that the <span class="math">\(\nth\)</span> power of <span class="math">\(A\)</span> is a matrix with the nth Fibonacci number in its bottom left and top right entries. So the following tasks remain:</p>
+<ol>
+<li>Find the eigenvectors and put them in a matrix <span class="math">\(V\)</span></li>
+<li>Find the inverse of <span class="math">\(V\)</span></li>
+<li>Compute the matrix product <span class="math">\(V^{-1}AV\)</span></li>
+<li>Compute the result of raising that to the <span class="math">\(\nth\)</span> power</li>
+<li>Plug the result of that into the overall expression</li>
+<li>Take the entry in the bottom left or top right (they should be the same!) and simplify.</li>
+</ol>
+<p>The result should be an expression giving the <span class="math">\(\nth\)</span> Fibonacci number as a function of <span class="math">\(n\)</span>. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.</p>
+<h5><strong>1. Find the eigenvectors</strong></h5>
+<p>We follow the textbook approach: We have
+</p>
+<div class="math">$$
+A = \mat{0}{1}
+        {1}{1}
+$$</div>
+<p>
+An eigenvector <span class="math">\(v\)</span> satisfies <span class="math">\(Av = \lambda v\)</span> for some scalar <span class="math">\(\lambda\)</span>. That equation can be rearranged as follows</p>
+<div class="math">\begin{align*}
+A\vec v &amp;= \lambda I\vec v
+\\
+A\vec v - \lambda I\vec v &amp;= \vec 0
+\\
+(A - \lambda I)\vec v &amp;= \vec 0
+\end{align*}</div>
+<p>
+which means that the matrix <span class="math">\(A - \lambda I\)</span> is a transformation that takes some non-zero vector <span class="math">\(\vec v\)</span> to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors <span class="math">\(\lambda\)</span>:</p>
+<div class="math">\begin{align*}
+\det (A - \lambda I) &amp;= 0
+\\
+\\
+\det \mat{-\lambda}{1}
+         {1          }{1 - \lambda} &amp;= 0
+\\
+\\
+(-\lambda)(1 - \lambda) - 1 &amp;= 0
+\\
+\\
+\lambda^2 - \lambda - 1 = 0
+\end{align*}</div>
+<p>Using the quadratic formula we have <span class="math">\(a=1, b=-1, c=-1\)</span> and</p>
+<div class="math">\begin{align*}
+\lambda
+= \frac{-b ± \sqrt{b^2 - 4ac}}{2a}
+= \frac{1 ± \sqrt{5}}{2}
+\end{align*}</div>
+<p>which are the two eigenvalues. To find the first eigenvector we plug <span class="math">\(\frac{1 + \sqrt{5}}{2}\)</span> into the equation above:</p>
+<div class="math">\begin{align*}
+(A - \lambda I)\vec v &amp;= \vec 0
+\\
+\\
+\mat{-\lambda}{1}
+    {1       }{1 - \lambda} \vec v &amp;= \vec 0
+\\
+\\
+\mat{\frac{-1 - \sqrt{5}}{2} }{1                       }
+    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &amp;= \vec 0
+\end{align*}</div>
+<p>Let the eigenvector <span class="math">\(v\)</span> be <span class="math">\(\scvec{v_1}{v_2}\)</span>. So <span class="math">\(v1\)</span> and <span class="math">\(v2\)</span> satisfy the system of equations</p>
+<div class="math">$$
+\begin{cases}
+v_1\Big(\frac{-1 - \sqrt(5)}{2}\Big) + v_2 = 0 \\
+v_1 + v2\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+\end{cases}
+\\
+\\
+v2 = v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)
+\\
+\\
+v_1 + v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+\\
+\\
+v_1\Big(1 + \frac{-4}{2}\Big) = 0
+$$</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<hr>
+	<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'dandavison7-notes'; 
+    var disqus_title = 'Linear Algebra';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://dandavison.github.io/notes">Notes</a></li>
+							<li><a href="http://dandavison.github.io/notes/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/dandavison">github</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://dandavison.github.io/notes/category/calculus.html">calculus (1)</a></li>
+							<li><a href="http://dandavison.github.io/notes/category/misc.html">misc (3)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Dan Davison 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
