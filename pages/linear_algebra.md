@@ -14,7 +14,8 @@ $$
 
 -------------------------------------------------------------------------------
 ### Linear transformations and matrices
-To specify a linear transformation, you specify:
+
+A linear transformation is completely specified by
 
 1. Some basis vectors $\i$ and $\j$
 2. Where those basis vectors are taken to by the transformation.
@@ -31,9 +32,24 @@ $$
     {b}{d}
 $$
 
+Some examples are
+
+$$
+\begin{array}{ll}
+\text{stretch by a in the i-direction} & \mat{a}{0}
+                                             {0}{1}
+\\\\
+\text{stretch by a in the i-direction and shear right} & \mat{a}{b}
+                                                             {0}{1}
+\\\\
+\text{rotate anticlockwise 90°} & \mat{0}{-1}
+                                      {1}{ 0}
+\end{array}
+$$
+
 Note that we haven't said what $\i$ and $\j$ are yet; they _define_ the
 2-dimensional space that we're considering. But, we can think of them for now
-as the usual unit vectors in 2D space.
+as the usual orthogonal unit vectors in 2D space.
 
 So the matrix tells us where the basis vectors have been taken to. Any other
 vector $f\i + g\j$ is taken to wherever that is using the transformed basis
@@ -52,9 +68,7 @@ $$
 $$
 
 
-A matrix represents a linear transformation by offering up some new basis
-vectors (its columns) for linear combinations of them to be made (a vector in
-the transformed space).
+A matrix represents a linear transformation by showing where the basis vector are taken to.
 
 -------------------------------------------------------------------------------
 ### Change of basis
