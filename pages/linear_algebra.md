@@ -5,9 +5,9 @@ Date: 2016-08-14
 $$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
-\newcommand{\vec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
-\newcommand{\svec}[2]{\tiny{\vec{#1}{#2}}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
 \newcommand{\nth}{n^{\text{th}}}
 $$
 
@@ -40,7 +40,7 @@ vector $f\i + g\j$ is taken to wherever that is using the transformed basis
 vectors:
 
 $$
-f\i + g\j \longrightarrow f\vec{a}{b} + g\vec{c}{d} = \vec{fa + gc}{fb + gd}
+f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
 $$
 
 
@@ -48,7 +48,7 @@ And that's how matrix multiplication is defined:
 
 $$
 \mat{a}{c}
-    {b}{d} \vec{f}{g} = \vec{fa + gc}{fb + gd}
+    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
 $$
 
 
@@ -61,41 +61,41 @@ the transformed space).
 
 Suppose person B uses some other basis vectors to describe locations in
 space. Specifically, in our coordinates, their basis vectors are
-$\svec{2}{1}$ and $\svec{-1}{1}$.
+$\scvec{2}{1}$ and $\scvec{-1}{1}$.
 
 
 **When they state a vector, what is it in our coordinates?**
 
-If they say $\svec{-1}{2}$, what is that in our coordinates?
+If they say $\scvec{-1}{2}$, what is that in our coordinates?
 
-Well, if they say $\svec{1}{0}$, that's $\svec{2}{1}$ in our
-coordinates. And if they say $\svec{0}{1}$, that's $\svec{-1}{1}$ in our
+Well, if they say $\scvec{1}{0}$, that's $\scvec{2}{1}$ in our
+coordinates. And if they say $\scvec{0}{1}$, that's $\scvec{-1}{1}$ in our
 coordinates. So the matrix containing _their basis vectors expressed in our
 coordinates_ transforms a point expressed in their language into one expressed
 in ours. So, the answer is
 
 $$
 \mat{2}{-1}
-    {1}{1} \vec{-1}{2} = \vec{-4}{1}.
+    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
 $$
 
 
 **When we state a vector, what is it in their coordinates?**
 
-We give the vector $\svec{3}{2}$. What is that in their coordinate system? By
-definition, the answer is the weights that scales their basis vectors to hit $\svec{3}{2}$. So, the solution to
+We give the vector $\scvec{3}{2}$. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit $\scvec{3}{2}$. So, the solution to
 
 $$
 \mat{2}{-1}
-    {1}{1} \vec{a}{b} = \vec{3}{2}.
+    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
 $$
 
 
 Computationally, we can see that we can get the solution by multiplying both sides by the inverse:
 
 $$
-\vec{a}{b} = \mat{2}{-1}
-                 {1}{1}^{-1} \vec{3}{2}.
+\cvec{a}{b} = \mat{2}{-1}
+                  {1}{1}^{-1} \cvec{3}{2}.
 $$
 
 Conceptually, we have
@@ -109,9 +109,9 @@ $$
 and so the role played by the inverse is
 
 $$
-\vec{a}{b} =
+\cvec{a}{b} =
 \begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
-\vec{3}{2}.
+\cvec{3}{2}.
 $$
 
 **When we state a transformation, what is it in their coordinates?**
@@ -155,8 +155,8 @@ The first few powers are
 \\
 &A^{2} = \mat{0}{1}
              {1}{1} \mat{0}{1}
-                       {1}{1} &= \mat{1}{1}
-                                     {1}{2}
+                        {1}{1} &= \mat{1}{1}
+                                      {1}{2}
 \\
 &A^{3} = \mat{0}{1}
              {1}{1} \mat{1}{1}
@@ -249,7 +249,7 @@ The result should be an expression giving the $\nth$ Fibonacci number as a funct
 
 
 ##### **1. Find the eigenvectors**
-We just follow the textbook approach: We have
+We follow the textbook approach: We have
 $$
 A = \mat{0}{1}
         {1}{1}
@@ -263,64 +263,41 @@ A\vec v - \lambda I\vec v &= 0
 \\
 (A - \lambda I)\vec v &= 0
 \end{align*}
-which means that the matrix $A - \lambda I$ is a transformation that takes some non-zero vector $v$ to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact:
+which means that the matrix $A - \lambda I$ is a transformation that takes some non-zero vector $\vec v$ to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors $\lambda$:
 
-$$
-\det (A - \lambda I) = 0
-$$
+\begin{align*}
+\det (A - \lambda I) &= 0
+\\
+\\
+\det \mat{-\lambda}{1}
+         {1          }{1 - \lambda} &= 0
+\\
+\\
+(-\lambda)(1 - \lambda) - 1 &= 0
+\\
+\\
+\lambda^2 - \lambda - 1 = 0
+\end{align*}
 
+Using the quadratic formula we have $a=1, b=-1, c=-1$ and
 
--------------------------------------------------------------------------------
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+\begin{align*}
+\lambda
+= \frac{-b ± \sqrt{b^2 - 4ac}}{2a}
+= \frac{1 ± \sqrt{5}}{2}
+\end{align*}
 
+which are the two eigenvalues. To find the first eigenvector we plug $\frac{1 + \sqrt(5)}{2}$ into the equation above:
 
-A vector $\vec{f}{g}$ is really $f\i + g\j$. If $\i$ and $\j$ are unit
-vectors, this is
-
-$$
-\mat{1}{0}
-    {0}{1} \vec{f}{g}
-$$
-
-And in the transformed space, $\vec{f}{g}$ is at
-
-$$
-\mat{a}{c}
-    {b}{d} \vec{f}{g}
-$$
-
-
-- A matrix can represent a linear transformation: it contains the new basis
-  vectors as its columns
-
-- In general, a matrix provides some columns and multiplying a matrix by a
-  vector is forming a linear combination of the matrix's columns, with weights
-  given by the elements of the vector.
-
-- So we read Ax = b as saying "Using the new basis vectors given by A, what
-  vector in the input space is taken to b" Careful: Are the keeping the same
-  coordinate system or not?
-
-- $A(BC) == (AB)C$ is obviously true since both say "do the C transformation,
-  then B, then A".
-
-- With square matrices, the input space and output space can be represented in
-  the same coordinate system. We are discussing things as if the basis vectors
-  of the input space are the orthogonal unit vectors, and the basis vectors in
-  the output space are something else.
-
-- A 3x2 matrix contains 2 columns (i.e. it is describing where the 2 basis
-  vectors of a 2D space will end up), each one being a 3-vector (so they end up
-  in a 3D space). I.e. it maps vectors from a 2D input space into a 3D
-  space. However, they will lie on a 2D plane in that 3D space.
-
-- A 2x3 matrix contains 3 columns (input space is 3D) each one being a 2-vector
-  (output is 2D). So the 3 basis vectors are flattened out and end up on a
-  plane.
+\begin{align*}
+(A - \lambda I)\vec v &= 0
+\\
+\mat{-\lambda}{1}
+    {1       }{1 - \lambda} \vec v &= 0
+\\
+\mat{\frac{-1 - \sqrt(5)}{2} }{1                       }
+    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &= 0
+\end{align*}
 
 
-Questions
 
-- Does it make sense to view all matrices as linear transformations? For
-  example, what about a covariance matrix, or a hessian, or a design matrix in
-  linear models?
