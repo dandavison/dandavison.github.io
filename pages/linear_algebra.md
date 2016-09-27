@@ -273,9 +273,9 @@ An eigenvector $v$ satisfies $Av = \lambda v$ for some scalar $\lambda$. That eq
 \begin{align*}
 A\vec v &= \lambda I\vec v
 \\
-A\vec v - \lambda I\vec v &= 0
+A\vec v - \lambda I\vec v &= \vec 0
 \\
-(A - \lambda I)\vec v &= 0
+(A - \lambda I)\vec v &= \vec 0
 \end{align*}
 which means that the matrix $A - \lambda I$ is a transformation that takes some non-zero vector $\vec v$ to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors $\lambda$:
 
@@ -301,17 +301,34 @@ Using the quadratic formula we have $a=1, b=-1, c=-1$ and
 = \frac{1 ± \sqrt{5}}{2}
 \end{align*}
 
-which are the two eigenvalues. To find the first eigenvector we plug $\frac{1 + \sqrt(5)}{2}$ into the equation above:
+which are the two eigenvalues. To find the first eigenvector we plug $\frac{1 + \sqrt{5}}{2}$ into the equation above:
 
 \begin{align*}
-(A - \lambda I)\vec v &= 0
+(A - \lambda I)\vec v &= \vec 0
+\\
 \\
 \mat{-\lambda}{1}
-    {1       }{1 - \lambda} \vec v &= 0
+    {1       }{1 - \lambda} \vec v &= \vec 0
 \\
-\mat{\frac{-1 - \sqrt(5)}{2} }{1                       }
-    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &= 0
+\\
+\mat{\frac{-1 - \sqrt{5}}{2} }{1                       }
+    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &= \vec 0
 \end{align*}
 
+Let the eigenvector $v$ be $\scvec{v_1}{v_2}$. So $v1$ and $v2$ satisfy the system of equations
 
-
+$$
+\begin{cases}
+v_1\Big(\frac{-1 - \sqrt(5)}{2}\Big) + v_2 = 0 \\
+v_1 + v2\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+\end{cases}
+\\
+\\
+v2 = v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)
+\\
+\\
+v_1 + v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+\\
+\\
+v_1\Big(1 + \frac{-4}{2}\Big) = 0
+$$
