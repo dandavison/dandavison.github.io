@@ -264,8 +264,7 @@ v_1          &+ (1 - \lambda) v_2 &= 0
 \end{cases}
 $$
 
-From the first equation [ref]Using the second equation gives the same
-answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many
+From the first equation we have $v_2 = \lambda v_1$. There are infinitely many
 eigenvectors (a line of them) associated with any given eigenvalue, so we can
 pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have
 eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$. The matrix
