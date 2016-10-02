@@ -38,6 +38,10 @@ PLUGINS = [
     'render_math',
 ]
 
+MD_EXTENSIONS = [
+    'headerid',
+]
+
 THEME = 'themes/aboutwilson'
 
 STATIC_PATHS = ['images']
