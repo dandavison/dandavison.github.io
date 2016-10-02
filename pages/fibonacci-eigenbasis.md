@@ -13,10 +13,11 @@ $$
 $$
 
 
-This is the problem set at the end of the eigenvectors video in the
+This is the problem given at the end of the eigenvectors video in the
 [Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
 series by Grant Sanderson,.
 
+-------------------------------------------------------------------------------
 #### **Introduction**
 
 Consider the matrix
@@ -101,10 +102,11 @@ matrix multiplications.
 Let's suppose we've already found the eigenvectors and that there are two of
 them and we've arranged them as the two columns of a matrix $V$. So $V$ holds
 the basis vectors of the alternative basis and therefore we know from the
-change of basis notes above that $V$ is the matrix that takes as input a vector
-expressed in the alternative basis and outputs its representation in our
-basis. So, step (3) is done by $V$, and step (1) is done by $V^{-1}$, and the
-matrix performing all three steps is going to look like
+[change of basis](./linear-algebra.html#change-of-basis) notes that $V$ is the
+matrix that takes as input a vector expressed in the alternative basis and
+outputs its representation in our basis. So, step (3) is done by $V$, and step
+(1) is done by $V^{-1}$, and the matrix performing all three steps is going to
+look like
 
 $$
 V
@@ -112,8 +114,9 @@ V
 V^{-1}
 $$
 
-OK, so what is the matrix in the middle? The change of basis section above
-tells us that we can compute it as
+OK, so what is the matrix in the middle? The
+[change of basis](./linear-algebra.html#change-of-basis) notes tell us that we
+can compute it as
 
 $$
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}

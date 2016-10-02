@@ -12,6 +12,9 @@ $$
 \newcommand{\nth}{n^{\text{th}}}
 $$
 
+Notes from the
+[Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
+video series by Grant Sanderson.
 
 -------------------------------------------------------------------------------
 ### Linear transformations and matrices
