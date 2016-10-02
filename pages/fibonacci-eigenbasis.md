@@ -393,7 +393,7 @@ $$
                                  {0              }{(1 - \sqrt 5)^n}
 $$
 
-##### **4. Plug the $\nth$ power into the overall expression**
+##### **5. Plug the $\nth$ power into the overall expression**
 
 \begin{align*}
 V \Big(V^{-1}AV\Big)^n V^{-1}
