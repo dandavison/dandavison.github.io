@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Linear Algebra — Notes</title>
+	<meta name="description" content="Title: Linear Algebra; Date: 2016-08-14; Author: Dan Davison">
+	<meta name="author" content="Dan Davison">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://dandavison.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://dandavison.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="https://dandavison.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://dandavison.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://dandavison.github.io/">Notes</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Linear Algebra</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">Dan Davison</h4>
+		</span>
+		<time datetime="2016-08-14T00:00:00-07:00" itemprop="datePublished">Sun 14 August 2016</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="https://dandavison.github.io/category/misc.html" rel="category">misc</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><div class="math">$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 &amp; #2\\#3 &amp; #4\\ \end{bmatrix}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
+\newcommand{\nth}{n^{\text{th}}}
+$$</div>
+<p>Notes from the
+<a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a>
+video series by Grant Sanderson.</p>
+<hr />
+<h3 id="linear-transformations-and-matrices">Linear transformations and matrices</h3>
+<p>A linear transformation is completely specified by</p>
+<ol>
+<li>Some basis vectors <span class="math">\(\i\)</span> and <span class="math">\(\j\)</span></li>
+<li>Where those basis vectors are taken to by the transformation.</li>
+</ol>
+<p>How the transformation affects any other point follows from those two pieces of
+information.</p>
+<p>So <span class="math">\(\i\)</span> might be taken to <span class="math">\(a\i + b\j\)</span>, and <span class="math">\(\j\)</span> might be taken to <span class="math">\(c\i + d\j\)</span>.
+In this case we would use the following matrix to describe the
+transformation:</p>
+<div class="math">$$
+\mat{a}{c}
+    {b}{d}
+$$</div>
+<p>Some examples are</p>
+<div class="math">$$
+\begin{array}{ll}
+\text{stretch by a in the i-direction} &amp; \mat{a}{0}
+                                             {0}{1}
+\\\\
+\text{stretch by a in the i-direction and shear right} &amp; \mat{a}{b}
+                                                             {0}{1}
+\\\\
+\text{rotate anticlockwise 90°} &amp; \mat{0}{-1}
+                                      {1}{ 0}
+\end{array}
+$$</div>
+<p>Note that we haven't said what <span class="math">\(\i\)</span> and <span class="math">\(\j\)</span> are yet; they <em>define</em> the
+2-dimensional space that we're considering. But, we can think of them for now
+as the usual orthogonal unit vectors in 2D space.</p>
+<p>So the matrix tells us where the basis vectors have been taken to. Any other
+vector <span class="math">\(f\i + g\j\)</span> is taken to wherever that is using the transformed basis
+vectors:</p>
+<div class="math">$$
+f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
+$$</div>
+<p>And that's how matrix multiplication is defined:</p>
+<div class="math">$$
+\mat{a}{c}
+    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
+$$</div>
+<p>A matrix represents a linear transformation by showing where the basis vector are taken to.</p>
+<hr />
+<h3 id="change-of-basis">Change of basis</h3>
+<p>Suppose person B uses some other basis vectors to describe locations in
+space. Specifically, in our coordinates, their basis vectors are
+<span class="math">\(\scvec{2}{1}\)</span> and <span class="math">\(\scvec{-1}{1}\)</span>.</p>
+<p><strong>When they state a vector, what is it in our coordinates?</strong></p>
+<p>If they say <span class="math">\(\scvec{-1}{2}\)</span>, what is that in our coordinates?</p>
+<p>Well, if they say <span class="math">\(\scvec{1}{0}\)</span>, that's <span class="math">\(\scvec{2}{1}\)</span> in our
+coordinates. And if they say <span class="math">\(\scvec{0}{1}\)</span>, that's <span class="math">\(\scvec{-1}{1}\)</span> in our
+coordinates. So the matrix containing <em>their basis vectors expressed in our
+coordinates</em> transforms a point expressed in their language into one expressed
+in ours. So, the answer is</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
+$$</div>
+<p><strong>When we state a vector, what is it in their coordinates?</strong></p>
+<p>We give the vector <span class="math">\(\scvec{3}{2}\)</span>. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit <span class="math">\(\scvec{3}{2}\)</span>. So, the solution to</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
+$$</div>
+<p>Computationally, we can see that we can get the solution by multiplying both sides by the inverse:</p>
+<div class="math">$$
+\cvec{a}{b} = \mat{2}{-1}
+                  {1}{1}^{-1} \cvec{3}{2}.
+$$</div>
+<p>Conceptually, we have</p>
+<div class="math">$$
+\mat{2}{-1}
+    {1}{1} =
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$</div>
+<p>and so the role played by the inverse is</p>
+<div class="math">$$
+\cvec{a}{b} =
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\cvec{3}{2}.
+$$</div>
+<p><strong>When we state a transformation, what is it in their coordinates?</strong></p>
+<p>We state a 90° anticlockwise rotation of 2D space:</p>
+<div class="math">$$
+\mat{1}{-1}
+    {0}{0}
+$$</div>
+<p>what is that transformation in their coordinates? The answer is</p>
+<div class="math">$$
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\mat{1}{-1}
+    {0}{0}
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$</div>
+<p>Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<hr>
+	<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'dandavison7-notes'; 
+    var disqus_title = 'Linear Algebra';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://dandavison.github.io">Notes</a></li>
+							<li><a href="https://dandavison.github.io/feeds/all.atom.xml" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://github.com/dandavison">github</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://dandavison.github.io/category/misc.html">misc (3)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; Dan Davison 2016</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

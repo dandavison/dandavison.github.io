@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Notes</title><link href="https://dandavison.github.io/" rel="alternate"></link><link href="https://dandavison.github.io/feeds/all.atom.xml" rel="self"></link><id>https://dandavison.github.io/</id><updated>2016-10-01T00:00:00-07:00</updated><entry><title>Finding the nth Fibonacci number via an eigenvector change of basis</title><link href="https://dandavison.github.io/fibonacci-eigenbasis.html" rel="alternate"></link><published>2016-10-01T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-10-01:fibonacci-eigenbasis.html</id><summary type="html">&lt;div class="math"&gt;$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 &amp;amp; #2\\#3 &amp;amp; #4\\ \end{bmatrix}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
+\newcommand{\nth}{n^{\text{th}}}
+$$&lt;/div&gt;
+&lt;p&gt;This is the problem given at the end of the eigenvectors video in the
+&lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
+series by Grant Sanderson.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4 id="introduction"&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Consider the matrix&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A = \mat{0}{1}
+        {1}{1}
+$$&lt;/div&gt;
+&lt;p&gt;The first few powers are&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+&amp;amp;A^{1} &amp;amp;= \mat{0}{1}
+              {1}{1}
+\\
+&amp;amp;A^{2} = \mat{0}{1}
+             {1}{1} \mat{0}{1}
+                        {1}{1} &amp;amp;= \mat{1}{1}
+                                      {1}{2}
+\\
+&amp;amp;A^{3} = \mat{0}{1}
+             {1}{1} \mat{1}{1}
+                        {1}{2} &amp;amp;= \mat{1}{2}
+                                      {2}{3}
+\\
+&amp;amp;A^{4} = \mat{0}{1}
+             {1}{1} \mat{1}{2}
+                        {2}{3} &amp;amp;= \mat{2}{3}
+                                      {3}{5}
+\end{align*}&lt;/div&gt;
+&lt;p&gt;Define the Fibonacci numbers to be &lt;span class="math"&gt;\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...\)&lt;/span&gt; = &lt;span class="math"&gt;\(0, 1, 1, 2, 3, 5, 8, ...\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The matrix powers are generating the Fibonacci sequence:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A^{n} = \mat{F_{n-1} }{F_n      }
+            {F_n     }{F_{n+1} }
+$$&lt;/div&gt;
+&lt;p&gt;So if there were an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of the
+matrix, that would also be an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt;
+Fibonacci number "directly", i.e. without computing all the preceding Fibonacci
+numbers &lt;em&gt;en route&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;How can we do this? To state the problem in a different way, we need to
+construct a new matrix that performs exactly the same transformation as &lt;span class="math"&gt;\(A^n\)&lt;/span&gt;,
+but which somehow does the exponentiation step "in one go" rather than by
+multiplying &lt;span class="math"&gt;\(A\)&lt;/span&gt; with itself &lt;span class="math"&gt;\(n\)&lt;/span&gt; times.&lt;/p&gt;
+&lt;h4 id="solution-outline"&gt;&lt;strong&gt;Solution outline&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Matrices represent transformations, so we can talk about them as taking in some
+vector and producing some other vector. The approach we're going to take is to
+re-express the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Convert the input vector to its representation in an alternative basis which
+   uses the eigenvectors as the basis vectors (it's called an "eigenbasis").&lt;/li&gt;
+&lt;li&gt;In this alternative basis, compute the new position of the vector after
+   carrying out the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation.&lt;/li&gt;
+&lt;li&gt;Convert the resulting vector back to its representation in our original
+   basis.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I.e., we're going to compute the overall transformation as this product of
+matrices:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;The key part of all this -- the crux of the trick -- is that the exponentiation
+is efficient in the eigenbasis. That's because, in the eigenbasis, the
+transformation is just stretching space in the directions of the two basis
+vectors. So to do the transformation &lt;span class="math"&gt;\(n\)&lt;/span&gt; times in the eigenbasis, you just
+stretch by the stretch-factor raised to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power, rather than doing &lt;span class="math"&gt;\(n\)&lt;/span&gt;
+matrix multiplications.&lt;/p&gt;
+&lt;h4 id="solution-details"&gt;&lt;strong&gt;Solution details&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Let's suppose we've already found the eigenvectors and that there are two of
+them and we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. So &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds
+the basis vectors of the alternative basis and therefore we know from the
+&lt;a href="./linear-algebra.html#change-of-basis"&gt;change of basis&lt;/a&gt; notes that &lt;span class="math"&gt;\(V\)&lt;/span&gt; is the
+matrix that takes as input a vector expressed in the alternative basis and
+outputs its representation in our basis. So, step (3) is done by &lt;span class="math"&gt;\(V\)&lt;/span&gt;, and step
+(1) is done by &lt;span class="math"&gt;\(V^{-1}\)&lt;/span&gt;, and the matrix performing all three steps is going to
+look like&lt;/p&gt;
+&lt;div class="math"&gt;$$
+V
+\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
+V^{-1}
+$$&lt;/div&gt;
+&lt;p&gt;OK, so what is the matrix in the middle? The
+&lt;a href="./linear-algebra.html#change-of-basis"&gt;change of basis&lt;/a&gt; notes tell us that we
+can compute it as&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+A
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;so in other words the matrix in the middle is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+V^{-1}AV
+$$&lt;/div&gt;
+&lt;p&gt;and the entire transformation is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+V
+\Big(V^{-1}AV\Big)^n
+V^{-1}
+$$&lt;/div&gt;
+&lt;p&gt;Recall that above we observed that the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a matrix with the
+nth Fibonacci number in its bottom left and top right entries. So the following
+tasks remain:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Find the eigenvectors and put them in a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Find the inverse of &lt;span class="math"&gt;\(V\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Compute the matrix product &lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Compute the result of raising that to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power.&lt;/li&gt;
+&lt;li&gt;Plug the result of that into the overall expression.&lt;/li&gt;
+&lt;li&gt;Take the entry in the bottom left or top right (they should be the same!).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The result should be an expression giving the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; Fibonacci number as a
+function of &lt;span class="math"&gt;\(n\)&lt;/span&gt;. It should be possible to give as input to that function the
+number one million, and have it output the one millionth Fibonacci number
+directly, without it having to go through the preceding 999,999 Fibonacci
+numbers.&lt;/p&gt;
+&lt;h4 id="the-answer-without-showing-the-calculations"&gt;&lt;strong&gt;The answer without showing the calculations&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class="math"&gt;\begin{align*}
+&amp;amp;\text{The eigenvectors are}
+\\\\
+&amp;amp;V &amp;amp;= \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+\\\\
+&amp;amp;\text{which has inverse}
+\\\\
+&amp;amp;V^{-1} &amp;amp;= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                                 {-1 - \sqrt 5}{2}
+\\\\
+&amp;amp;\text{Therefore}
+\\\\
+&amp;amp;V^{-1}AV &amp;amp;= \frac{1}{2} \mat{1 + \sqrt 5}{0          }
+                            {0          }{1 - \sqrt 5}
+\\\\
+&amp;amp;\text{and}
+\\\\
+&amp;amp;(V^{-1}AV)^n &amp;amp;= \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                   {0                }{(1 - \sqrt 5)^n}
+\\\\
+&amp;amp;\text{and}
+\\\\
+&amp;amp;V \Big(V^{-1}AV\Big)^n V^{-1} &amp;amp;=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
+\\\\
+&amp;amp;\text{Therefore the nth Fibonacci number is}
+\\\\
+&amp;amp;F_n &amp;amp;= \frac{(1 + \sqrt 5)^n     - (1 - \sqrt 5)^n}
+             {2^n    \sqrt 5}
+\end{align*}&lt;/div&gt;
+&lt;h4 id="does-this-actually-work"&gt;&lt;strong&gt;Does this actually work?&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Yes.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;/&lt;/span&gt;
+        &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mf"&gt;2.0&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mf"&gt;3.0&lt;/span&gt;
+&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mf"&gt;5.0&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="mf"&gt;8.0&lt;/span&gt;
+&lt;span class="mi"&gt;7&lt;/span&gt; &lt;span class="mf"&gt;13.0&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="mf"&gt;21.0&lt;/span&gt;
+&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="mf"&gt;34.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4 id="calculations"&gt;&lt;strong&gt;Calculations&lt;/strong&gt;&lt;/h4&gt;
+&lt;h5 id="1-find-the-eigenvectors"&gt;&lt;strong&gt;1. Find the eigenvectors&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;We follow the textbook approach: We have
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A = \mat{0}{1}
+        {1}{1}
+$$&lt;/div&gt;
+&lt;p&gt;An eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; satisfies &lt;span class="math"&gt;\(Av = \lambda v\)&lt;/span&gt; for some scalar &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;. That
+equation can be rearranged as follows&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+A\vec v &amp;amp;= \lambda I\vec v
+\\
+A\vec v - \lambda I\vec v &amp;amp;= \vec 0
+\\
+(A - \lambda I)\vec v &amp;amp;= \vec 0
+\end{align*}&lt;/div&gt;
+&lt;p&gt;which means that the matrix &lt;span class="math"&gt;\(A - \lambda I\)&lt;/span&gt; is a transformation that takes some
+non-zero vector &lt;span class="math"&gt;\(\vec v\)&lt;/span&gt; to the zero vector (i.e. it has a non-empty "null
+space"). This means that the transformation cannot be reversed, i.e. the matrix
+has no inverse, i.e. its determinant is zero. So, use that last fact to find
+the eigenvectors &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+\det (A - \lambda I) &amp;amp;= 0
+\\
+\\
+\det \mat{-\lambda}{1}
+         {1          }{1 - \lambda} &amp;amp;= 0
+% \\
+% \\
+% (-\lambda)(1 - \lambda) - 1 &amp;amp;= 0
+\\
+\\
+\lambda^2 - \lambda - 1 = 0
+\end{align*}&lt;/div&gt;
+&lt;p&gt;Using the quadratic formula we have &lt;span class="math"&gt;\(a=1, b=-1, c=-1\)&lt;/span&gt; and&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+\lambda
+= \frac{-b ± \sqrt{b^2 - 4ac}}{2a}
+= \frac{1 ± \sqrt{5}}{2}
+\end{align*}&lt;/div&gt;
+&lt;p&gt;which are the two eigenvalues.&lt;/p&gt;
+&lt;p&gt;To find eigenvectors associated with the eigenvalues, go back to the equations&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+(A - \lambda I)\vec v &amp;amp;= \vec 0
+\\
+\\
+\mat{-\lambda}{1}
+    {1       }{1 - \lambda} \vec v &amp;amp;= \vec 0
+\end{align*}&lt;/div&gt;
+&lt;p&gt;Let an eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; be &lt;span class="math"&gt;\(\scvec{v_1}{v_2}\)&lt;/span&gt;. The matrix equation corresponds
+to this system of equations:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{cases}
+-\lambda v_1 &amp;amp;+ v_2               &amp;amp;= 0\\
+v_1          &amp;amp;+ (1 - \lambda) v_2 &amp;amp;= 0
+\end{cases}
+$$&lt;/div&gt;
+&lt;p&gt;From the first equation we have &lt;span class="math"&gt;\(v_2 = \lambda v_1\)&lt;/span&gt;. There are infinitely many
+eigenvectors (a line of them) associated with any given eigenvalue, so we can
+pick an arbitrary value for &lt;span class="math"&gt;\(v_1\)&lt;/span&gt;. If we choose &lt;span class="math"&gt;\(v_1=2\)&lt;/span&gt; then we have
+eigenvectors &lt;span class="math"&gt;\(\scvec{2}{1+\sqrt 5}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{2}{1-\sqrt 5}\)&lt;/span&gt;. The matrix
+containing the eigenvectors is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+V = \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+$$&lt;/div&gt;
+&lt;h5 id="2-find-inverse-of-v"&gt;&lt;strong&gt;2. Find inverse of &lt;span class="math"&gt;\(V\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The inverse of a 2x2 matrix is given by&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d} ^ {-1}
+=
+\frac{1}{\text{det}} \mat{d}{-c}
+                         {-b}{a}
+$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\text{det} = ad - cb\)&lt;/span&gt;. Therefore&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+V^{-1}
+&amp;amp;= \frac{1}{2(1 - \sqrt 5) - 2(1 + \sqrt 5)} \mat{1 - \sqrt 5 }{-2}
+                                                 {-(1 + \sqrt 5)}{2}
+\\\\
+&amp;amp;= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                           {-(1 + \sqrt 5)}{2}
+\end{align*}&lt;/div&gt;
+&lt;h5 id="3-find-the-matrix-product-v-1av"&gt;&lt;strong&gt;3. Find the matrix product &lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Before we get lost in the calculation, let's remember what this is. It's a
+matrix that does the &lt;span class="math"&gt;\(A\)&lt;/span&gt; transformation, but &lt;em&gt;in the coordinate system defined
+by &lt;span class="math"&gt;\(A\)&lt;/span&gt;'s eigenvectors&lt;/em&gt;. So, the resulting matrix &lt;em&gt;must&lt;/em&gt; do nothing other than
+stretch space in the direction of one or both basis vectors. That's because (1)
+we represent a transformation with a matrix saying where each of the basis
+vectors are taken to, (2) the definition of an eigenvector of a transformation
+is that it is a vector which is simply stretched by the transformation with no
+change in direction, therefore (3) if the eigenvectors are the basis vectors,
+then the matrix representing the transformation must just stretch space in the
+two directions. A matrix which stretches space in the direction of the basis
+vectors looks like &lt;span class="math"&gt;\(\smat{a}{0}{0}{b}\)&lt;/span&gt;, i.e. it is diagonal. Therefore,
+&lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt; &lt;em&gt;must&lt;/em&gt; be diagonal.&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+V^{-1}AV &amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{0}{1}
+    {1}{1}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{1 + \sqrt 5}{1 - \sqrt 5}
+    {3 + \sqrt 5}{3 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{-4 - 2(3 + \sqrt 5)             }{6 - 2\sqrt 5 - 2(3 - \sqrt 5)}
+    {-(6 + 2\sqrt 5) + 2(3 + \sqrt 5)}{4 + 2(3 - \sqrt 5)}
+\\\\
+&amp;amp;=
+\frac{-1}{2\sqrt 5}
+\mat{-2 - 3 - \sqrt 5}{3 - \sqrt 5 - 3 + \sqrt 5}
+    {-3 - \sqrt 5 + 3 + \sqrt 5}{2 + 3 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{2\sqrt 5}
+\mat{-5 - \sqrt 5}{0          }
+    {0           }{5 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{1}{2}
+\mat{1 + \sqrt 5}{0          }
+    {0          }{1 - \sqrt 5}
+\end{align*}&lt;/div&gt;
+&lt;h5 id="4-compute-v-1avn"&gt;&lt;strong&gt;4. Compute &lt;span class="math"&gt;\((V^{-1}AV)^n\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The matrix is diagonal so this is straightforward. Note that this is the whole
+point of converting to the eigenbasis: the exponentiation at this step just
+involves the usual operations of raising scalar numbers to a power; no need to
+multiply matrices together. A computer will be able to compute the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power
+of a diagonal matrix much faster than that of a non-diagonal matrix.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+(V^{-1}AV)^n = \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                 {0              }{(1 - \sqrt 5)^n}
+$$&lt;/div&gt;
+&lt;h5 id="5-plug-the-nth-power-into-the-overall-expression"&gt;&lt;strong&gt;5. Plug the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power into the overall expression&lt;/strong&gt;&lt;/h5&gt;
+&lt;div class="math"&gt;\begin{align*}
+V \Big(V^{-1}AV\Big)^n V^{-1}
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 + \sqrt 5)^n}{0              }
+    {0              }{(1 - \sqrt 5)^n}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 - \sqrt 5)(1 + \sqrt 5)^n}{-2(1 + \sqrt 5)^n}
+    {-(1 + \sqrt 5)(1 - \sqrt 5)^n}{2(1 - \sqrt 5)^n}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2(-4)\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{-4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}
+    {   -4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{-2\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}
+\\\\
+&amp;amp;=
+\frac{1}{4\sqrt 5}
+\mat{4\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}}}{4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}
+    {4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}{ \frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n-1}}}
+\\\\
+&amp;amp;=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
+\end{align*}&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="https://dandavison.github.io/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 &amp;amp; #2\\#3 &amp;amp; #4\\ \end{bmatrix}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
+\newcommand{\nth}{n^{\text{th}}}
+$$&lt;/div&gt;
+&lt;p&gt;Notes from the
+&lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
+video series by Grant Sanderson.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id="linear-transformations-and-matrices"&gt;Linear transformations and matrices&lt;/h3&gt;
+&lt;p&gt;A linear transformation is completely specified by&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Some basis vectors &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Where those basis vectors are taken to by the transformation.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;How the transformation affects any other point follows from those two pieces of
+information.&lt;/p&gt;
+&lt;p&gt;So &lt;span class="math"&gt;\(\i\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(a\i + b\j\)&lt;/span&gt;, and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(c\i + d\j\)&lt;/span&gt;.
+In this case we would use the following matrix to describe the
+transformation:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d}
+$$&lt;/div&gt;
+&lt;p&gt;Some examples are&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{array}{ll}
+\text{stretch by a in the i-direction} &amp;amp; \mat{a}{0}
+                                             {0}{1}
+\\\\
+\text{stretch by a in the i-direction and shear right} &amp;amp; \mat{a}{b}
+                                                             {0}{1}
+\\\\
+\text{rotate anticlockwise 90°} &amp;amp; \mat{0}{-1}
+                                      {1}{ 0}
+\end{array}
+$$&lt;/div&gt;
+&lt;p&gt;Note that we haven't said what &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; are yet; they &lt;em&gt;define&lt;/em&gt; the
+2-dimensional space that we're considering. But, we can think of them for now
+as the usual orthogonal unit vectors in 2D space.&lt;/p&gt;
+&lt;p&gt;So the matrix tells us where the basis vectors have been taken to. Any other
+vector &lt;span class="math"&gt;\(f\i + g\j\)&lt;/span&gt; is taken to wherever that is using the transformed basis
+vectors:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
+$$&lt;/div&gt;
+&lt;p&gt;And that's how matrix multiplication is defined:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
+$$&lt;/div&gt;
+&lt;p&gt;A matrix represents a linear transformation by showing where the basis vector are taken to.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id="change-of-basis"&gt;Change of basis&lt;/h3&gt;
+&lt;p&gt;Suppose person B uses some other basis vectors to describe locations in
+space. Specifically, in our coordinates, their basis vectors are
+&lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;When they state a vector, what is it in our coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If they say &lt;span class="math"&gt;\(\scvec{-1}{2}\)&lt;/span&gt;, what is that in our coordinates?&lt;/p&gt;
+&lt;p&gt;Well, if they say &lt;span class="math"&gt;\(\scvec{1}{0}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; in our
+coordinates. And if they say &lt;span class="math"&gt;\(\scvec{0}{1}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt; in our
+coordinates. So the matrix containing &lt;em&gt;their basis vectors expressed in our
+coordinates&lt;/em&gt; transforms a point expressed in their language into one expressed
+in ours. So, the answer is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
+$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;When we state a vector, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We give the vector &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. So, the solution to&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;Computationally, we can see that we can get the solution by multiplying both sides by the inverse:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\cvec{a}{b} = \mat{2}{-1}
+                  {1}{1}^{-1} \cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;Conceptually, we have&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{1} =
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;and so the role played by the inverse is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\cvec{a}{b} =
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;When we state a transformation, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We state a 90° anticlockwise rotation of 2D space:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{1}{-1}
+    {0}{0}
+$$&lt;/div&gt;
+&lt;p&gt;what is that transformation in their coordinates? The answer is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\mat{1}{-1}
+    {0}{0}
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary></entry><entry><title>Classical Mechanics by John R. Taylor</title><link href="https://dandavison.github.io/taylor-classical-mechanics.html" rel="alternate"></link><published>2016-05-29T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-05-29:taylor-classical-mechanics.html</id><summary type="html">&lt;p&gt;My notes on &lt;a href="http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X"&gt;Classical Mechanics&lt;/a&gt; by John R. Taylor.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\newcommand{\xhat}{\vec{e_x}}
+\newcommand{\yhat}{\vec{e_y}}
+\newcommand{\rhat}{\vec{e_r}}
+\newcommand{\phihat}{\vec{e_\phi}}
+\newcommand{\r}{\vec{r}}
+\newcommand{\v}{\vec{v}}
+\newcommand{\p}{\vec{p}}
+\newcommand{\a}{\vec{a}}
+\newcommand{\F}{\vec{F}}
+\newcommand{\vector}[1]{\begin{bmatrix}#1\end{bmatrix}}
+$$&lt;/div&gt;
+&lt;h1 id="chapter-1-newtons-laws-of-motion"&gt;Chapter 1 - Newton's Laws of Motion&lt;/h1&gt;
+&lt;h4 id="basics"&gt;Basics&lt;/h4&gt;
+&lt;p&gt;The basic object of interest is a moving particle. Its position at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; is
+&lt;span class="math"&gt;\(\r\)&lt;/span&gt;. It has that arrow over it because it is a vector. A vector is something
+that specifies a direction and a magnitude. Think of &lt;span class="math"&gt;\(\r\)&lt;/span&gt; as an arrow from the
+origin pointing to the current position. Don't think of &lt;span class="math"&gt;\(\r\)&lt;/span&gt; yet as a column
+vector containing numbers, because we haven't said what coordinate system we're
+using. Regardless of what coordinate system we use, &lt;span class="math"&gt;\(\r\)&lt;/span&gt; is always a vector
+pointing from the origin to the current position.&lt;/p&gt;
+&lt;p&gt;The particle is moving, i.e. the position changes over time. So instead of just
+writing &lt;span class="math"&gt;\(\r\)&lt;/span&gt;, we write &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; which says that it's a function of time. Think
+of that as giving the answer to a question: "At a given time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, what is the
+position?". The answer (position) is a vector, so we can say that this is a
+"vector-valued function" (i.e. whatever output it gives, it's always a vector).&lt;/p&gt;
+&lt;p&gt;Its velocity is a function &lt;span class="math"&gt;\(\v(t)\)&lt;/span&gt; whose value is also a vector (at time &lt;span class="math"&gt;\(t\)&lt;/span&gt;
+it's going at some speed in some direction). The velocity function &lt;span class="math"&gt;\(\v(t)\)&lt;/span&gt; is
+the derivative with respect to time of the position function &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt;. That
+sounds very familiar, but what exactly is the derivative of a vector-valued
+function?&lt;/p&gt;
+&lt;p&gt;In normal, non-vector, calculus we imagine some curve like &lt;span class="math"&gt;\(y = x^2\)&lt;/span&gt;. So &lt;span class="math"&gt;\(y\)&lt;/span&gt; is
+a function of &lt;span class="math"&gt;\(x\)&lt;/span&gt;. The value of that function is not a vector; it's just a
+number (a scalar). The derivative of that function with respect to &lt;span class="math"&gt;\(x\)&lt;/span&gt; is
+saying: at a particular point along the x-axis, if I start advancing &lt;span class="math"&gt;\(x\)&lt;/span&gt; a tiny
+bit, how fast is &lt;span class="math"&gt;\(y\)&lt;/span&gt; changing? So, it's the slope of the curve at that point
+(also just a number, not a vector).&lt;/p&gt;
+&lt;p&gt;In vector calculus, the derivative of &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; with respect to &lt;span class="math"&gt;\(t\)&lt;/span&gt; is saying: at
+some particular time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, if I start advancing time a tiny bit, where is the
+position going and how fast is it going there? So the derivative of a
+vector-valued function is a vector -- an arrow with direction and magnitude
+(speed).&lt;/p&gt;
+&lt;h4 id="coordinate-systems"&gt;Coordinate systems&lt;/h4&gt;
+&lt;p&gt;Thinking of &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; as an arrow with direction and magnitude is correct but a
+bit abstract. How specifically do we use numbers to represent position? The
+chapter covers two main coordinate systems. Let's say the particle is moving in
+2D space for now.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Cartesian coordinates&lt;/strong&gt;: we write down how far the particle currently is in
+  the x-direction, &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt;, and how far it currently is in the y-direction,
+  &lt;span class="math"&gt;\(y(t)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Polar coordinates&lt;/strong&gt;: we write down how far the particle currently is,
+  &lt;span class="math"&gt;\(r(t)\)&lt;/span&gt;, in the current direction to the particle.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that &lt;span class="math"&gt;\(x(t)\)&lt;/span&gt;, &lt;span class="math"&gt;\(y(t)\)&lt;/span&gt;, and &lt;span class="math"&gt;\(r(t)\)&lt;/span&gt; were not written with arrows. They are
+just numbers, saying how far the particle is &lt;em&gt;in some direction&lt;/em&gt;. The "in some
+direction" part corresponds to the concept of a &lt;em&gt;unit vector&lt;/em&gt;. A "unit vector"
+is basically a vector where the direction is of interest, but the magnitude is
+just set to 1 for convenience.&lt;/p&gt;
+&lt;p&gt;Cartesian coordinates use two directions to specify the position. We'll write
+these directions as the unit vectors &lt;span class="math"&gt;\(\xhat\)&lt;/span&gt; and &lt;span class="math"&gt;\(\yhat\)&lt;/span&gt;. So in Cartesian
+coordinates, the position is&lt;/p&gt;
+&lt;table style="width:100%"&gt;
+  &lt;tbody&gt;&lt;tr&gt;
+    &lt;td&gt; $$\r(t) = x(t)\xhat + y(t)\yhat$$ &lt;/td&gt;
+    &lt;td&gt; $$\mathrm{Go~} x(t) \mathrm{~units~in~the~} \xhat \mathrm{~direction} \mathrm{~and~} y(t) \mathrm{~units~in~the~} \yhat \mathrm{~direction}$$ &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;p&gt;In contrast, polar coordinates just use one direction to specify the position:
+the direction of a direct line to the particle's current position. This
+direction is the unit vector &lt;span class="math"&gt;\(\rhat(t)\)&lt;/span&gt;. So in polar
+coordinates, the position is&lt;/p&gt;
+&lt;table style="width:100%"&gt;
+  &lt;tbody&gt;&lt;tr&gt;
+    &lt;td&gt; $$\r(t) = r(t)\rhat(t)$$ &lt;/td&gt;
+    &lt;td&gt; $$\mathrm{Go~} r(t) \mathrm{~units~in~the~} \rhat(t) \mathrm{~direction}$$ &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;p&gt;Notice (and this is pretty important; it's basically the reason the chapter is
+covering polar coordinates) that in polar coordinates the unit vector
+&lt;span class="math"&gt;\(\rhat(t)\)&lt;/span&gt; is a function of time (its direction changes as the particle moves);
+in contrast, in Cartesian coordinates, &lt;span class="math"&gt;\(\xhat\)&lt;/span&gt; and &lt;span class="math"&gt;\(\yhat\)&lt;/span&gt; are constant; they
+always point in the same direction. The polar unit vector is a function of time
+because it is the direction to wherever-the-particle-currently-is. The
+Cartesian unit vectors are not functions of time because they are just the
+x-axis direction and the y-axis direction and these do not change.&lt;/p&gt;
+&lt;h4 id="velocity"&gt;Velocity&lt;/h4&gt;
+&lt;p&gt;We can now differentiate these position functions to get the velocity. Recall
+that the answer is going to be a vector because it is the derivative of a
+vector-valued function.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cartesian coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Because &lt;span class="math"&gt;\(\xhat\)&lt;/span&gt; and &lt;span class="math"&gt;\(\yhat\)&lt;/span&gt; are not functions of time, differentiating is
+straightforward:&lt;/p&gt;
+&lt;div class="math"&gt;$$\v(t) = \frac{d}{dt}\bigg(x(t)\xhat + y(t)\yhat\bigg) = \frac{d x(t)}{dt}\xhat + \frac{d y(t)}{dt} \yhat$$&lt;/div&gt;
+&lt;p&gt;Physicists use a dot to represent derivative-with-respect-to-time. So they
+might write this as&lt;/p&gt;
+&lt;div class="math"&gt;$$\v(t) =  \dot x(t) \xhat + \dot y(t) \yhat$$&lt;/div&gt;
+&lt;p&gt;Either way, what this is saying is that in Cartesian coordinates, the velocity
+function is a vector comprised of current x-speed in the x-direction and
+current y-speed in the y-direction. In other words, it's what you expect.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Polar coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="math"&gt;$$\v(t) = \frac{d}{dt}\bigg(r(t)\rhat(t)\bigg)$$&lt;/div&gt;
+&lt;p&gt;That's a product of two things that are both a function of time, so we use the
+"product rule"&lt;sup id="sf-taylor-classical-mechanics-1-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-1" class="simple-footnote" title=" The product rule is the thing when you studied differentiation that says: when you're differentiating the product of two functions you differentiate one and keep the other as-is, then you differentiate the other while keeping the first as-is, and you add the two things together: \(\frac{d(f(t)g(t))}{dt} = \dot f(t) g(t) + f(t) \dot g(t)\) "&gt;1&lt;/a&gt;&lt;/sup&gt; to differentiate it:&lt;/p&gt;
+&lt;div class="math"&gt;$$\frac{d}{dt}\bigg(r(t)\rhat(t)\bigg) = \dot r(t) \rhat(t) + r(t)\frac{d \rhat(t)}{dt}$$&lt;/div&gt;
+&lt;p&gt;There's quite a few &lt;span class="math"&gt;\(r\)&lt;/span&gt;s there and it's important at this stage not to get lost
+in the symbols. We know that the answer (velocity) is a vector. That means we
+can write it as a bunch of things added together, where each thing is a number
+times some unit vector. And we're using polar coordinates, so the unit vectors
+are going to be the polar unit vectors. So the thing on the left &lt;span class="math"&gt;\(\dot r(t)
+\rhat(t)\)&lt;/span&gt; is fine: that's saying that the velocity has one component which is
+the current radial speed (a number &lt;span class="math"&gt;\(\dot r(t)\)&lt;/span&gt;) in the current radial direction
+(the unit vector &lt;span class="math"&gt;\(\rhat(t)\)&lt;/span&gt;).&lt;/p&gt;
+&lt;p&gt;What about the thing on the right? It's the current radial distance times the
+current derivative of the unit vector function. We've said that in polar
+coordinates the unit vector &lt;span class="math"&gt;\(\rhat(t)\)&lt;/span&gt; changes over time, so it does make sense
+that we could ask what its derivative with respect to time is. So what is it?
+The answer is that it's a vector-valued function whose current value always
+points at right-angles to the current radial direction, but that requires
+explaining:&lt;/p&gt;
+&lt;p&gt;Going back to the informal definition of derivatives above, we're at some point
+&lt;span class="math"&gt;\(t\)&lt;/span&gt; in time, and we imagine starting to advance time a tiny bit, and we look at
+the change in where the unit vector points, after this infinitesimally small
+amount of time passes. A unit vector always has length 1, so it can't grow in
+length. There's only one thing it can do: it can point in a slightly different
+direction. What direction has it gone in? It's basically like the hand of a
+clock. It's not too hard to see that if the hand of a clock changes just a tiny
+bit, then the tip moves in a direction that's almost a tangent to the
+circle. Change "tiny" to "infinitesimally small" and the "almost" goes away: so
+the time derivative of the radial unit vector is a vector pointing at right
+angles to the radial vector. This unit vector in that direction is called
+&lt;span class="math"&gt;\(\phihat\)&lt;/span&gt;, because it points in the direction that you go in when you increase
+the angle &lt;span class="math"&gt;\(\phi\)&lt;/span&gt;, as opposed to &lt;span class="math"&gt;\(\rhat\)&lt;/span&gt; which points in the direction you go in
+if you increase the radius &lt;span class="math"&gt;\(r\)&lt;/span&gt;. How fast does the radial unit vector move in
+the &lt;span class="math"&gt;\(\phihat\)&lt;/span&gt; direction? The answer is that it moves at the speed that the
+angle is increasing, so &lt;span class="math"&gt;\(\dot \phi\)&lt;/span&gt;&lt;sup id="sf-taylor-classical-mechanics-2-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-2" class="simple-footnote" title="You can prove this by writing the unit vector in Cartesian coordinates, \(cos(\phi) \xhat + sin(\phi) \yhat\), and then differentiating it to give \(\dot \phi\big(-sin(\phi)\xhat + cos(\phi)\yhat\big)\) which is \(\dot \phi\) times a vector orthogonal to the original one."&gt;2&lt;/a&gt;&lt;/sup&gt;. In other words, the time derivative of the radial unit
+vector is &lt;span class="math"&gt;\(\dot \phi(t) \phihat(t)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The conclusion of all that is that in polar coordinates, the velocity vector is&lt;/p&gt;
+&lt;div class="math"&gt;$$\v(t) = \dot r(t) \rhat(t) + r(t) \dot \phi(t) \phihat(t)$$&lt;/div&gt;
+&lt;p&gt;Compare this with the expression for velocity in Cartesian coordinates&lt;/p&gt;
+&lt;div class="math"&gt;$$\v(t) =  \dot x(t) \xhat + \dot y(t) \yhat$$&lt;/div&gt;
+&lt;p&gt;and we see it's a bit more complicated in polar coordinates.&lt;/p&gt;
+&lt;p&gt;I understand the polar coordinates version as follows. At time &lt;span class="math"&gt;\(t\)&lt;/span&gt; the particle
+might be moving radially, and its angle might also be changing. The velocity
+vector has two components, one in the radial direction, and one in the tangent
+direction. In the radial direction, it's moving at whatever speed the radius is
+changing with. In the tangent direction it's moving at the speed that the angle
+is changing, multiplied by the current radius. That multiplication by radius
+makes sense informally, because if you are further out from the center of a
+circle, and the circle rotates by a few degrees, then you move further in space
+than if you were closer in to the center.&lt;/p&gt;
+&lt;h4 id="acceleration"&gt;Acceleration&lt;/h4&gt;
+&lt;p&gt;The acceleration function is the derivative of the velocity function with
+respect to time. Therefore, it is also a vector: at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; the particle is
+accelerating by some amount, in some direction.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cartesian coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Again, because the unit vectors do not change with time, it's as you expect:
+there's an x-acceleration in the x-direction, and a y-acceleration in the
+y-direction.&lt;/p&gt;
+&lt;div class="math"&gt;$$\a(t) = \ddot x(t) \xhat + \ddot y(t) \yhat$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Polar coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Above we saw that because, in polar coordinates, the directions of the
+coordinate system change with time, the function for velocity was more
+complicated than when using Cartesian coordinates. For acceleration, we
+differentiate the velocity expression and of course it gets even more
+complicated. But basically the answer is still a function of the form&lt;/p&gt;
+&lt;div class="math"&gt;$$\a(t) = \bigg( \text{Some function of } t \bigg) \rhat(t) + \bigg( \text{Another function of } t \bigg) \phihat(t)$$&lt;/div&gt;
+&lt;p&gt;The functions of &lt;span class="math"&gt;\(t\)&lt;/span&gt; involve the current radius length, the speed and
+acceleration in the current radius direction, and the speed and acceleration of
+the angle parameter &lt;span class="math"&gt;\(\phi\)&lt;/span&gt;. The full expression is in the footnote&lt;sup id="sf-taylor-classical-mechanics-3-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-3" class="simple-footnote" title="In polar coordinates, if you suppose that you know functions \(r(t)\) and \(\phi(t)\) giving the angle and distance at time \(t\), then the accelerations in the two orthogonal directions at time \(t\) are \(\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)\) "&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;h3 id="newtons-second-law-as-a-differential-equation"&gt;Newton's second law as a differential equation&lt;/h3&gt;
+&lt;p&gt;A key point seems to be: view Newton's second law &lt;span class="math"&gt;\(\F = m\a\)&lt;/span&gt; as a differential
+equation&lt;sup id="sf-taylor-classical-mechanics-4-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-4" class="simple-footnote" title='The dot means "differentiated with respect to time". So if \(r\) is position as a function of time then \(\dot r\) is velocity and \(\ddot r\) is acceleration.'&gt;4&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;$$m \ddot \r(t) = \F$$&lt;/div&gt;
+&lt;p&gt;I'm understanding this as follows: You know what forces are acting on the body
+in question. You want to know how the position of the body will evolve through
+time: &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt;. This is a function satisfying the following differential
+equation: the second derivative with respect to time of &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt;, times &lt;span class="math"&gt;\(m\)&lt;/span&gt;, is
+equal to the net force acting on the body.&lt;/p&gt;
+&lt;p&gt;In practice: in a typical problem you have some expression for &lt;span class="math"&gt;\(\F\)&lt;/span&gt; derived from
+consideration of a diagram showing forces acting on the body. You might be able
+to discover &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; by finding a function whose second derivative is &lt;span class="math"&gt;\(\F\)&lt;/span&gt;.&lt;/p&gt;
+&lt;h4 id="example-problems"&gt;Example problems&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Cartesian coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1.37 A student kicks a frictionless puck with initial speed &lt;span class="math"&gt;\(v_0\)&lt;/span&gt;, so that it
+slides up a plane that is inclined at an angle &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; above the
+horizontal. &lt;strong&gt;(a)&lt;/strong&gt; Write down Newton's second law for the puck and solve to
+give its position as a function of time.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is a simple example of using the Second Law as a differential equation. We
+write down the forces acting on the particle, set them equal to &lt;span class="math"&gt;\(m\ddot r(t)\)&lt;/span&gt;
+and integrate twice to get position.&lt;/p&gt;
+&lt;p&gt;The only force acting on the puck is its weight, i.e. its mass times
+acceleration due to gravity: &lt;span class="math"&gt;\(mg\)&lt;/span&gt;. The puck can only move along the surface of
+the plane, so we are only interested in the component of the force that acts
+parallel to the plane. This component is &lt;span class="math"&gt;\(-mg sin(\theta)\)&lt;/span&gt;. So taking &lt;span class="math"&gt;\(x\)&lt;/span&gt; as the
+direction up the plane, Newton's second law is&lt;/p&gt;
+&lt;div class="math"&gt;$$ m\ddot x(t) = -mgsin(\theta)$$&lt;/div&gt;
+&lt;p&gt;Integrating once gives velocity&lt;/p&gt;
+&lt;div class="math"&gt;$$ \dot x(t) = -g sin(\theta) t + v_0$$&lt;/div&gt;
+&lt;p&gt;Integrating again gives position&lt;/p&gt;
+&lt;div class="math"&gt;$$ x(t) = -\frac{1}{2} g sin(\theta) t^2 + v_0t + x_0$$&lt;/div&gt;
+&lt;p&gt;and &lt;span class="math"&gt;\(x_0=0\)&lt;/span&gt; since we start measuring from its starting position.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;(b)&lt;/strong&gt; How long will the puck take to return to its starting point?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The puck is at its starting point whenever &lt;span class="math"&gt;\(x = 0\)&lt;/span&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;$$0 = t\bigg(-\frac{1}{2} g sin(\theta) t + v_0\bigg)$$&lt;/div&gt;
+&lt;p&gt;The solutions of that are either &lt;span class="math"&gt;\(t=0\)&lt;/span&gt; (which we already knew) or (the solution
+we want)&lt;/p&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(t = \frac{2v_0}{g sin(\theta)}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Polar coordinates&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A "halfpipe" at a skateboard park consists of a concrete trough with a
+semicircular cross section of radius &lt;span class="math"&gt;\(R = 5m\)&lt;/span&gt;. I hold a frictionless
+skateboard on the side of the trough pointing down toward the bottom and
+release it. Discuss the subsequent motion using Newton's second law. In
+particular, if I release the skateboard just a short way from the bottom, how
+long will it take to come back to the point of release?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Conceptually, we do the same thing as for the problem using Cartesian
+coordinates: we write down Newton's second law resolved into two orthogonal
+directions. It's just that with polar coordinates, these orthogonal directions
+are constantly changing.&lt;/p&gt;
+&lt;p&gt;The weight of the skateboard acts downwards. This results in a tangent force
+causing the skateboard to move along the halfpipe, and also presses the
+skateboard into the halfpipe a bit, with an associated reaction force. We
+ignore the force/reaction force between the skateboard and the pipe and focus
+only on the tangent force: &lt;span class="math"&gt;\(-mg sin(\phi)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The equation for acceleration says that, at time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, acceleration in the
+current tangent direction is &lt;span class="math"&gt;\(R\ddot \phi(t)\)&lt;/span&gt; (halfpipe radius times current
+angular acceleration&lt;sup id="sf-taylor-classical-mechanics-5-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-5" class="simple-footnote" title="To see this, start with the \(\phihat(t)\) (tangent direction) part of the full expression for acceleration and note that the radial distance of the skateboard is fixed by the presence of the half-pipe, so speed \(\dot r(t)\) (and acceleration) in the radial direction is zero."&gt;5&lt;/a&gt;&lt;/sup&gt;). So Newton's second law in this context is the differential
+equation&lt;/p&gt;
+&lt;div class="math"&gt;$$mR \ddot \phi(t) = -mg sin(\phi(t))$$&lt;/div&gt;
+&lt;p&gt;We read this as saying:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We don't know how the angle is changing over time &lt;span class="math"&gt;\(\phi(t)\)&lt;/span&gt; -- that is
+precisely what we want to know. But what we do know is that whatever that
+function is, its second derivative at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; is equal to the sin of the
+current angle (times &lt;span class="math"&gt;\(g/R\)&lt;/span&gt; and with a minus sign because the way we've
+defined the angle it gets smaller as the weight force takes the skateboard
+towards the bottom).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Once we've got to that point, finding the angle function &lt;span class="math"&gt;\(\phi(t)\)&lt;/span&gt; is just
+math. It turns out that the only function for which it is true that the second
+derivative has this property&lt;sup id="sf-taylor-classical-mechanics-6-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-6" class="simple-footnote" title="Actually the solution is a function with second derivative having a different property, but one which is very similar to the desired property as long as we're restricting ourselves to the angle being fairly small."&gt;6&lt;/a&gt;&lt;/sup&gt; is&lt;/p&gt;
+&lt;div class="math"&gt;$$\phi(t) = \phi_0 cos\bigg(\sqrt\frac{g}{R}t\bigg)$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\phi_0\)&lt;/span&gt; is the angle that the skateboard was released at at time &lt;span class="math"&gt;\(t=0\)&lt;/span&gt;.
+This is the "solution" of the differential equation: a function matching the
+criteria that the differential equation specified.&lt;/p&gt;
+&lt;p&gt;So we have our answer: the forces acting on the skateboard imply (via Newton's
+second law) that the way the angle of the skateboard changes is a cosine
+function of time. So the skateboard angle does what cosines do: it starts off
+at its maximum, decreases to zero, crosses zero and becomes negative for a
+while, starts turning back towards zero, crosses zero and becomes positive
+again and gets back to its maximum where it turns around again.&lt;/p&gt;
+&lt;h3 id="conservation-of-momentum"&gt;Conservation of momentum&lt;/h3&gt;
+&lt;p&gt;Momentum is mass times velocity, &lt;span class="math"&gt;\(\p(t) = m\dot \r(t)\)&lt;/span&gt;, so another way of
+stating the second law is: rate of change of momentum is equal to force. In a
+multi-particle system the forces-and-reaction-forces of the third law cancel
+each other out when summing the rate of change of momentum of the whole
+system. So, total momentum doesn't change due to internal forces (but it does
+if there are external forces).&lt;/p&gt;
+&lt;p&gt;pp 21-23 show that conservation of momentum does not hold when considering
+magnetic and electrostatic forces between charged particles moving close to the
+speed of light. However I am unfamiliar with those forces and with the
+"right-hand rule" for fields/forces and I haven't understood this section.&lt;/p&gt;
+&lt;hr&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;&lt;ol class="simple-footnotes"&gt;&lt;li id="sf-taylor-classical-mechanics-1"&gt; The product rule is the thing when you studied
+differentiation that says: when you're differentiating the product of two
+functions you differentiate one and keep the other as-is, then you
+differentiate the other while keeping the first as-is, and you add the two
+things together: &lt;span class="math"&gt;\(\frac{d(f(t)g(t))}{dt} = \dot f(t) g(t) + f(t) \dot g(t)\)&lt;/span&gt;
+ &lt;a href="#sf-taylor-classical-mechanics-1-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;li id="sf-taylor-classical-mechanics-2"&gt;You can prove this by writing the unit
+vector in Cartesian coordinates, &lt;span class="math"&gt;\(cos(\phi) \xhat + sin(\phi) \yhat\)&lt;/span&gt;, and then
+differentiating it to give &lt;span class="math"&gt;\(\dot \phi\big(-sin(\phi)\xhat +
+cos(\phi)\yhat\big)\)&lt;/span&gt; which is &lt;span class="math"&gt;\(\dot \phi\)&lt;/span&gt; times a vector orthogonal to the
+original one. &lt;a href="#sf-taylor-classical-mechanics-2-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;li id="sf-taylor-classical-mechanics-3"&gt;In polar
+coordinates, if you suppose that you know functions &lt;span class="math"&gt;\(r(t)\)&lt;/span&gt; and &lt;span class="math"&gt;\(\phi(t)\)&lt;/span&gt; giving
+the angle and distance at time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, then the accelerations in the two
+orthogonal directions at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; are
+&lt;span class="math"&gt;\(\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)\)&lt;/span&gt;
+ &lt;a href="#sf-taylor-classical-mechanics-3-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;li id="sf-taylor-classical-mechanics-4"&gt;The dot means "differentiated with respect to time". So if &lt;span class="math"&gt;\(r\)&lt;/span&gt; is
+position as a function of time then &lt;span class="math"&gt;\(\dot r\)&lt;/span&gt; is velocity and &lt;span class="math"&gt;\(\ddot r\)&lt;/span&gt; is
+acceleration. &lt;a href="#sf-taylor-classical-mechanics-4-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;li id="sf-taylor-classical-mechanics-5"&gt;To see this, start with the &lt;span class="math"&gt;\(\phihat(t)\)&lt;/span&gt; (tangent
+direction) part of the full expression for acceleration and note that the
+radial distance of the skateboard is fixed by the presence of the half-pipe, so
+speed &lt;span class="math"&gt;\(\dot r(t)\)&lt;/span&gt; (and acceleration) in the radial direction is
+zero. &lt;a href="#sf-taylor-classical-mechanics-5-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;li id="sf-taylor-classical-mechanics-6"&gt;Actually the solution is a function with
+second derivative having a different property, but one which is very similar to
+the desired property as long as we're restricting ourselves to the angle being
+fairly small. &lt;a href="#sf-taylor-classical-mechanics-6-back" class="simple-footnote-back"&gt;↩&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;</summary></entry></feed>
