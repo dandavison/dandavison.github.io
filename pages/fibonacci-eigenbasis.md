@@ -13,8 +13,9 @@ $$
 $$
 
 
--------------------------------------------------------------------------------
-### Eigenbasis Fibonacci proof
+This is the problem set at the end of the eigenvectors video in the
+[Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
+series by Grant Sanderson,.
 
 #### **Introduction**
 
@@ -89,13 +90,21 @@ $$
 $$
 
 The key part of all this -- the crux of the trick -- is that the exponentiation
-is efficient in the eigenbasis. We'll see why below.
+is efficient in the eigenbasis. That's because, in the eigenbasis, the
+transformation is just stretching space in the directions of the two basis
+vectors. So two do the transformation $n$ times in the eigenbasis, you just
+stretch by the stretch-factor raised to the $\nth$ power, rather than doing $n$
+matrix multiplications.
 
 #### **Solution details**
 
-Let's suppose we've already found the eigenvectors and that there are two of them and we've arranged them as the two columns of a matrix $V$. So $V$ holds the basis vectors of the alternative basis and therefore we know from the change of basis notes above that $V$ is the matrix that takes as input a vector expressed in the alternative basis and outputs its representation in our basis. So, step (3) is done by $V$, and step (1) is done by $V^{-1}$, and the matrix performing all three steps is going to look like
-
-i.e.
+Let's suppose we've already found the eigenvectors and that there are two of
+them and we've arranged them as the two columns of a matrix $V$. So $V$ holds
+the basis vectors of the alternative basis and therefore we know from the
+change of basis notes above that $V$ is the matrix that takes as input a vector
+expressed in the alternative basis and outputs its representation in our
+basis. So, step (3) is done by $V$, and step (1) is done by $V^{-1}$, and the
+matrix performing all three steps is going to look like
 
 $$
 V
