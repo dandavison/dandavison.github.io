@@ -193,6 +193,33 @@ numbers.
              {2^n    \sqrt 5}
 \end{align*}
 
+#### **Does this actually work?**
+
+Yes.
+
+    :::python
+    from math import sqrt
+
+    def fib(n):
+        return (
+            ( (1 + sqrt(5))**n - (1 - sqrt(5))**n )
+            /
+            float(2**n * sqrt(5)))
+
+    for i in range(10):
+        print i, fib(i)
+
+    0 0.0
+    1 1.0
+    2 1.0
+    3 2.0
+    4 3.0
+    5 5.0
+    6 8.0
+    7 13.0
+    8 21.0
+    9 34.0
+
 
 #### **Calculations**
 
