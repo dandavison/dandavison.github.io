@@ -1,113 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Notes</title><link href="http://dandavison.github.io/notes/" rel="alternate"></link><link href="http://dandavison.github.io/notes/feeds/misc.atom.xml" rel="self"></link><id>http://dandavison.github.io/notes/</id><updated>2016-08-14T00:00:00-07:00</updated><entry><title>Linear Algebra</title><link href="http://dandavison.github.io/notes/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:notes/linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Notes</title><link href="http://dandavison.github.io/notes/" rel="alternate"></link><link href="http://dandavison.github.io/notes/feeds/misc.atom.xml" rel="self"></link><id>http://dandavison.github.io/notes/</id><updated>2016-10-01T00:00:00-07:00</updated><entry><title>Finding the nth Fibonacci number via an eigenvector change of basis</title><link href="http://dandavison.github.io/notes/fibonacci-eigenbasis.html" rel="alternate"></link><published>2016-10-01T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-10-01:notes/fibonacci-eigenbasis.html</id><summary type="html">&lt;div class="math"&gt;$$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 &amp;amp; #2\\#3 &amp;amp; #4\\ \end{bmatrix}}
 \newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
 \newcommand{\nth}{n^{\text{th}}}
 $$&lt;/div&gt;
+&lt;p&gt;This is the problem given at the end of the eigenvectors video in the
+&lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
+series by Grant Sanderson.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Linear transformations and matrices&lt;/h3&gt;
-&lt;p&gt;A linear transformation is completely specified by&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Some basis vectors &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Where those basis vectors are taken to by the transformation.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;How the transformation affects any other point follows from those two pieces of
-information.&lt;/p&gt;
-&lt;p&gt;So &lt;span class="math"&gt;\(\i\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(a\i + b\j\)&lt;/span&gt;, and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(c\i + d\j\)&lt;/span&gt;.
-In this case we would use the following matrix to describe the
-transformation:&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{a}{c}
-    {b}{d}
-$$&lt;/div&gt;
-&lt;p&gt;Some examples are&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\begin{array}{ll}
-\text{stretch by a in the i-direction} &amp;amp; \mat{a}{0}
-                                             {0}{1}
-\\\\
-\text{stretch by a in the i-direction and shear right} &amp;amp; \mat{a}{b}
-                                                             {0}{1}
-\\\\
-\text{rotate anticlockwise 90°} &amp;amp; \mat{0}{-1}
-                                      {1}{ 0}
-\end{array}
-$$&lt;/div&gt;
-&lt;p&gt;Note that we haven't said what &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; are yet; they &lt;em&gt;define&lt;/em&gt; the
-2-dimensional space that we're considering. But, we can think of them for now
-as the usual orthogonal unit vectors in 2D space.&lt;/p&gt;
-&lt;p&gt;So the matrix tells us where the basis vectors have been taken to. Any other
-vector &lt;span class="math"&gt;\(f\i + g\j\)&lt;/span&gt; is taken to wherever that is using the transformed basis
-vectors:&lt;/p&gt;
-&lt;div class="math"&gt;$$
-f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
-$$&lt;/div&gt;
-&lt;p&gt;And that's how matrix multiplication is defined:&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{a}{c}
-    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
-$$&lt;/div&gt;
-&lt;p&gt;A matrix represents a linear transformation by showing where the basis vector are taken to.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h3&gt;Change of basis&lt;/h3&gt;
-&lt;p&gt;Suppose person B uses some other basis vectors to describe locations in
-space. Specifically, in our coordinates, their basis vectors are
-&lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;When they state a vector, what is it in our coordinates?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;If they say &lt;span class="math"&gt;\(\scvec{-1}{2}\)&lt;/span&gt;, what is that in our coordinates?&lt;/p&gt;
-&lt;p&gt;Well, if they say &lt;span class="math"&gt;\(\scvec{1}{0}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; in our
-coordinates. And if they say &lt;span class="math"&gt;\(\scvec{0}{1}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt; in our
-coordinates. So the matrix containing &lt;em&gt;their basis vectors expressed in our
-coordinates&lt;/em&gt; transforms a point expressed in their language into one expressed
-in ours. So, the answer is&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{2}{-1}
-    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
-$$&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;When we state a vector, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;We give the vector &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. What is that in their coordinate system? By
-definition, the answer is the weights that scales their basis vectors to hit &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. So, the solution to&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{2}{-1}
-    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
-$$&lt;/div&gt;
-&lt;p&gt;Computationally, we can see that we can get the solution by multiplying both sides by the inverse:&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\cvec{a}{b} = \mat{2}{-1}
-                  {1}{1}^{-1} \cvec{3}{2}.
-$$&lt;/div&gt;
-&lt;p&gt;Conceptually, we have&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{2}{-1}
-    {1}{1} =
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
-$$&lt;/div&gt;
-&lt;p&gt;and so the role played by the inverse is&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\cvec{a}{b} =
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
-\cvec{3}{2}.
-$$&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;When we state a transformation, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;We state a 90° anticlockwise rotation of 2D space:&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\mat{1}{-1}
-    {0}{0}
-$$&lt;/div&gt;
-&lt;p&gt;what is that transformation in their coordinates? The answer is&lt;/p&gt;
-&lt;div class="math"&gt;$$
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
-\mat{1}{-1}
-    {0}{0}
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
-$$&lt;/div&gt;
-&lt;p&gt;Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h3&gt;Eigenbasis Fibonacci proof&lt;/h3&gt;
-&lt;h4&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h4&gt;
+&lt;h4 id="introduction"&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h4&gt;
 &lt;p&gt;Consider the matrix&lt;/p&gt;
 &lt;div class="math"&gt;$$
 A = \mat{0}{1}
@@ -139,31 +44,56 @@ $$&lt;/div&gt;
 A^{n} = \mat{F_{n-1} }{F_n      }
             {F_n     }{F_{n+1} }
 $$&lt;/div&gt;
-&lt;p&gt;So if there were an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of the matrix, that would also be an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers &lt;em&gt;en route&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;How can we do this? To state the problem in a different way, we need to construct a new matrix that performs exactly the same transformation as &lt;span class="math"&gt;\(A^n\)&lt;/span&gt;, but which somehow does the exponentiation step "in one go" rather than by multiplying &lt;span class="math"&gt;\(A\)&lt;/span&gt; with itself &lt;span class="math"&gt;\(n\)&lt;/span&gt; times.&lt;/p&gt;
-&lt;h4&gt;&lt;strong&gt;Solution outline&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;Matrices represent transformations, so we can talk about them as taking in some vector and producing some other vector. The approach we're going to take is to re-express the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation as follows:&lt;/p&gt;
+&lt;p&gt;So if there were an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of the
+matrix, that would also be an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt;
+Fibonacci number "directly", i.e. without computing all the preceding Fibonacci
+numbers &lt;em&gt;en route&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;How can we do this? To state the problem in a different way, we need to
+construct a new matrix that performs exactly the same transformation as &lt;span class="math"&gt;\(A^n\)&lt;/span&gt;,
+but which somehow does the exponentiation step "in one go" rather than by
+multiplying &lt;span class="math"&gt;\(A\)&lt;/span&gt; with itself &lt;span class="math"&gt;\(n\)&lt;/span&gt; times.&lt;/p&gt;
+&lt;h4 id="solution-outline"&gt;&lt;strong&gt;Solution outline&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Matrices represent transformations, so we can talk about them as taking in some
+vector and producing some other vector. The approach we're going to take is to
+re-express the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation as follows:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Convert the input vector to its representation in an alternative basis which uses the eigenvectors as the basis vectors (it's called an "eigenbasis").&lt;/li&gt;
-&lt;li&gt;In this alternative basis, compute the new position of the vector after carrying out the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation.&lt;/li&gt;
-&lt;li&gt;Convert the resulting vector back to its representation in our original basis.&lt;/li&gt;
+&lt;li&gt;Convert the input vector to its representation in an alternative basis which
+   uses the eigenvectors as the basis vectors (it's called an "eigenbasis").&lt;/li&gt;
+&lt;li&gt;In this alternative basis, compute the new position of the vector after
+   carrying out the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation.&lt;/li&gt;
+&lt;li&gt;Convert the resulting vector back to its representation in our original
+   basis.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;I.e., we're going to compute the overall transformation as this product of matrices:&lt;/p&gt;
+&lt;p&gt;I.e., we're going to compute the overall transformation as this product of
+matrices:&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 $$&lt;/div&gt;
-&lt;p&gt;The key part of all this -- the crux of the trick -- is that the exponentiation is efficient in the eigenbasis. We'll see why below.&lt;/p&gt;
-&lt;h4&gt;&lt;strong&gt;Solution details&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;Let's suppose we've already found the eigenvectors and that there are two of them and we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. So &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds the basis vectors of the alternative basis and therefore we know from the change of basis notes above that &lt;span class="math"&gt;\(V\)&lt;/span&gt; is the matrix that takes as input a vector expressed in the alternative basis and outputs its representation in our basis. So, step (3) is done by &lt;span class="math"&gt;\(V\)&lt;/span&gt;, and step (1) is done by &lt;span class="math"&gt;\(V^{-1}\)&lt;/span&gt;, and the matrix performing all three steps is going to look like&lt;/p&gt;
-&lt;p&gt;i.e.&lt;/p&gt;
+&lt;p&gt;The key part of all this -- the crux of the trick -- is that the exponentiation
+is efficient in the eigenbasis. That's because, in the eigenbasis, the
+transformation is just stretching space in the directions of the two basis
+vectors. So two do the transformation &lt;span class="math"&gt;\(n\)&lt;/span&gt; times in the eigenbasis, you just
+stretch by the stretch-factor raised to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power, rather than doing &lt;span class="math"&gt;\(n\)&lt;/span&gt;
+matrix multiplications.&lt;/p&gt;
+&lt;h4 id="solution-details"&gt;&lt;strong&gt;Solution details&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Let's suppose we've already found the eigenvectors and that there are two of
+them and we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. So &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds
+the basis vectors of the alternative basis and therefore we know from the
+&lt;a href="./linear-algebra.html#change-of-basis"&gt;change of basis&lt;/a&gt; notes that &lt;span class="math"&gt;\(V\)&lt;/span&gt; is the
+matrix that takes as input a vector expressed in the alternative basis and
+outputs its representation in our basis. So, step (3) is done by &lt;span class="math"&gt;\(V\)&lt;/span&gt;, and step
+(1) is done by &lt;span class="math"&gt;\(V^{-1}\)&lt;/span&gt;, and the matrix performing all three steps is going to
+look like&lt;/p&gt;
 &lt;div class="math"&gt;$$
 V
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
 V^{-1}
 $$&lt;/div&gt;
-&lt;p&gt;OK, so what is the matrix in the middle? The change of basis section above tells us that we can compute it as&lt;/p&gt;
+&lt;p&gt;OK, so what is the matrix in the middle? The
+&lt;a href="./linear-algebra.html#change-of-basis"&gt;change of basis&lt;/a&gt; notes tell us that we
+can compute it as&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 A
@@ -179,25 +109,91 @@ V
 \Big(V^{-1}AV\Big)^n
 V^{-1}
 $$&lt;/div&gt;
-&lt;p&gt;Recall that above we observed that the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a matrix with the nth Fibonacci number in its bottom left and top right entries. So the following tasks remain:&lt;/p&gt;
+&lt;p&gt;Recall that above we observed that the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a matrix with the
+nth Fibonacci number in its bottom left and top right entries. So the following
+tasks remain:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Find the eigenvectors and put them in a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Find the inverse of &lt;span class="math"&gt;\(V\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Compute the matrix product &lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Compute the result of raising that to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power&lt;/li&gt;
-&lt;li&gt;Plug the result of that into the overall expression&lt;/li&gt;
-&lt;li&gt;Take the entry in the bottom left or top right (they should be the same!) and simplify.&lt;/li&gt;
+&lt;li&gt;Find the eigenvectors and put them in a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Find the inverse of &lt;span class="math"&gt;\(V\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Compute the matrix product &lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Compute the result of raising that to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power.&lt;/li&gt;
+&lt;li&gt;Plug the result of that into the overall expression.&lt;/li&gt;
+&lt;li&gt;Take the entry in the bottom left or top right (they should be the same!).&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;The result should be an expression giving the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; Fibonacci number as a function of &lt;span class="math"&gt;\(n\)&lt;/span&gt;. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.&lt;/p&gt;
-&lt;h5&gt;&lt;strong&gt;1. Find the eigenvectors&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The result should be an expression giving the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; Fibonacci number as a
+function of &lt;span class="math"&gt;\(n\)&lt;/span&gt;. It should be possible to give as input to that function the
+number one million, and have it output the one millionth Fibonacci number
+directly, without it having to go through the preceding 999,999 Fibonacci
+numbers.&lt;/p&gt;
+&lt;h4 id="the-answer-without-showing-the-calculations"&gt;&lt;strong&gt;The answer without showing the calculations&lt;/strong&gt;&lt;/h4&gt;
+&lt;div class="math"&gt;\begin{align*}
+&amp;amp;\text{The eigenvectors are}
+\\\\
+&amp;amp;V &amp;amp;= \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+\\\\
+&amp;amp;\text{which has inverse}
+\\\\
+&amp;amp;V^{-1} &amp;amp;= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                                 {-1 - \sqrt 5}{2}
+\\\\
+&amp;amp;\text{Therefore}
+\\\\
+&amp;amp;V^{-1}AV &amp;amp;= \frac{1}{2} \mat{1 + \sqrt 5}{0          }
+                            {0          }{1 - \sqrt 5}
+\\\\
+&amp;amp;\text{and}
+\\\\
+&amp;amp;(V^{-1}AV)^n &amp;amp;= \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                   {0                }{(1 - \sqrt 5)^n}
+\\\\
+&amp;amp;\text{and}
+\\\\
+&amp;amp;V \Big(V^{-1}AV\Big)^n V^{-1} &amp;amp;=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
+\\\\
+&amp;amp;\text{Therefore the nth Fibonacci number is}
+\\\\
+&amp;amp;F_n &amp;amp;= \frac{(1 + \sqrt 5)^n     - (1 - \sqrt 5)^n}
+             {2^n    \sqrt 5}
+\end{align*}&lt;/div&gt;
+&lt;h4 id="does-this-actually-work"&gt;&lt;strong&gt;Does this actually work?&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Yes.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;/&lt;/span&gt;
+        &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mf"&gt;2.0&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mf"&gt;3.0&lt;/span&gt;
+&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mf"&gt;5.0&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="mf"&gt;8.0&lt;/span&gt;
+&lt;span class="mi"&gt;7&lt;/span&gt; &lt;span class="mf"&gt;13.0&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="mf"&gt;21.0&lt;/span&gt;
+&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="mf"&gt;34.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4 id="calculations"&gt;&lt;strong&gt;Calculations&lt;/strong&gt;&lt;/h4&gt;
+&lt;h5 id="1-find-the-eigenvectors"&gt;&lt;strong&gt;1. Find the eigenvectors&lt;/strong&gt;&lt;/h5&gt;
 &lt;p&gt;We follow the textbook approach: We have
 &lt;/p&gt;
 &lt;div class="math"&gt;$$
 A = \mat{0}{1}
         {1}{1}
 $$&lt;/div&gt;
-&lt;p&gt;
-An eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; satisfies &lt;span class="math"&gt;\(Av = \lambda v\)&lt;/span&gt; for some scalar &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;. That equation can be rearranged as follows&lt;/p&gt;
+&lt;p&gt;An eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; satisfies &lt;span class="math"&gt;\(Av = \lambda v\)&lt;/span&gt; for some scalar &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;. That
+equation can be rearranged as follows&lt;/p&gt;
 &lt;div class="math"&gt;\begin{align*}
 A\vec v &amp;amp;= \lambda I\vec v
 \\
@@ -205,17 +201,20 @@ A\vec v - \lambda I\vec v &amp;amp;= \vec 0
 \\
 (A - \lambda I)\vec v &amp;amp;= \vec 0
 \end{align*}&lt;/div&gt;
-&lt;p&gt;
-which means that the matrix &lt;span class="math"&gt;\(A - \lambda I\)&lt;/span&gt; is a transformation that takes some non-zero vector &lt;span class="math"&gt;\(\vec v\)&lt;/span&gt; to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;:&lt;/p&gt;
+&lt;p&gt;which means that the matrix &lt;span class="math"&gt;\(A - \lambda I\)&lt;/span&gt; is a transformation that takes some
+non-zero vector &lt;span class="math"&gt;\(\vec v\)&lt;/span&gt; to the zero vector (i.e. it has a non-empty "null
+space"). This means that the transformation cannot be reversed, i.e. the matrix
+has no inverse, i.e. its determinant is zero. So, use that last fact to find
+the eigenvectors &lt;span class="math"&gt;\(\lambda\)&lt;/span&gt;:&lt;/p&gt;
 &lt;div class="math"&gt;\begin{align*}
 \det (A - \lambda I) &amp;amp;= 0
 \\
 \\
 \det \mat{-\lambda}{1}
          {1          }{1 - \lambda} &amp;amp;= 0
-\\
-\\
-(-\lambda)(1 - \lambda) - 1 &amp;amp;= 0
+% \\
+% \\
+% (-\lambda)(1 - \lambda) - 1 &amp;amp;= 0
 \\
 \\
 \lambda^2 - \lambda - 1 = 0
@@ -226,34 +225,146 @@ which means that the matrix &lt;span class="math"&gt;\(A - \lambda I\)&lt;/span&
 = \frac{-b ± \sqrt{b^2 - 4ac}}{2a}
 = \frac{1 ± \sqrt{5}}{2}
 \end{align*}&lt;/div&gt;
-&lt;p&gt;which are the two eigenvalues. To find the first eigenvector we plug &lt;span class="math"&gt;\(\frac{1 + \sqrt{5}}{2}\)&lt;/span&gt; into the equation above:&lt;/p&gt;
+&lt;p&gt;which are the two eigenvalues.&lt;/p&gt;
+&lt;p&gt;To find eigenvectors associated with the eigenvalues, go back to the equations&lt;/p&gt;
 &lt;div class="math"&gt;\begin{align*}
 (A - \lambda I)\vec v &amp;amp;= \vec 0
 \\
 \\
 \mat{-\lambda}{1}
     {1       }{1 - \lambda} \vec v &amp;amp;= \vec 0
-\\
-\\
-\mat{\frac{-1 - \sqrt{5}}{2} }{1                       }
-    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &amp;amp;= \vec 0
 \end{align*}&lt;/div&gt;
-&lt;p&gt;Let the eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; be &lt;span class="math"&gt;\(\scvec{v_1}{v_2}\)&lt;/span&gt;. So &lt;span class="math"&gt;\(v1\)&lt;/span&gt; and &lt;span class="math"&gt;\(v2\)&lt;/span&gt; satisfy the system of equations&lt;/p&gt;
+&lt;p&gt;Let an eigenvector &lt;span class="math"&gt;\(v\)&lt;/span&gt; be &lt;span class="math"&gt;\(\scvec{v_1}{v_2}\)&lt;/span&gt;. The matrix equation corresponds
+to this system of equations:&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \begin{cases}
-v_1\Big(\frac{-1 - \sqrt(5)}{2}\Big) + v_2 = 0 \\
-v_1 + v2\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
+-\lambda v_1 &amp;amp;+ v_2               &amp;amp;= 0\\
+v_1          &amp;amp;+ (1 - \lambda) v_2 &amp;amp;= 0
 \end{cases}
-\\
-\\
-v2 = v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)
-\\
-\\
-v_1 + v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
-\\
-\\
-v_1\Big(1 + \frac{-4}{2}\Big) = 0
 $$&lt;/div&gt;
+&lt;p&gt;From the first equation we have &lt;span class="math"&gt;\(v_2 = \lambda v_1\)&lt;/span&gt;. There are infinitely many
+eigenvectors (a line of them) associated with any given eigenvalue, so we can
+pick an arbitrary value for &lt;span class="math"&gt;\(v_1\)&lt;/span&gt;. If we choose &lt;span class="math"&gt;\(v_1=2\)&lt;/span&gt; then we have
+eigenvectors &lt;span class="math"&gt;\(\scvec{2}{1+\sqrt 5}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{2}{1-\sqrt 5}\)&lt;/span&gt;. The matrix
+containing the eigenvectors is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+V = \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+$$&lt;/div&gt;
+&lt;h5 id="2-find-inverse-of-v"&gt;&lt;strong&gt;2. Find inverse of &lt;span class="math"&gt;\(V\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The inverse of a 2x2 matrix is given by&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d} ^ {-1}
+=
+\frac{1}{\text{det}} \mat{d}{-c}
+                         {-b}{a}
+$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\text{det} = ad - cb\)&lt;/span&gt;. Therefore&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+V^{-1}
+&amp;amp;= \frac{1}{2(1 - \sqrt 5) - 2(1 + \sqrt 5)} \mat{1 - \sqrt 5 }{-2}
+                                                 {-(1 + \sqrt 5)}{2}
+\\\\
+&amp;amp;= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                           {-(1 + \sqrt 5)}{2}
+\end{align*}&lt;/div&gt;
+&lt;h5 id="3-find-the-matrix-product-v-1av"&gt;&lt;strong&gt;3. Find the matrix product &lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Before we get lost in the calculation, let's remember what this is. It's a
+matrix that does the &lt;span class="math"&gt;\(A\)&lt;/span&gt; transformation, but &lt;em&gt;in the coordinate system defined
+by &lt;span class="math"&gt;\(A\)&lt;/span&gt;'s eigenvectors&lt;/em&gt;. So, the resulting matrix &lt;em&gt;must&lt;/em&gt; do nothing other than
+stretch space in the direction of one or both basis vectors. That's because (1)
+we represent a transformation with a matrix saying where each of the basis
+vectors are taken to, (2) the definition of an eigenvector of a transformation
+is that it is a vector which is simply stretched by the transformation with no
+change in direction, therefore (3) if the eigenvectors are the basis vectors,
+then the matrix representing the transformation must just stretch space in the
+two directions. A matrix which stretches space in the direction of the basis
+vectors looks like &lt;span class="math"&gt;\(\smat{a}{0}{0}{b}\)&lt;/span&gt;, i.e. it is diagonal. Therefore,
+&lt;span class="math"&gt;\(V^{-1}AV\)&lt;/span&gt; &lt;em&gt;must&lt;/em&gt; be diagonal.&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+V^{-1}AV &amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{0}{1}
+    {1}{1}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{1 + \sqrt 5}{1 - \sqrt 5}
+    {3 + \sqrt 5}{3 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\mat{-4 - 2(3 + \sqrt 5)             }{6 - 2\sqrt 5 - 2(3 - \sqrt 5)}
+    {-(6 + 2\sqrt 5) + 2(3 + \sqrt 5)}{4 + 2(3 - \sqrt 5)}
+\\\\
+&amp;amp;=
+\frac{-1}{2\sqrt 5}
+\mat{-2 - 3 - \sqrt 5}{3 - \sqrt 5 - 3 + \sqrt 5}
+    {-3 - \sqrt 5 + 3 + \sqrt 5}{2 + 3 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{-1}{2\sqrt 5}
+\mat{-5 - \sqrt 5}{0          }
+    {0           }{5 - \sqrt 5}
+\\\\
+&amp;amp;=
+\frac{1}{2}
+\mat{1 + \sqrt 5}{0          }
+    {0          }{1 - \sqrt 5}
+\end{align*}&lt;/div&gt;
+&lt;h5 id="4-compute-v-1avn"&gt;&lt;strong&gt;4. Compute &lt;span class="math"&gt;\((V^{-1}AV)^n\)&lt;/span&gt;&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The matrix is diagonal so this is straightforward. Note that this is the whole
+point of converting to the eigenbasis: the exponentiation at this step just
+involves the usual operations of raising scalar numbers to a power; no need to
+multiply matrices together. A computer will be able to compute the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power
+of a diagonal matrix much faster than that of a non-diagonal matrix.&lt;/p&gt;
+&lt;div class="math"&gt;$$
+(V^{-1}AV)^n = \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                 {0              }{(1 - \sqrt 5)^n}
+$$&lt;/div&gt;
+&lt;h5 id="5-plug-the-nth-power-into-the-overall-expression"&gt;&lt;strong&gt;5. Plug the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power into the overall expression&lt;/strong&gt;&lt;/h5&gt;
+&lt;div class="math"&gt;\begin{align*}
+V \Big(V^{-1}AV\Big)^n V^{-1}
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 + \sqrt 5)^n}{0              }
+    {0              }{(1 - \sqrt 5)^n}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 - \sqrt 5)(1 + \sqrt 5)^n}{-2(1 + \sqrt 5)^n}
+    {-(1 + \sqrt 5)(1 - \sqrt 5)^n}{2(1 - \sqrt 5)^n}
+\\\\
+&amp;amp;=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2(-4)\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{-4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}
+    {   -4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{-2\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}
+\\\\
+&amp;amp;=
+\frac{1}{4\sqrt 5}
+\mat{4\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}}}{4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}
+    {4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}{ \frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n-1}}}
+\\\\
+&amp;amp;=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
+\end{align*}&lt;/div&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -310,7 +421,173 @@ $$&lt;/div&gt;
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary></entry><entry><title>Logs</title><link href="http://dandavison.github.io/notes/logs.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:notes/logs.html</id><summary type="html">&lt;h3&gt;Evaluate:&lt;/h3&gt;
+&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="http://dandavison.github.io/notes/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:notes/linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
+\newcommand{\i}{\mathbf{i}}
+\newcommand{\j}{\mathbf{j}}
+\newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\mat}[4]{\begin{bmatrix}#1 &amp;amp; #2\\#3 &amp;amp; #4\\ \end{bmatrix}}
+\newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
+\newcommand{\nth}{n^{\text{th}}}
+$$&lt;/div&gt;
+&lt;p&gt;Notes from the
+&lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
+video series by Grant Sanderson.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id="linear-transformations-and-matrices"&gt;Linear transformations and matrices&lt;/h3&gt;
+&lt;p&gt;A linear transformation is completely specified by&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Some basis vectors &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Where those basis vectors are taken to by the transformation.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;How the transformation affects any other point follows from those two pieces of
+information.&lt;/p&gt;
+&lt;p&gt;So &lt;span class="math"&gt;\(\i\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(a\i + b\j\)&lt;/span&gt;, and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; might be taken to &lt;span class="math"&gt;\(c\i + d\j\)&lt;/span&gt;.
+In this case we would use the following matrix to describe the
+transformation:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d}
+$$&lt;/div&gt;
+&lt;p&gt;Some examples are&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{array}{ll}
+\text{stretch by a in the i-direction} &amp;amp; \mat{a}{0}
+                                             {0}{1}
+\\\\
+\text{stretch by a in the i-direction and shear right} &amp;amp; \mat{a}{b}
+                                                             {0}{1}
+\\\\
+\text{rotate anticlockwise 90°} &amp;amp; \mat{0}{-1}
+                                      {1}{ 0}
+\end{array}
+$$&lt;/div&gt;
+&lt;p&gt;Note that we haven't said what &lt;span class="math"&gt;\(\i\)&lt;/span&gt; and &lt;span class="math"&gt;\(\j\)&lt;/span&gt; are yet; they &lt;em&gt;define&lt;/em&gt; the
+2-dimensional space that we're considering. But, we can think of them for now
+as the usual orthogonal unit vectors in 2D space.&lt;/p&gt;
+&lt;p&gt;So the matrix tells us where the basis vectors have been taken to. Any other
+vector &lt;span class="math"&gt;\(f\i + g\j\)&lt;/span&gt; is taken to wherever that is using the transformed basis
+vectors:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+f\i + g\j \longrightarrow f\cvec{a}{b} + g\cvec{c}{d} = \cvec{fa + gc}{fb + gd}
+$$&lt;/div&gt;
+&lt;p&gt;And that's how matrix multiplication is defined:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{a}{c}
+    {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
+$$&lt;/div&gt;
+&lt;p&gt;A matrix represents a linear transformation by showing where the basis vector are taken to.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id="change-of-basis"&gt;Change of basis&lt;/h3&gt;
+&lt;p&gt;Suppose person B uses some other basis vectors to describe locations in
+space. Specifically, in our coordinates, their basis vectors are
+&lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;When they state a vector, what is it in our coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If they say &lt;span class="math"&gt;\(\scvec{-1}{2}\)&lt;/span&gt;, what is that in our coordinates?&lt;/p&gt;
+&lt;p&gt;Well, if they say &lt;span class="math"&gt;\(\scvec{1}{0}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; in our
+coordinates. And if they say &lt;span class="math"&gt;\(\scvec{0}{1}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt; in our
+coordinates. So the matrix containing &lt;em&gt;their basis vectors expressed in our
+coordinates&lt;/em&gt; transforms a point expressed in their language into one expressed
+in ours. So, the answer is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
+$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;When we state a vector, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We give the vector &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. What is that in their coordinate system? By
+definition, the answer is the weights that scales their basis vectors to hit &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. So, the solution to&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{1} \cvec{a}{b} = \cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;Computationally, we can see that we can get the solution by multiplying both sides by the inverse:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\cvec{a}{b} = \mat{2}{-1}
+                  {1}{1}^{-1} \cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;Conceptually, we have&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{2}{-1}
+    {1}{1} =
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;and so the role played by the inverse is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\cvec{a}{b} =
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\cvec{3}{2}.
+$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;When we state a transformation, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We state a 90° anticlockwise rotation of 2D space:&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mat{1}{-1}
+    {0}{0}
+$$&lt;/div&gt;
+&lt;p&gt;what is that transformation in their coordinates? The answer is&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\mat{1}{-1}
+    {0}{0}
+\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+$$&lt;/div&gt;
+&lt;p&gt;Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' }, Macros: {} }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary></entry><entry><title>Logs</title><link href="http://dandavison.github.io/notes/logs.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:notes/logs.html</id><summary type="html">&lt;h3 id="evaluate"&gt;Evaluate:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;span class="math"&gt;\(\log_{10} 100\)&lt;/span&gt;&lt;/p&gt;
@@ -334,7 +611,7 @@ $$&lt;/div&gt;
 &lt;p&gt;What's the maximum value of a 32-bit integer? (making same assumption)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Simplify&lt;/h3&gt;
+&lt;h3 id="simplify"&gt;Simplify&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;span class="math"&gt;\(\log xy\)&lt;/span&gt;&lt;/p&gt;
@@ -430,8 +707,8 @@ $$&lt;/div&gt;
 \newcommand{\F}{\vec{F}}
 \newcommand{\vector}[1]{\begin{bmatrix}#1\end{bmatrix}}
 $$&lt;/div&gt;
-&lt;h1&gt;Chapter 1 - Newton's Laws of Motion&lt;/h1&gt;
-&lt;h4&gt;Basics&lt;/h4&gt;
+&lt;h1 id="chapter-1-newtons-laws-of-motion"&gt;Chapter 1 - Newton's Laws of Motion&lt;/h1&gt;
+&lt;h4 id="basics"&gt;Basics&lt;/h4&gt;
 &lt;p&gt;The basic object of interest is a moving particle. Its position at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; is
 &lt;span class="math"&gt;\(\r\)&lt;/span&gt;. It has that arrow over it because it is a vector. A vector is something
 that specifies a direction and a magnitude. Think of &lt;span class="math"&gt;\(\r\)&lt;/span&gt; as an arrow from the
@@ -460,7 +737,7 @@ some particular time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, if I start adv
 position going and how fast is it going there? So the derivative of a
 vector-valued function is a vector -- an arrow with direction and magnitude
 (speed).&lt;/p&gt;
-&lt;h4&gt;Coordinate systems&lt;/h4&gt;
+&lt;h4 id="coordinate-systems"&gt;Coordinate systems&lt;/h4&gt;
 &lt;p&gt;Thinking of &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; as an arrow with direction and magnitude is correct but a
 bit abstract. How specifically do we use numbers to represent position? The
 chapter covers two main coordinate systems. Let's say the particle is moving in
@@ -510,7 +787,7 @@ always point in the same direction. The polar unit vector is a function of time
 because it is the direction to wherever-the-particle-currently-is. The
 Cartesian unit vectors are not functions of time because they are just the
 x-axis direction and the y-axis direction and these do not change.&lt;/p&gt;
-&lt;h4&gt;Velocity&lt;/h4&gt;
+&lt;h4 id="velocity"&gt;Velocity&lt;/h4&gt;
 &lt;p&gt;We can now differentiate these position functions to get the velocity. Recall
 that the answer is going to be a vector because it is the derivative of a
 vector-valued function.&lt;/p&gt;
@@ -575,7 +852,7 @@ is changing, multiplied by the current radius. That multiplication by radius
 makes sense informally, because if you are further out from the center of a
 circle, and the circle rotates by a few degrees, then you move further in space
 than if you were closer in to the center.&lt;/p&gt;
-&lt;h4&gt;Acceleration&lt;/h4&gt;
+&lt;h4 id="acceleration"&gt;Acceleration&lt;/h4&gt;
 &lt;p&gt;The acceleration function is the derivative of the velocity function with
 respect to time. Therefore, it is also a vector: at time &lt;span class="math"&gt;\(t\)&lt;/span&gt; the particle is
 accelerating by some amount, in some direction.&lt;/p&gt;
@@ -594,7 +871,7 @@ complicated. But basically the answer is still a function of the form&lt;/p&gt;
 &lt;p&gt;The functions of &lt;span class="math"&gt;\(t\)&lt;/span&gt; involve the current radius length, the speed and
 acceleration in the current radius direction, and the speed and acceleration of
 the angle parameter &lt;span class="math"&gt;\(\phi\)&lt;/span&gt;. The full expression is in the footnote&lt;sup id="sf-taylor-classical-mechanics-3-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-3" class="simple-footnote" title="In polar coordinates, if you suppose that you know functions \(r(t)\) and \(\phi(t)\) giving the angle and distance at time \(t\), then the accelerations in the two orthogonal directions at time \(t\) are \(\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)\) "&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;h3&gt;Newton's second law as a differential equation&lt;/h3&gt;
+&lt;h3 id="newtons-second-law-as-a-differential-equation"&gt;Newton's second law as a differential equation&lt;/h3&gt;
 &lt;p&gt;A key point seems to be: view Newton's second law &lt;span class="math"&gt;\(\F = m\a\)&lt;/span&gt; as a differential
 equation&lt;sup id="sf-taylor-classical-mechanics-4-back"&gt;&lt;a href="#sf-taylor-classical-mechanics-4" class="simple-footnote" title='The dot means "differentiated with respect to time". So if \(r\) is position as a function of time then \(\dot r\) is velocity and \(\ddot r\) is acceleration.'&gt;4&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;div class="math"&gt;$$m \ddot \r(t) = \F$$&lt;/div&gt;
@@ -606,7 +883,7 @@ equal to the net force acting on the body.&lt;/p&gt;
 &lt;p&gt;In practice: in a typical problem you have some expression for &lt;span class="math"&gt;\(\F\)&lt;/span&gt; derived from
 consideration of a diagram showing forces acting on the body. You might be able
 to discover &lt;span class="math"&gt;\(\r(t)\)&lt;/span&gt; by finding a function whose second derivative is &lt;span class="math"&gt;\(\F\)&lt;/span&gt;.&lt;/p&gt;
-&lt;h4&gt;Example problems&lt;/h4&gt;
+&lt;h4 id="example-problems"&gt;Example problems&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Cartesian coordinates&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1.37 A student kicks a frictionless puck with initial speed &lt;span class="math"&gt;\(v_0\)&lt;/span&gt;, so that it
@@ -681,7 +958,7 @@ function of time. So the skateboard angle does what cosines do: it starts off
 at its maximum, decreases to zero, crosses zero and becomes negative for a
 while, starts turning back towards zero, crosses zero and becomes positive
 again and gets back to its maximum where it turns around again.&lt;/p&gt;
-&lt;h3&gt;Conservation of momentum&lt;/h3&gt;
+&lt;h3 id="conservation-of-momentum"&gt;Conservation of momentum&lt;/h3&gt;
 &lt;p&gt;Momentum is mass times velocity, &lt;span class="math"&gt;\(\p(t) = m\dot \r(t)\)&lt;/span&gt;, so another way of
 stating the second law is: rate of change of momentum is equal to force. In a
 multi-particle system the forces-and-reaction-forces of the third law cancel

@@ -51,8 +51,8 @@
 \newcommand{\F}{\vec{F}}
 \newcommand{\vector}[1]{\begin{bmatrix}#1\end{bmatrix}}
 $$</div>
-<h1>Chapter 1 - Newton's Laws of Motion</h1>
-<h4>Basics</h4>
+<h1 id="chapter-1-newtons-laws-of-motion">Chapter 1 - Newton's Laws of Motion</h1>
+<h4 id="basics">Basics</h4>
 <p>The basic object of interest is a moving particle. Its position at time <span class="math">\(t\)</span> is
 <span class="math">\(\r\)</span>. It has that arrow over it because it is a vector. A vector is something
 that specifies a direction and a magnitude. Think of <span class="math">\(\r\)</span> as an arrow from the
@@ -81,7 +81,7 @@ some particular time <span class="math">\(t\)</span>, if I start advancing time 
 position going and how fast is it going there? So the derivative of a
 vector-valued function is a vector -- an arrow with direction and magnitude
 (speed).</p>
-<h4>Coordinate systems</h4>
+<h4 id="coordinate-systems">Coordinate systems</h4>
 <p>Thinking of <span class="math">\(\r(t)\)</span> as an arrow with direction and magnitude is correct but a
 bit abstract. How specifically do we use numbers to represent position? The
 chapter covers two main coordinate systems. Let's say the particle is moving in
@@ -131,7 +131,7 @@ always point in the same direction. The polar unit vector is a function of time
 because it is the direction to wherever-the-particle-currently-is. The
 Cartesian unit vectors are not functions of time because they are just the
 x-axis direction and the y-axis direction and these do not change.</p>
-<h4>Velocity</h4>
+<h4 id="velocity">Velocity</h4>
 <p>We can now differentiate these position functions to get the velocity. Recall
 that the answer is going to be a vector because it is the derivative of a
 vector-valued function.</p>
@@ -196,7 +196,7 @@ is changing, multiplied by the current radius. That multiplication by radius
 makes sense informally, because if you are further out from the center of a
 circle, and the circle rotates by a few degrees, then you move further in space
 than if you were closer in to the center.</p>
-<h4>Acceleration</h4>
+<h4 id="acceleration">Acceleration</h4>
 <p>The acceleration function is the derivative of the velocity function with
 respect to time. Therefore, it is also a vector: at time <span class="math">\(t\)</span> the particle is
 accelerating by some amount, in some direction.</p>
@@ -215,7 +215,7 @@ complicated. But basically the answer is still a function of the form</p>
 <p>The functions of <span class="math">\(t\)</span> involve the current radius length, the speed and
 acceleration in the current radius direction, and the speed and acceleration of
 the angle parameter <span class="math">\(\phi\)</span>. The full expression is in the footnote<sup id="sf-taylor-classical-mechanics-3-back"><a href="#sf-taylor-classical-mechanics-3" class="simple-footnote" title="In polar coordinates, if you suppose that you know functions \(r(t)\) and \(\phi(t)\) giving the angle and distance at time \(t\), then the accelerations in the two orthogonal directions at time \(t\) are \(\a(t) = \bigg( \ddot r(t) - r(t) \dot\phi(t)^2 \bigg) \rhat(t) + \bigg( 2\dot r(t) \dot \phi(t) + r(t) \ddot \phi(t)\bigg) \phihat(t)\) ">3</a></sup>.</p>
-<h3>Newton's second law as a differential equation</h3>
+<h3 id="newtons-second-law-as-a-differential-equation">Newton's second law as a differential equation</h3>
 <p>A key point seems to be: view Newton's second law <span class="math">\(\F = m\a\)</span> as a differential
 equation<sup id="sf-taylor-classical-mechanics-4-back"><a href="#sf-taylor-classical-mechanics-4" class="simple-footnote" title='The dot means "differentiated with respect to time". So if \(r\) is position as a function of time then \(\dot r\) is velocity and \(\ddot r\) is acceleration.'>4</a></sup>:</p>
 <div class="math">$$m \ddot \r(t) = \F$$</div>
@@ -227,7 +227,7 @@ equal to the net force acting on the body.</p>
 <p>In practice: in a typical problem you have some expression for <span class="math">\(\F\)</span> derived from
 consideration of a diagram showing forces acting on the body. You might be able
 to discover <span class="math">\(\r(t)\)</span> by finding a function whose second derivative is <span class="math">\(\F\)</span>.</p>
-<h4>Example problems</h4>
+<h4 id="example-problems">Example problems</h4>
 <p><strong>Cartesian coordinates</strong></p>
 <blockquote>
 <p>1.37 A student kicks a frictionless puck with initial speed <span class="math">\(v_0\)</span>, so that it
@@ -302,7 +302,7 @@ function of time. So the skateboard angle does what cosines do: it starts off
 at its maximum, decreases to zero, crosses zero and becomes negative for a
 while, starts turning back towards zero, crosses zero and becomes positive
 again and gets back to its maximum where it turns around again.</p>
-<h3>Conservation of momentum</h3>
+<h3 id="conservation-of-momentum">Conservation of momentum</h3>
 <p>Momentum is mass times velocity, <span class="math">\(\p(t) = m\dot \r(t)\)</span>, so another way of
 stating the second law is: rate of change of momentum is equal to force. In a
 multi-particle system the forces-and-reaction-forces of the third law cancel
@@ -434,7 +434,7 @@ fairly small. <a href="#sf-taylor-classical-mechanics-6-back" class="simple-foot
 						<h4>Categories</h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="http://dandavison.github.io/notes/category/calculus.html">calculus (1)</a></li>
-							<li><a href="http://dandavison.github.io/notes/category/misc.html">misc (3)</a></li>
+							<li><a href="http://dandavison.github.io/notes/category/misc.html">misc (4)</a></li>
 						</ul>
 					</div>
 				</div>

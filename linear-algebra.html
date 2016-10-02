@@ -44,10 +44,14 @@
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 &amp; #2\\#3 &amp; #4\\ \end{bmatrix}}
 \newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
 \newcommand{\nth}{n^{\text{th}}}
 $$</div>
+<p>Notes from the
+<a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a>
+video series by Grant Sanderson.</p>
 <hr />
-<h3>Linear transformations and matrices</h3>
+<h3 id="linear-transformations-and-matrices">Linear transformations and matrices</h3>
 <p>A linear transformation is completely specified by</p>
 <ol>
 <li>Some basis vectors <span class="math">\(\i\)</span> and <span class="math">\(\j\)</span></li>
@@ -91,7 +95,7 @@ $$</div>
 $$</div>
 <p>A matrix represents a linear transformation by showing where the basis vector are taken to.</p>
 <hr />
-<h3>Change of basis</h3>
+<h3 id="change-of-basis">Change of basis</h3>
 <p>Suppose person B uses some other basis vectors to describe locations in
 space. Specifically, in our coordinates, their basis vectors are
 <span class="math">\(\scvec{2}{1}\)</span> and <span class="math">\(\scvec{-1}{1}\)</span>.</p>
@@ -144,155 +148,6 @@ $$</div>
 \begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
 $$</div>
 <p>Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.</p>
-<hr />
-<h3>Eigenbasis Fibonacci proof</h3>
-<h4><strong>Introduction</strong></h4>
-<p>Consider the matrix</p>
-<div class="math">$$
-A = \mat{0}{1}
-        {1}{1}
-$$</div>
-<p>The first few powers are</p>
-<div class="math">\begin{align*}
-&amp;A^{1} &amp;= \mat{0}{1}
-              {1}{1}
-\\
-&amp;A^{2} = \mat{0}{1}
-             {1}{1} \mat{0}{1}
-                        {1}{1} &amp;= \mat{1}{1}
-                                      {1}{2}
-\\
-&amp;A^{3} = \mat{0}{1}
-             {1}{1} \mat{1}{1}
-                        {1}{2} &amp;= \mat{1}{2}
-                                      {2}{3}
-\\
-&amp;A^{4} = \mat{0}{1}
-             {1}{1} \mat{1}{2}
-                        {2}{3} &amp;= \mat{2}{3}
-                                      {3}{5}
-\end{align*}</div>
-<p>Define the Fibonacci numbers to be <span class="math">\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...\)</span> = <span class="math">\(0, 1, 1, 2, 3, 5, 8, ...\)</span>.</p>
-<p>The matrix powers are generating the Fibonacci sequence:</p>
-<div class="math">$$
-A^{n} = \mat{F_{n-1} }{F_n      }
-            {F_n     }{F_{n+1} }
-$$</div>
-<p>So if there were an efficient algorithm for computing the <span class="math">\(\nth\)</span> power of the matrix, that would also be an efficient algorithm for computing the <span class="math">\(\nth\)</span> Fibonacci number "directly", i.e. without computing all the preceding Fibonacci numbers <em>en route</em>.</p>
-<p>How can we do this? To state the problem in a different way, we need to construct a new matrix that performs exactly the same transformation as <span class="math">\(A^n\)</span>, but which somehow does the exponentiation step "in one go" rather than by multiplying <span class="math">\(A\)</span> with itself <span class="math">\(n\)</span> times.</p>
-<h4><strong>Solution outline</strong></h4>
-<p>Matrices represent transformations, so we can talk about them as taking in some vector and producing some other vector. The approach we're going to take is to re-express the <span class="math">\(A^n\)</span> transformation as follows:</p>
-<ol>
-<li>Convert the input vector to its representation in an alternative basis which uses the eigenvectors as the basis vectors (it's called an "eigenbasis").</li>
-<li>In this alternative basis, compute the new position of the vector after carrying out the <span class="math">\(A^n\)</span> transformation.</li>
-<li>Convert the resulting vector back to its representation in our original basis.</li>
-</ol>
-<p>I.e., we're going to compute the overall transformation as this product of matrices:</p>
-<div class="math">$$
-\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
-\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
-\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
-$$</div>
-<p>The key part of all this -- the crux of the trick -- is that the exponentiation is efficient in the eigenbasis. We'll see why below.</p>
-<h4><strong>Solution details</strong></h4>
-<p>Let's suppose we've already found the eigenvectors and that there are two of them and we've arranged them as the two columns of a matrix <span class="math">\(V\)</span>. So <span class="math">\(V\)</span> holds the basis vectors of the alternative basis and therefore we know from the change of basis notes above that <span class="math">\(V\)</span> is the matrix that takes as input a vector expressed in the alternative basis and outputs its representation in our basis. So, step (3) is done by <span class="math">\(V\)</span>, and step (1) is done by <span class="math">\(V^{-1}\)</span>, and the matrix performing all three steps is going to look like</p>
-<p>i.e.</p>
-<div class="math">$$
-V
-\begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
-V^{-1}
-$$</div>
-<p>OK, so what is the matrix in the middle? The change of basis section above tells us that we can compute it as</p>
-<div class="math">$$
-\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
-A
-\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
-$$</div>
-<p>so in other words the matrix in the middle is</p>
-<div class="math">$$
-V^{-1}AV
-$$</div>
-<p>and the entire transformation is</p>
-<div class="math">$$
-V
-\Big(V^{-1}AV\Big)^n
-V^{-1}
-$$</div>
-<p>Recall that above we observed that the <span class="math">\(\nth\)</span> power of <span class="math">\(A\)</span> is a matrix with the nth Fibonacci number in its bottom left and top right entries. So the following tasks remain:</p>
-<ol>
-<li>Find the eigenvectors and put them in a matrix <span class="math">\(V\)</span></li>
-<li>Find the inverse of <span class="math">\(V\)</span></li>
-<li>Compute the matrix product <span class="math">\(V^{-1}AV\)</span></li>
-<li>Compute the result of raising that to the <span class="math">\(\nth\)</span> power</li>
-<li>Plug the result of that into the overall expression</li>
-<li>Take the entry in the bottom left or top right (they should be the same!) and simplify.</li>
-</ol>
-<p>The result should be an expression giving the <span class="math">\(\nth\)</span> Fibonacci number as a function of <span class="math">\(n\)</span>. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.</p>
-<h5><strong>1. Find the eigenvectors</strong></h5>
-<p>We follow the textbook approach: We have
-</p>
-<div class="math">$$
-A = \mat{0}{1}
-        {1}{1}
-$$</div>
-<p>
-An eigenvector <span class="math">\(v\)</span> satisfies <span class="math">\(Av = \lambda v\)</span> for some scalar <span class="math">\(\lambda\)</span>. That equation can be rearranged as follows</p>
-<div class="math">\begin{align*}
-A\vec v &amp;= \lambda I\vec v
-\\
-A\vec v - \lambda I\vec v &amp;= \vec 0
-\\
-(A - \lambda I)\vec v &amp;= \vec 0
-\end{align*}</div>
-<p>
-which means that the matrix <span class="math">\(A - \lambda I\)</span> is a transformation that takes some non-zero vector <span class="math">\(\vec v\)</span> to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors <span class="math">\(\lambda\)</span>:</p>
-<div class="math">\begin{align*}
-\det (A - \lambda I) &amp;= 0
-\\
-\\
-\det \mat{-\lambda}{1}
-         {1          }{1 - \lambda} &amp;= 0
-\\
-\\
-(-\lambda)(1 - \lambda) - 1 &amp;= 0
-\\
-\\
-\lambda^2 - \lambda - 1 = 0
-\end{align*}</div>
-<p>Using the quadratic formula we have <span class="math">\(a=1, b=-1, c=-1\)</span> and</p>
-<div class="math">\begin{align*}
-\lambda
-= \frac{-b ± \sqrt{b^2 - 4ac}}{2a}
-= \frac{1 ± \sqrt{5}}{2}
-\end{align*}</div>
-<p>which are the two eigenvalues. To find the first eigenvector we plug <span class="math">\(\frac{1 + \sqrt{5}}{2}\)</span> into the equation above:</p>
-<div class="math">\begin{align*}
-(A - \lambda I)\vec v &amp;= \vec 0
-\\
-\\
-\mat{-\lambda}{1}
-    {1       }{1 - \lambda} \vec v &amp;= \vec 0
-\\
-\\
-\mat{\frac{-1 - \sqrt{5}}{2} }{1                       }
-    {1                       }{ \frac{1 - \sqrt(5)}{2} } \vec v &amp;= \vec 0
-\end{align*}</div>
-<p>Let the eigenvector <span class="math">\(v\)</span> be <span class="math">\(\scvec{v_1}{v_2}\)</span>. So <span class="math">\(v1\)</span> and <span class="math">\(v2\)</span> satisfy the system of equations</p>
-<div class="math">$$
-\begin{cases}
-v_1\Big(\frac{-1 - \sqrt(5)}{2}\Big) + v_2 = 0 \\
-v_1 + v2\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
-\end{cases}
-\\
-\\
-v2 = v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)
-\\
-\\
-v_1 + v_1\Big(\frac{1 + \sqrt(5)}{2}\Big)\Big(\frac{1 - \sqrt(5)}{2}\Big) = 0
-\\
-\\
-v_1\Big(1 + \frac{-4}{2}\Big) = 0
-$$</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -390,7 +245,7 @@ $$</div>
 						<h4>Categories</h4>
 						<ul class="list-unstyled my-list-style">
 							<li><a href="http://dandavison.github.io/notes/category/calculus.html">calculus (1)</a></li>
-							<li><a href="http://dandavison.github.io/notes/category/misc.html">misc (3)</a></li>
+							<li><a href="http://dandavison.github.io/notes/category/misc.html">misc (4)</a></li>
 						</ul>
 					</div>
 				</div>
