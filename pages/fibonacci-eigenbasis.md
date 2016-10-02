@@ -1,4 +1,4 @@
-Title: Finding the nth Fibonacci number by a change of basis to the eigenvectors
+Title: Finding the nth Fibonacci number via an eigenvector change of basis
 Slug: fibonacci-eigenbasis
 Date: 2016-10-01
 
@@ -15,7 +15,7 @@ $$
 
 This is the problem given at the end of the eigenvectors video in the
 [Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
-series by Grant Sanderson,.
+series by Grant Sanderson.
 
 -------------------------------------------------------------------------------
 #### **Introduction**
