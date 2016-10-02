@@ -268,33 +268,33 @@ The result should be an expression giving the $\nth$ Fibonacci number as a funct
 \begin{align*}
 &\text{The eigenvectors are}
 \\\\
-&V &= \mat{2          }{2          }
+&&V = \mat{2          }{2          }
         {1 + \sqrt 5}{1 - \sqrt 5}
 \\\\
 &\text{which has inverse}
 \\\\
-&V^{-1} &= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+&&V^{-1} = \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
                                  {-1 - \sqrt 5}{2}
 \\\\
 &\text{Therefore}
 \\\\
-&V^{-1}AV &= \frac{1}{2} \mat{1 + \sqrt 5}{0          }
+&&V^{-1}AV = \frac{1}{2} \mat{1 + \sqrt 5}{0          }
                             {0          }{1 - \sqrt 5}
 \\\\
 &\text{and}
 \\\\
-&(V^{-1}AV)^n &= \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+&&(V^{-1}AV)^n = \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
                                    {0                }{(1 - \sqrt 5)^n}
 \\\\
 &\text{and}
 \\\\
-&V \Big(V^{-1}AV\Big)^n V^{-1} &=
+&&V \Big(V^{-1}AV\Big)^n V^{-1} =
 \mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
     {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
 \\\\
 &\text{Therefore the nth Fibonacci number is}
 \\\\
-&F_n &= \frac{(1 + \sqrt 5)^n     - (1 - \sqrt 5)^n}
+&&F_n = \frac{(1 + \sqrt 5)^n     - (1 - \sqrt 5)^n}
              {2^n    \sqrt 5}
 \end{align*}
 
