@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Notes</title><link href="https://dandavison.github.io/" rel="alternate"></link><link href="https://dandavison.github.io/feeds/misc.atom.xml" rel="self"></link><id>https://dandavison.github.io/</id><updated>2016-10-01T00:00:00-07:00</updated><entry><title>Finding the nth Fibonacci number via an eigenvector change of basis</title><link href="https://dandavison.github.io/fibonacci-eigenbasis.html" rel="alternate"></link><published>2016-10-01T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-10-01:fibonacci-eigenbasis.html</id><summary type="html">&lt;div class="math"&gt;$$
+<feed xmlns="http://www.w3.org/2005/Atom"><title></title><link href="http://dandavison.github.io/" rel="alternate"></link><link href="http://dandavison.github.io/feeds/misc.atom.xml" rel="self"></link><id>http://dandavison.github.io/</id><updated>2016-10-01T00:00:00-07:00</updated><entry><title>Finding the nth Fibonacci number via an eigenvector change of basis</title><link href="http://dandavison.github.io/fibonacci-eigenbasis.html" rel="alternate"></link><published>2016-10-01T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-10-01:fibonacci-eigenbasis.html</id><summary type="html">&lt;div class="math"&gt;$$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
@@ -421,7 +421,7 @@ V \Big(V^{-1}AV\Big)^n V^{-1}
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="https://dandavison.github.io/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
+&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="http://dandavison.github.io/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
@@ -587,7 +587,7 @@ $$&lt;/div&gt;
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary></entry><entry><title>Classical Mechanics by John R. Taylor</title><link href="https://dandavison.github.io/taylor-classical-mechanics.html" rel="alternate"></link><published>2016-05-29T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-05-29:taylor-classical-mechanics.html</id><summary type="html">&lt;p&gt;My notes on &lt;a href="http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X"&gt;Classical Mechanics&lt;/a&gt; by John R. Taylor.&lt;/p&gt;
+&lt;/script&gt;</summary></entry><entry><title>Classical Mechanics by John R. Taylor</title><link href="http://dandavison.github.io/taylor-classical-mechanics.html" rel="alternate"></link><published>2016-05-29T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-05-29:taylor-classical-mechanics.html</id><summary type="html">&lt;p&gt;My notes on &lt;a href="http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X"&gt;Classical Mechanics&lt;/a&gt; by John R. Taylor.&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \newcommand{\xhat}{\vec{e_x}}
 \newcommand{\yhat}{\vec{e_y}}
