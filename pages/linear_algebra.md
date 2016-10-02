@@ -8,6 +8,7 @@ $$
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\mat}[4]{\begin{bmatrix}#1 & #2\\#3 & #4\\ \end{bmatrix}}
 \newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
+\newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
 \newcommand{\nth}{n^{\text{th}}}
 $$
 
@@ -262,6 +263,31 @@ Recall that above we observed that the $\nth$ power of $A$ is a matrix with the 
 The result should be an expression giving the $\nth$ Fibonacci number as a function of $n$. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.
 
 
+#### **The answer without proofs**
+
+The eigenvectors are
+
+$$
+V = \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+$$
+
+which has inverse
+
+$$
+V^{-1} = \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                                 {-1 - \sqrt 5}{2}
+\end{align*}
+
+Therefore
+
+$$
+V^{-1}AV =
+$$
+
+
+#### **Proofs**
+
 ##### **1. Find the eigenvectors**
 We follow the textbook approach: We have
 $$
@@ -322,4 +348,78 @@ v_1          &+ (1 - \lambda) v_2 &= 0
 \end{cases}
 $$
 
-From the first equation [ref]Using the second equation gives the same answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many eigenvectors (a line of them) associated with any given eigenvalue, so we can pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$.
+From the first equation [ref]Using the second equation gives the same answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many eigenvectors (a line of them) associated with any given eigenvalue, so we can pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$. The matrix containing the eigenvectors is
+
+$$
+V = \mat{2          }{2          }
+        {1 + \sqrt 5}{1 - \sqrt 5}
+$$
+
+
+##### **2. Find inverse of $V$**
+
+The inverse of a 2x2 matrix is given by
+
+$$
+\mat{a}{c}
+    {b}{d} ^ {-1}
+=
+\frac{1}{\text{det}} \mat{d}{-c}
+                         {-b}{a}
+$$
+
+where $\text{det} = ad - cb$. Therefore
+
+\begin{align*}
+V^{-1}
+&= \frac{1}{2(1 - \sqrt 5) - 2(1 + \sqrt 5)} \mat{1 - \sqrt 5 }{-2}
+                                                 {-(1 + \sqrt 5)}{2}
+\\\\
+&= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+                           {-(1 + \sqrt 5)}{2}
+\end{align*}
+
+
+##### **2. Find the matrix product $V^{-1}AV$**
+
+Before we get lost in the calculation, let's remember what this is. It's a matrix that does the $A$ transformation, but _in the coordinate system defined by $A$'s eigenvectors_. So, the resulting matrix _must_ do nothing other than stretch space in the direction of one or both basis vectors. That's because (1) we represent a transformation with a matrix saying where each of the basis vectors are taken to, (2) the definition of an eigenvector of a transformation is that it is a vector which is simply stretched by the transformation with no change in direction, therefore (3) if the eigenvectors are the basis vectors, then the matrix representing the transformation must just stretch space in the two directions.
+
+A matrix which stretches space in the direction of the basis vectors looks like $\smat{a}{0}{0}{b}$, i.e. it is diagonal. Therefore, $V^{-1}AV$ _must_ be diagonal.
+
+\begin{align*}
+V^{-1}AV &=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{0}{1}
+    {1}{1}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\\\\
+&=
+\frac{-1}{4\sqrt 5}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\mat{1 + \sqrt 5}{1 - \sqrt 5}
+    {3 + \sqrt 5}{3 - \sqrt 5}
+\\\\
+&=
+\frac{-1}{4\sqrt 5}
+\mat{-4 - 2(3 + \sqrt 5)             }{6 - 2\sqrt 5 - 2(3 - \sqrt 5)}
+    {-(6 + 2\sqrt 5) + 2(3 + \sqrt 5)}{4 + 2(3 - \sqrt 5)}
+\\\\
+&=
+\frac{-1}{2\sqrt 5}
+\mat{-2 - 3 - \sqrt 5}{3 - \sqrt 5 - 3 + \sqrt 5}
+    {-3 - \sqrt 5 + 3 + \sqrt 5}{2 + 3 - \sqrt 5}
+\\\\
+&=
+\frac{-1}{2\sqrt 5}
+\mat{-5 - \sqrt 5}{0          }
+    {0           }{5 - \sqrt 5}
+\\\\
+&=
+\frac{1}{2}
+\mat{1 + \sqrt 5}{0          }
+    {0          }{1 - \sqrt 5}
+\end{align*}
