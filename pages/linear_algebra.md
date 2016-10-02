@@ -253,40 +253,53 @@ $$
 
 Recall that above we observed that the $\nth$ power of $A$ is a matrix with the nth Fibonacci number in its bottom left and top right entries. So the following tasks remain:
 
-1. Find the eigenvectors and put them in a matrix $V$
-2. Find the inverse of $V$
-3. Compute the matrix product $V^{-1}AV$
-4. Compute the result of raising that to the $\nth$ power
-5. Plug the result of that into the overall expression
-6. Take the entry in the bottom left or top right (they should be the same!) and simplify.
+1. Find the eigenvectors and put them in a matrix $V$.
+2. Find the inverse of $V$.
+3. Compute the matrix product $V^{-1}AV$.
+4. Compute the result of raising that to the $\nth$ power.
+5. Plug the result of that into the overall expression.
+6. Take the entry in the bottom left or top right (they should be the same!).
 
 The result should be an expression giving the $\nth$ Fibonacci number as a function of $n$. It should be possible to give as input to that function the number one million, and have it output the one millionth Fibonacci number directly, without it having to go through the preceding 999,999 Fibonacci numbers.
 
 
-#### **The answer without proofs**
+#### **The answer without showing the calculations**
 
-The eigenvectors are
-
-$$
-V = \mat{2          }{2          }
+\begin{align*}
+&\text{The eigenvectors are}
+\\\\
+&V &= \mat{2          }{2          }
         {1 + \sqrt 5}{1 - \sqrt 5}
-$$
-
-which has inverse
-
-$$
-V^{-1} = \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
+\\\\
+&\text{which has inverse}
+\\\\
+&V^{-1} &= \frac{-1}{4\sqrt 5} \mat{1 - \sqrt 5 }{-2}
                                  {-1 - \sqrt 5}{2}
+\\\\
+&\text{Therefore}
+\\\\
+&V^{-1}AV &= \frac{1}{2} \mat{1 + \sqrt 5}{0          }
+                            {0          }{1 - \sqrt 5}
+\\\\
+&\text{and}
+\\\\
+&(V^{-1}AV)^n &= \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                   {0                }{(1 - \sqrt 5)^n}
+\\\\
+&\text{and}
+\\\\
+&V \Big(V^{-1}AV\Big)^n V^{-1} &=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
+\\\\
+&\text{Therefore the nth Fibonacci number is}
+\\\\
+&F_n &= \frac{(1 + \sqrt 5)^n     - (1 - \sqrt 5)^n}
+             {2^n    \sqrt 5}
 \end{align*}
 
-Therefore
 
-$$
-V^{-1}AV =
-$$
-
-
-#### **Proofs**
+#### **Calculations**
 
 ##### **1. Find the eigenvectors**
 We follow the textbook approach: We have
@@ -303,6 +316,7 @@ A\vec v - \lambda I\vec v &= \vec 0
 \\
 (A - \lambda I)\vec v &= \vec 0
 \end{align*}
+
 which means that the matrix $A - \lambda I$ is a transformation that takes some non-zero vector $\vec v$ to the zero vector (i.e. it has a non-empty "null space"). This means that the transformation cannot be reversed, i.e. the matrix has no inverse, i.e. its determinant is zero. So, use that last fact to find the eigenvectors $\lambda$:
 
 \begin{align*}
@@ -339,7 +353,8 @@ To find eigenvectors associated with the eigenvalues, go back to the equations
     {1       }{1 - \lambda} \vec v &= \vec 0
 \end{align*}
 
-Let an eigenvector $v$ be $\scvec{v_1}{v_2}$. The matrix equation corresponds to this system of equations:
+Let an eigenvector $v$ be $\scvec{v_1}{v_2}$. The matrix equation corresponds
+to this system of equations:
 
 $$
 \begin{cases}
@@ -348,7 +363,12 @@ v_1          &+ (1 - \lambda) v_2 &= 0
 \end{cases}
 $$
 
-From the first equation [ref]Using the second equation gives the same answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many eigenvectors (a line of them) associated with any given eigenvalue, so we can pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$. The matrix containing the eigenvectors is
+From the first equation [ref]Using the second equation gives the same
+answer. TODO: Why?[/ref] we have $v_2 = \lambda v_1$. There are infinitely many
+eigenvectors (a line of them) associated with any given eigenvalue, so we can
+pick an arbitrary value for $v_1$. If we choose $v_1=2$ then we have
+eigenvectors $\scvec{2}{1+\sqrt 5}$ and $\scvec{2}{1-\sqrt 5}$. The matrix
+containing the eigenvectors is
 
 $$
 V = \mat{2          }{2          }
@@ -380,11 +400,20 @@ V^{-1}
 \end{align*}
 
 
-##### **2. Find the matrix product $V^{-1}AV$**
+##### **3. Find the matrix product $V^{-1}AV$**
 
-Before we get lost in the calculation, let's remember what this is. It's a matrix that does the $A$ transformation, but _in the coordinate system defined by $A$'s eigenvectors_. So, the resulting matrix _must_ do nothing other than stretch space in the direction of one or both basis vectors. That's because (1) we represent a transformation with a matrix saying where each of the basis vectors are taken to, (2) the definition of an eigenvector of a transformation is that it is a vector which is simply stretched by the transformation with no change in direction, therefore (3) if the eigenvectors are the basis vectors, then the matrix representing the transformation must just stretch space in the two directions.
-
-A matrix which stretches space in the direction of the basis vectors looks like $\smat{a}{0}{0}{b}$, i.e. it is diagonal. Therefore, $V^{-1}AV$ _must_ be diagonal.
+Before we get lost in the calculation, let's remember what this is. It's a
+matrix that does the $A$ transformation, but _in the coordinate system defined
+by $A$'s eigenvectors_. So, the resulting matrix _must_ do nothing other than
+stretch space in the direction of one or both basis vectors. That's because (1)
+we represent a transformation with a matrix saying where each of the basis
+vectors are taken to, (2) the definition of an eigenvector of a transformation
+is that it is a vector which is simply stretched by the transformation with no
+change in direction, therefore (3) if the eigenvectors are the basis vectors,
+then the matrix representing the transformation must just stretch space in the
+two directions. A matrix which stretches space in the direction of the basis
+vectors looks like $\smat{a}{0}{0}{b}$, i.e. it is diagonal. Therefore,
+$V^{-1}AV$ _must_ be diagonal.
 
 \begin{align*}
 V^{-1}AV &=
@@ -422,4 +451,51 @@ V^{-1}AV &=
 \frac{1}{2}
 \mat{1 + \sqrt 5}{0          }
     {0          }{1 - \sqrt 5}
+\end{align*}
+
+##### **4. Compute $(V^{-1}AV)^n$**
+
+The matrix is diagonal so this is straightforward. Note that this is the whole point of converting to the eigenbasis: the exponentiation at this step just involves the usual operations of raising scalar numbers to a power; no need to multiply matrices together. A computer will be able to compute the $\nth$ power of a diagonal matrix much faster than that of a non-diagonal matrix.
+
+$$
+(V^{-1}AV)^n = \frac{1}{2^n} \mat{(1 + \sqrt 5)^n}{0          }
+                                 {0              }{(1 - \sqrt 5)^n}
+$$
+
+##### **4. Plug the $\nth$ power into the overall expression**
+
+\begin{align*}
+V \Big(V^{-1}AV\Big)^n V^{-1}
+&=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 + \sqrt 5)^n}{0              }
+    {0              }{(1 - \sqrt 5)^n}
+\mat{1 - \sqrt 5 }{-2}
+    {-(1 + \sqrt 5)}{2}
+\\\\
+&=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2          }{2          }
+    {1 + \sqrt 5}{1 - \sqrt 5}
+\mat{(1 - \sqrt 5)(1 + \sqrt 5)^n}{-2(1 + \sqrt 5)^n}
+    {-(1 + \sqrt 5)(1 - \sqrt 5)^n}{2(1 - \sqrt 5)^n}
+\\\\
+&=
+\frac{-1}{4\sqrt 5}
+\frac{1}{2^n}
+\mat{2(-4)\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{-4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}
+    {   -4\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{-2\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}
+\\\\
+&=
+\frac{1}{4\sqrt 5}
+\mat{4\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}}}{4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}
+    {4\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    }}{ \frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n-1}}}
+\\\\
+&=
+\mat{\frac{\big((1 + \sqrt 5)^{n-1} - (1 - \sqrt 5)^{n-1}\big)}{2^{n-1}\sqrt 5}}{\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}
+    {\frac{\big((1 + \sqrt 5)^n     - (1 - \sqrt 5)^n    \big)}{2^n    \sqrt 5}}{\frac{\big((1 + \sqrt 5)^{n+1} - (1 - \sqrt 5)^{n+1}\big)}{2^{n+1}\sqrt 5}}
 \end{align*}
