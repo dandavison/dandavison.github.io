@@ -39,6 +39,7 @@ PLUGINS = [
 ]
 
 MD_EXTENSIONS = [
+    'codehilite',
     'headerid',
 ]
 
