@@ -3,7 +3,7 @@ Slug: taylor-classical-mechanics
 Date: 2016-05-29
 
 
-My notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X) by John R. Taylor.
+Notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X) by John R. Taylor.
 
 
 $$
