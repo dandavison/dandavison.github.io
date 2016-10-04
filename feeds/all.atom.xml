@@ -10,7 +10,7 @@
 $$&lt;/div&gt;
 &lt;p&gt;This is the problem given at the end of the eigenvectors video in the
 &lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
-series by Grant Sanderson.&lt;/p&gt;
+series by &lt;a href="http://www.3blue1brown.com/"&gt;3blue1brown&lt;/a&gt;.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h4 id="introduction"&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h4&gt;
 &lt;p&gt;Consider the matrix&lt;/p&gt;
@@ -432,7 +432,7 @@ V \Big(V^{-1}AV\Big)^n V^{-1}
 $$&lt;/div&gt;
 &lt;p&gt;Notes from the
 &lt;a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"&gt;Essence of Linear Algebra&lt;/a&gt;
-video series by Grant Sanderson.&lt;/p&gt;
+video series by &lt;a href="http://www.3blue1brown.com/"&gt;3blue1brown&lt;/a&gt;.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h3 id="linear-transformations-and-matrices"&gt;Linear transformations and matrices&lt;/h3&gt;
 &lt;p&gt;A linear transformation is completely specified by&lt;/p&gt;
