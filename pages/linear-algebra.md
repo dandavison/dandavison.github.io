@@ -14,7 +14,7 @@ $$
 
 Notes from the
 [Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
-video series by Grant Sanderson.
+video series by [3blue1brown](http://www.3blue1brown.com/).
 
 -------------------------------------------------------------------------------
 ### Linear transformations and matrices

@@ -15,7 +15,7 @@ $$
 
 This is the problem given at the end of the eigenvectors video in the
 [Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)
-series by Grant Sanderson.
+series by [3blue1brown](http://www.3blue1brown.com/).
 
 -------------------------------------------------------------------------------
 #### **Introduction**
