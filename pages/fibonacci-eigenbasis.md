@@ -2,6 +2,10 @@ Title: Finding the nth Fibonacci number via an eigenvector change of basis
 Slug: fibonacci-eigenbasis
 Date: 2016-10-01
 
+<style type="text/css">
+body {color: black;}
+</style>
+
 $$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
