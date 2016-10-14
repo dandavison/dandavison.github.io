@@ -128,15 +128,15 @@ Conceptually, we have
 $$
 \mat{2}{-1}
     {1}{1} =
-\begin{bmatrix}\text{matrix converting their}\\\text{terminology to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$
 
-where "their terminology" means the vector expressed using their coordinate
+where "their representation" means the vector expressed using their coordinate
 system. So the role played by the inverse is
 
 $$
 \cvec{a}{b} =
-\begin{bmatrix}\text{matrix converting our}\\\text{terminology to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \cvec{3}{2}.
 $$
 
@@ -152,10 +152,10 @@ $$
 what is that transformation in their coordinates? The answer is
 
 $$
-\begin{bmatrix}\text{matrix converting our}\\\text{terminology to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \mat{1}{-1}
     {0}{0}
-\begin{bmatrix}\text{matrix converting their}\\\text{terminology to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$
 
 since the composition of those three transformations defines a single
