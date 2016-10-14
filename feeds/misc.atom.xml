@@ -207,7 +207,7 @@ than a century earlier. It can be written as&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
 $$&lt;/div&gt;
-&lt;p&gt;where &lt;span class="math"&gt;\(\phi = \frac{1+\sqrt(5)}{2}\)&lt;/span&gt; is the
+&lt;p&gt;where &lt;span class="math"&gt;\(\phi = \frac{1+\sqrt{5}}{2}\)&lt;/span&gt; is the
 &lt;a href="https://en.wikipedia.org/wiki/Golden_ratio"&gt;golden ratio&lt;/a&gt;.&lt;/p&gt;
 &lt;h4 id="calculations"&gt;&lt;strong&gt;Calculations&lt;/strong&gt;&lt;/h4&gt;
 &lt;h5 id="1-find-the-eigenvectors"&gt;&lt;strong&gt;1. Find the eigenvectors&lt;/strong&gt;&lt;/h5&gt;
