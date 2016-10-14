@@ -154,4 +154,6 @@ $$
 \begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
 $$
 
-Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.
+since the composition of those three transformations defines a single
+transformation that takes in a vector in their language, converts it to ours,
+transforms it as requested, and then converts back to theirs.
