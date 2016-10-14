@@ -2,6 +2,10 @@ Title: Linear Algebra
 Slug: linear-algebra
 Date: 2016-08-14
 
+<style type="text/css">
+body {color: black;}
+</style>
+
 $$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
