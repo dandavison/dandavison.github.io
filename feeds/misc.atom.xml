@@ -425,7 +425,11 @@ V \Big(V^{-1}AV\Big)^n V^{-1}
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="http://dandavison.github.io/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:linear-algebra.html</id><summary type="html">&lt;div class="math"&gt;$$
+&lt;/script&gt;</summary></entry><entry><title>Linear Algebra</title><link href="http://dandavison.github.io/linear-algebra.html" rel="alternate"></link><published>2016-08-14T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-08-14:linear-algebra.html</id><summary type="html">&lt;style type="text/css"&gt;
+body {color: black;}
+&lt;/style&gt;
+
+&lt;div class="math"&gt;$$
 \newcommand{\i}{\mathbf{i}}
 \newcommand{\j}{\mathbf{j}}
 \newcommand{\cvec}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
@@ -534,7 +538,9 @@ $$&lt;/div&gt;
     {0}{0}
 \begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
 $$&lt;/div&gt;
-&lt;p&gt;Since the composition of those three transformations defines a single transformation that takes in a vector in their language, converts it to ours, transforms it as requested, and then converts back to theirs.&lt;/p&gt;
+&lt;p&gt;since the composition of those three transformations defines a single
+transformation that takes in a vector in their language, converts it to ours,
+transforms it as requested, and then converts back to theirs.&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
