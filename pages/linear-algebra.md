@@ -76,7 +76,8 @@ $$
 $$
 
 
-A matrix represents a linear transformation by showing where the basis vector are taken to.
+A matrix represents a linear transformation by showing where the basis vector
+are taken to.
 
 -------------------------------------------------------------------------------
 ### Change of basis
@@ -90,11 +91,11 @@ $\scvec{2}{1}$ and $\scvec{-1}{1}$.
 
 If they say $\scvec{-1}{2}$, what is that in our coordinates?
 
-Well, if they say $\scvec{1}{0}$, that's $\scvec{2}{1}$ in our
-coordinates. And if they say $\scvec{0}{1}$, that's $\scvec{-1}{1}$ in our
-coordinates. So the matrix containing _their basis vectors expressed in our
-coordinates_ transforms a point expressed in their language into one expressed
-in ours. So, the answer is
+Well, if they say $\scvec{1}{0}$, that's $\scvec{2}{1}$ in our coordinates. And
+if they say $\scvec{0}{1}$, that's $\scvec{-1}{1}$ in our coordinates. So the
+matrix containing _their basis vectors expressed using our coordinate system_
+transforms a point expressed in their coordinate system into one expressed in
+ours. That last sentence is critical, so hopefully it makes sense! So, the answer is
 
 $$
 \mat{2}{-1}
@@ -105,7 +106,8 @@ $$
 **When we state a vector, what is it in their coordinates?**
 
 We give the vector $\scvec{3}{2}$. What is that in their coordinate system? By
-definition, the answer is the weights that scales their basis vectors to hit $\scvec{3}{2}$. So, the solution to
+definition, the answer is the weights that scales their basis vectors to hit
+$\scvec{3}{2}$. So, the solution to
 
 $$
 \mat{2}{-1}
@@ -113,7 +115,8 @@ $$
 $$
 
 
-Computationally, we can see that we can get the solution by multiplying both sides by the inverse:
+Computationally, we can see that we can get the solution by multiplying both
+sides by the inverse:
 
 $$
 \cvec{a}{b} = \mat{2}{-1}
@@ -125,14 +128,15 @@ Conceptually, we have
 $$
 \mat{2}{-1}
     {1}{1} =
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{terminology to ours} \\ \end{bmatrix}
 $$
 
-and so the role played by the inverse is
+where "their terminology" means the vector expressed using their coordinate
+system. So the role played by the inverse is
 
 $$
 \cvec{a}{b} =
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{terminology to theirs} \\ \end{bmatrix}
 \cvec{3}{2}.
 $$
 
@@ -148,12 +152,13 @@ $$
 what is that transformation in their coordinates? The answer is
 
 $$
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{terminology to theirs} \\ \end{bmatrix}
 \mat{1}{-1}
     {0}{0}
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{terminology to ours} \\ \end{bmatrix}
 $$
 
 since the composition of those three transformations defines a single
-transformation that takes in a vector in their language, converts it to ours,
-transforms it as requested, and then converts back to theirs.
+transformation that takes in a vector expressed in their coordinate system,
+converts it to our coordinate system, transforms it as requested, and then
+converts back to theirs.
