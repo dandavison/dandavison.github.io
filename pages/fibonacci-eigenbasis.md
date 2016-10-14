@@ -365,15 +365,16 @@ V^{-1}
 Before we get lost in the calculation, let's remember what this is. It's a
 matrix that does the $A$ transformation, but _in the coordinate system defined
 by $A$'s eigenvectors_. So, the resulting matrix _must_ do nothing other than
-stretch space in the direction of one or both basis vectors. That's because (1)
-we represent a transformation with a matrix saying where each of the basis
-vectors are taken to, (2) the definition of an eigenvector of a transformation
-is that it is a vector which is simply stretched by the transformation with no
-change in direction, therefore (3) if the eigenvectors are the basis vectors,
-then the matrix representing the transformation must just stretch space in the
-two directions. A matrix which stretches space in the direction of the basis
-vectors looks like $\smat{a}{0}{0}{b}$, i.e. it is diagonal. Therefore,
-$V^{-1}AV$ _must_ be diagonal.
+stretch space in the direction of one or both basis vectors in that coordinate
+system. That's because (1) we represent a transformation with a matrix saying
+where each of the basis vectors are taken to, (2) the definition of an
+eigenvector of a transformation is that it is a vector which is simply
+stretched by the transformation with no change in direction, therefore (3) if
+the eigenvectors are the basis vectors, then the matrix representing the
+transformation must just stretch space in the two directions. A matrix which
+stretches space in the direction of the basis vectors looks like
+$\smat{a}{0}{0}{b}$, i.e. it is diagonal. Therefore, $V^{-1}AV$ _must_ be
+diagonal.
 
 \begin{align*}
 V^{-1}AV &=
