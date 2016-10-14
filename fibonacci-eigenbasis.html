@@ -81,16 +81,17 @@ $$</div>
                         {2}{3} &amp;= \mat{2}{3}
                                       {3}{5}
 \end{align*}</div>
-<p>Define the Fibonacci numbers to be <span class="math">\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...\)</span> = <span class="math">\(0, 1, 1, 2, 3, 5, 8, ...\)</span>.</p>
+<p>The Fibonacci sequence is the sequence you get by starting with <span class="math">\(0,
+1\)</span> and after that always forming the next number by adding the two previous ones:
+<span class="math">\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, F_7, ...\)</span> = <span class="math">\(0, 1, 1, 2, 3, 5, 8, 13, ...\)</span>.</p>
 <p>The matrix powers are generating the Fibonacci sequence:</p>
 <div class="math">$$
 A^{n} = \mat{F_{n-1} }{F_n      }
             {F_n     }{F_{n+1} }
 $$</div>
-<p>So if there were an efficient algorithm for computing the <span class="math">\(\nth\)</span> power of the
-matrix, that would also be an efficient algorithm for computing the <span class="math">\(\nth\)</span>
-Fibonacci number "directly", i.e. without computing all the preceding Fibonacci
-numbers <em>en route</em>.</p>
+<p>So if there were a way to compute the <span class="math">\(\nth\)</span> power of that matrix "directly",
+that would also be a way to compute the <span class="math">\(\nth\)</span> Fibonacci number "directly",
+i.e. without computing all the preceding Fibonacci numbers <em>en route</em>.</p>
 <p>How can we do this? To state the problem in a different way, we need to
 construct a new matrix that performs exactly the same transformation as <span class="math">\(A^n\)</span>,
 but which somehow does the exponentiation step "in one go" rather than by
@@ -108,7 +109,7 @@ re-express the <span class="math">\(A^n\)</span> transformation as follows:</p>
    basis.</li>
 </ol>
 <p>I.e., we're going to compute the overall transformation as this product of
-matrices:</p>
+matrices (remember that one reads these things right-to-left):</p>
 <div class="math">$$
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
@@ -121,14 +122,14 @@ vectors. So to do the transformation <span class="math">\(n\)</span> times in th
 stretch by the stretch-factor raised to the <span class="math">\(\nth\)</span> power, rather than doing <span class="math">\(n\)</span>
 matrix multiplications.</p>
 <h4 id="solution-details"><strong>Solution details</strong></h4>
-<p>Let's suppose we've already found the eigenvectors and that there are two of
-them and we've arranged them as the two columns of a matrix <span class="math">\(V\)</span>. So <span class="math">\(V\)</span> holds
-the basis vectors of the alternative basis and therefore we know from the
+<p>Let's suppose we've already found the eigenvectors, and that there are two of
+them, and that we've arranged them as the two columns of a matrix <span class="math">\(V\)</span>. <span class="math">\(V\)</span> holds
+the basis vectors of the alternative basis, and therefore we know from the
 <a href="./linear-algebra.html#change-of-basis">change of basis</a> notes that <span class="math">\(V\)</span> is the
 matrix that takes as input a vector expressed in the alternative basis and
-outputs its representation in our basis. So, step (3) is done by <span class="math">\(V\)</span>, and step
-(1) is done by <span class="math">\(V^{-1}\)</span>, and the matrix performing all three steps is going to
-look like</p>
+outputs its representation in our basis.</p>
+<p>So, step (3) is done by <span class="math">\(V\)</span>, and step (1) is done by <span class="math">\(V^{-1}\)</span>, and the matrix
+performing all three steps is going to look like</p>
 <div class="math">$$
 V
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
@@ -142,7 +143,7 @@ can compute it as</p>
 A
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$</div>
-<p>so in other words the matrix in the middle is</p>
+<p>In other words the matrix in the middle is</p>
 <div class="math">$$
 V^{-1}AV
 $$</div>
@@ -151,6 +152,16 @@ $$</div>
 V
 \Big(V^{-1}AV\Big)^n
 V^{-1}
+$$</div>
+<p>Put back into words, that's</p>
+<div class="math">$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg(
+    \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+    A
+    \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg)^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 $$</div>
 <p>Recall that above we observed that the <span class="math">\(\nth\)</span> power of <span class="math">\(A\)</span> is a matrix with the
 nth Fibonacci number in its bottom left and top right entries. So the following
@@ -227,6 +238,16 @@ numbers.</p>
 </pre></div>
 
 
+<h4 id="history"><strong>History</strong></h4>
+<p>The formula is known as
+<a href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression">Binet's formula</a>
+(1843) but was apparently known to Euler, Daniel Bernoulli and de Moivre more
+than a century earlier. It can be written as</p>
+<div class="math">$$
+\frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
+$$</div>
+<p>where <span class="math">\(\phi = \frac{1+\sqrt{5}}{2}\)</span> is the
+<a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a>.</p>
 <h4 id="calculations"><strong>Calculations</strong></h4>
 <h5 id="1-find-the-eigenvectors"><strong>1. Find the eigenvectors</strong></h5>
 <p>We follow the textbook approach: We have

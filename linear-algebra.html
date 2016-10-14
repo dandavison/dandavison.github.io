@@ -97,7 +97,8 @@ $$</div>
 \mat{a}{c}
     {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
 $$</div>
-<p>A matrix represents a linear transformation by showing where the basis vector are taken to.</p>
+<p>A matrix represents a linear transformation by showing where the basis vector
+are taken to.</p>
 <hr />
 <h3 id="change-of-basis">Change of basis</h3>
 <p>Suppose person B uses some other basis vectors to describe locations in
@@ -105,23 +106,25 @@ space. Specifically, in our coordinates, their basis vectors are
 <span class="math">\(\scvec{2}{1}\)</span> and <span class="math">\(\scvec{-1}{1}\)</span>.</p>
 <p><strong>When they state a vector, what is it in our coordinates?</strong></p>
 <p>If they say <span class="math">\(\scvec{-1}{2}\)</span>, what is that in our coordinates?</p>
-<p>Well, if they say <span class="math">\(\scvec{1}{0}\)</span>, that's <span class="math">\(\scvec{2}{1}\)</span> in our
-coordinates. And if they say <span class="math">\(\scvec{0}{1}\)</span>, that's <span class="math">\(\scvec{-1}{1}\)</span> in our
-coordinates. So the matrix containing <em>their basis vectors expressed in our
-coordinates</em> transforms a point expressed in their language into one expressed
-in ours. So, the answer is</p>
+<p>Well, if they say <span class="math">\(\scvec{1}{0}\)</span>, that's <span class="math">\(\scvec{2}{1}\)</span> in our coordinates. And
+if they say <span class="math">\(\scvec{0}{1}\)</span>, that's <span class="math">\(\scvec{-1}{1}\)</span> in our coordinates. So the
+matrix containing <em>their basis vectors expressed using our coordinate system</em>
+transforms a point expressed in their coordinate system into one expressed in
+ours. That last sentence is critical, so hopefully it makes sense! So, the answer is</p>
 <div class="math">$$
 \mat{2}{-1}
     {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
 $$</div>
 <p><strong>When we state a vector, what is it in their coordinates?</strong></p>
 <p>We give the vector <span class="math">\(\scvec{3}{2}\)</span>. What is that in their coordinate system? By
-definition, the answer is the weights that scales their basis vectors to hit <span class="math">\(\scvec{3}{2}\)</span>. So, the solution to</p>
+definition, the answer is the weights that scales their basis vectors to hit
+<span class="math">\(\scvec{3}{2}\)</span>. So, the solution to</p>
 <div class="math">$$
 \mat{2}{-1}
     {1}{1} \cvec{a}{b} = \cvec{3}{2}.
 $$</div>
-<p>Computationally, we can see that we can get the solution by multiplying both sides by the inverse:</p>
+<p>Computationally, we can see that we can get the solution by multiplying both
+sides by the inverse:</p>
 <div class="math">$$
 \cvec{a}{b} = \mat{2}{-1}
                   {1}{1}^{-1} \cvec{3}{2}.
@@ -130,12 +133,13 @@ $$</div>
 <div class="math">$$
 \mat{2}{-1}
     {1}{1} =
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$</div>
-<p>and so the role played by the inverse is</p>
+<p>where "their representation" means the vector expressed using their coordinate
+system. So the role played by the inverse is</p>
 <div class="math">$$
 \cvec{a}{b} =
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \cvec{3}{2}.
 $$</div>
 <p><strong>When we state a transformation, what is it in their coordinates?</strong></p>
@@ -146,14 +150,15 @@ $$</div>
 $$</div>
 <p>what is that transformation in their coordinates? The answer is</p>
 <div class="math">$$
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \mat{1}{-1}
     {0}{0}
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$</div>
 <p>since the composition of those three transformations defines a single
-transformation that takes in a vector in their language, converts it to ours,
-transforms it as requested, and then converts back to theirs.</p>
+transformation that takes in a vector expressed in their coordinate system,
+converts it to our coordinate system, transforms it as requested, and then
+converts back to theirs.</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
