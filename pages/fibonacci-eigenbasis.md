@@ -53,7 +53,9 @@ The first few powers are
                                       {3}{5}
 \end{align*}
 
-Define the Fibonacci numbers to be $F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...$ = $0, 1, 1, 2, 3, 5, 8, ...$.
+The Fibonacci sequence is the sequence you get by starting with $0,
+1$ and after that always forming the next number by adding the two previous ones:
+$F_0, F_1, F_2, F_3, F_4, F_5, F_6, F_7, ...$ = $0, 1, 1, 2, 3, 5, 8, 13, ...$.
 
 The matrix powers are generating the Fibonacci sequence:
 
@@ -62,10 +64,9 @@ A^{n} = \mat{F_{n-1} }{F_n      }
             {F_n     }{F_{n+1} }
 $$
 
-So if there were an efficient algorithm for computing the $\nth$ power of the
-matrix, that would also be an efficient algorithm for computing the $\nth$
-Fibonacci number "directly", i.e. without computing all the preceding Fibonacci
-numbers _en route_.
+So if there were a way to compute the $\nth$ power of that matrix "directly",
+that would also be a way to compute the $\nth$ Fibonacci number "directly",
+i.e. without computing all the preceding Fibonacci numbers _en route_.
 
 How can we do this? To state the problem in a different way, we need to
 construct a new matrix that performs exactly the same transformation as $A^n$,
@@ -86,7 +87,7 @@ re-express the $A^n$ transformation as follows:
    basis.
 
 I.e., we're going to compute the overall transformation as this product of
-matrices:
+matrices (remember that one reads these things right-to-left):
 
 $$
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
@@ -103,14 +104,15 @@ matrix multiplications.
 
 #### **Solution details**
 
-Let's suppose we've already found the eigenvectors and that there are two of
-them and we've arranged them as the two columns of a matrix $V$. So $V$ holds
-the basis vectors of the alternative basis and therefore we know from the
+Let's suppose we've already found the eigenvectors, and that there are two of
+them, and that we've arranged them as the two columns of a matrix $V$. $V$ holds
+the basis vectors of the alternative basis, and therefore we know from the
 [change of basis](./linear-algebra.html#change-of-basis) notes that $V$ is the
 matrix that takes as input a vector expressed in the alternative basis and
-outputs its representation in our basis. So, step (3) is done by $V$, and step
-(1) is done by $V^{-1}$, and the matrix performing all three steps is going to
-look like
+outputs its representation in our basis.
+
+So, step (3) is done by $V$, and step (1) is done by $V^{-1}$, and the matrix
+performing all three steps is going to look like
 
 $$
 V
@@ -128,7 +130,7 @@ A
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$
 
-so in other words the matrix in the middle is
+In other words the matrix in the middle is
 
 $$
 V^{-1}AV
@@ -136,12 +138,25 @@ $$
 
 and the entire transformation is
 
-
 $$
 V
 \Big(V^{-1}AV\Big)^n
 V^{-1}
 $$
+
+Put back into words, that's
+
+$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg(
+    \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+    A
+    \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg)^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+$$
+
+
 
 
 Recall that above we observed that the $\nth$ power of $A$ is a matrix with the
@@ -223,6 +238,20 @@ Yes.
     7 13.0
     8 21.0
     9 34.0
+
+#### **History**
+
+The formula is known as
+[Binet's formula](https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression)
+(1843) but was apparently known to Euler, Daniel Bernoulli and de Moivre more
+than a century earlier. It can be written as
+
+$$
+\frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
+$$
+
+where $\phi = \frac{1+\sqrt{5}}{2}$ is the
+[golden ratio](https://en.wikipedia.org/wiki/Golden_ratio).
 
 
 #### **Calculations**
