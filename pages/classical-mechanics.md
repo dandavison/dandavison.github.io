@@ -6,6 +6,11 @@ Date: 2016-05-29
 Notes on [Classical Mechanics](http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X) by John R. Taylor.
 
 
+<style type="text/css">
+body {color: black;}
+</style>
+
+
 $$
 \newcommand{\xhat}{\vec{e_x}}
 \newcommand{\yhat}{\vec{e_y}}
