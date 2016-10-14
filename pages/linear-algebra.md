@@ -145,16 +145,16 @@ $$
 We state a 90° anticlockwise rotation of 2D space:
 
 $$
-\mat{1}{-1}
-    {0}{0}
+\mat{0}{-1}
+    {1}{0}
 $$
 
 what is that transformation in their coordinates? The answer is
 
 $$
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
-\mat{1}{-1}
-    {0}{0}
+\mat{0}{-1}
+    {1}{0}
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$
 
