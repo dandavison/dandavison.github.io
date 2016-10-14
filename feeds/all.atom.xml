@@ -42,16 +42,17 @@ $$&lt;/div&gt;
                         {2}{3} &amp;amp;= \mat{2}{3}
                                       {3}{5}
 \end{align*}&lt;/div&gt;
-&lt;p&gt;Define the Fibonacci numbers to be &lt;span class="math"&gt;\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, ...\)&lt;/span&gt; = &lt;span class="math"&gt;\(0, 1, 1, 2, 3, 5, 8, ...\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;The Fibonacci sequence is the sequence you get by starting with &lt;span class="math"&gt;\(0,
+1\)&lt;/span&gt; and after that always forming the next number by adding the two previous ones:
+&lt;span class="math"&gt;\(F_0, F_1, F_2, F_3, F_4, F_5, F_6, F_7, ...\)&lt;/span&gt; = &lt;span class="math"&gt;\(0, 1, 1, 2, 3, 5, 8, 13, ...\)&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;The matrix powers are generating the Fibonacci sequence:&lt;/p&gt;
 &lt;div class="math"&gt;$$
 A^{n} = \mat{F_{n-1} }{F_n      }
             {F_n     }{F_{n+1} }
 $$&lt;/div&gt;
-&lt;p&gt;So if there were an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of the
-matrix, that would also be an efficient algorithm for computing the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt;
-Fibonacci number "directly", i.e. without computing all the preceding Fibonacci
-numbers &lt;em&gt;en route&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;So if there were a way to compute the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of that matrix "directly",
+that would also be a way to compute the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; Fibonacci number "directly",
+i.e. without computing all the preceding Fibonacci numbers &lt;em&gt;en route&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;How can we do this? To state the problem in a different way, we need to
 construct a new matrix that performs exactly the same transformation as &lt;span class="math"&gt;\(A^n\)&lt;/span&gt;,
 but which somehow does the exponentiation step "in one go" rather than by
@@ -69,7 +70,7 @@ re-express the &lt;span class="math"&gt;\(A^n\)&lt;/span&gt; transformation as f
    basis.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;I.e., we're going to compute the overall transformation as this product of
-matrices:&lt;/p&gt;
+matrices (remember that one reads these things right-to-left):&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
@@ -82,14 +83,14 @@ vectors. So to do the transformation &lt;span class="math"&gt;\(n\)&lt;/span&gt;
 stretch by the stretch-factor raised to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power, rather than doing &lt;span class="math"&gt;\(n\)&lt;/span&gt;
 matrix multiplications.&lt;/p&gt;
 &lt;h4 id="solution-details"&gt;&lt;strong&gt;Solution details&lt;/strong&gt;&lt;/h4&gt;
-&lt;p&gt;Let's suppose we've already found the eigenvectors and that there are two of
-them and we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. So &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds
-the basis vectors of the alternative basis and therefore we know from the
+&lt;p&gt;Let's suppose we've already found the eigenvectors, and that there are two of
+them, and that we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds
+the basis vectors of the alternative basis, and therefore we know from the
 &lt;a href="./linear-algebra.html#change-of-basis"&gt;change of basis&lt;/a&gt; notes that &lt;span class="math"&gt;\(V\)&lt;/span&gt; is the
 matrix that takes as input a vector expressed in the alternative basis and
-outputs its representation in our basis. So, step (3) is done by &lt;span class="math"&gt;\(V\)&lt;/span&gt;, and step
-(1) is done by &lt;span class="math"&gt;\(V^{-1}\)&lt;/span&gt;, and the matrix performing all three steps is going to
-look like&lt;/p&gt;
+outputs its representation in our basis.&lt;/p&gt;
+&lt;p&gt;So, step (3) is done by &lt;span class="math"&gt;\(V\)&lt;/span&gt;, and step (1) is done by &lt;span class="math"&gt;\(V^{-1}\)&lt;/span&gt;, and the matrix
+performing all three steps is going to look like&lt;/p&gt;
 &lt;div class="math"&gt;$$
 V
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
@@ -103,7 +104,7 @@ can compute it as&lt;/p&gt;
 A
 \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$&lt;/div&gt;
-&lt;p&gt;so in other words the matrix in the middle is&lt;/p&gt;
+&lt;p&gt;In other words the matrix in the middle is&lt;/p&gt;
 &lt;div class="math"&gt;$$
 V^{-1}AV
 $$&lt;/div&gt;
@@ -112,6 +113,16 @@ $$&lt;/div&gt;
 V
 \Big(V^{-1}AV\Big)^n
 V^{-1}
+$$&lt;/div&gt;
+&lt;p&gt;Put back into words, that's&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg(
+    \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
+    A
+    \begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
+\Bigg)^n
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 $$&lt;/div&gt;
 &lt;p&gt;Recall that above we observed that the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power of &lt;span class="math"&gt;\(A\)&lt;/span&gt; is a matrix with the
 nth Fibonacci number in its bottom left and top right entries. So the following
@@ -173,7 +184,7 @@ numbers.&lt;/p&gt;
         &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;sqrt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 
 &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0&lt;/span&gt;
 &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
@@ -188,6 +199,15 @@ numbers.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h4 id="history"&gt;&lt;strong&gt;History&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;The formula is known as
+&lt;a href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression"&gt;Binet's formula&lt;/a&gt;
+(1843) but was apparently known to Euler, Daniel Bernoulli and de Moivre more
+than a century earlier. It can be written as&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
+$$&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(\phi\)&lt;/span&gt; is the &lt;a href="https://en.wikipedia.org/wiki/Golden_ratio"&gt;golden ratio&lt;/a&gt;.&lt;/p&gt;
 &lt;h4 id="calculations"&gt;&lt;strong&gt;Calculations&lt;/strong&gt;&lt;/h4&gt;
 &lt;h5 id="1-find-the-eigenvectors"&gt;&lt;strong&gt;1. Find the eigenvectors&lt;/strong&gt;&lt;/h5&gt;
 &lt;p&gt;We follow the textbook approach: We have
@@ -484,7 +504,8 @@ $$&lt;/div&gt;
 \mat{a}{c}
     {b}{d} \cvec{f}{g} = \cvec{fa + gc}{fb + gd}
 $$&lt;/div&gt;
-&lt;p&gt;A matrix represents a linear transformation by showing where the basis vector are taken to.&lt;/p&gt;
+&lt;p&gt;A matrix represents a linear transformation by showing where the basis vector
+are taken to.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h3 id="change-of-basis"&gt;Change of basis&lt;/h3&gt;
 &lt;p&gt;Suppose person B uses some other basis vectors to describe locations in
@@ -492,23 +513,25 @@ space. Specifically, in our coordinates, their basis vectors are
 &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;When they state a vector, what is it in our coordinates?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;If they say &lt;span class="math"&gt;\(\scvec{-1}{2}\)&lt;/span&gt;, what is that in our coordinates?&lt;/p&gt;
-&lt;p&gt;Well, if they say &lt;span class="math"&gt;\(\scvec{1}{0}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; in our
-coordinates. And if they say &lt;span class="math"&gt;\(\scvec{0}{1}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt; in our
-coordinates. So the matrix containing &lt;em&gt;their basis vectors expressed in our
-coordinates&lt;/em&gt; transforms a point expressed in their language into one expressed
-in ours. So, the answer is&lt;/p&gt;
+&lt;p&gt;Well, if they say &lt;span class="math"&gt;\(\scvec{1}{0}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{2}{1}\)&lt;/span&gt; in our coordinates. And
+if they say &lt;span class="math"&gt;\(\scvec{0}{1}\)&lt;/span&gt;, that's &lt;span class="math"&gt;\(\scvec{-1}{1}\)&lt;/span&gt; in our coordinates. So the
+matrix containing &lt;em&gt;their basis vectors expressed using our coordinate system&lt;/em&gt;
+transforms a point expressed in their coordinate system into one expressed in
+ours. That last sentence is critical, so hopefully it makes sense! So, the answer is&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \mat{2}{-1}
     {1}{ 1} \cvec{-1}{2} = \cvec{-4}{1}.
 $$&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;When we state a vector, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;We give the vector &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. What is that in their coordinate system? By
-definition, the answer is the weights that scales their basis vectors to hit &lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. So, the solution to&lt;/p&gt;
+definition, the answer is the weights that scales their basis vectors to hit
+&lt;span class="math"&gt;\(\scvec{3}{2}\)&lt;/span&gt;. So, the solution to&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \mat{2}{-1}
     {1}{1} \cvec{a}{b} = \cvec{3}{2}.
 $$&lt;/div&gt;
-&lt;p&gt;Computationally, we can see that we can get the solution by multiplying both sides by the inverse:&lt;/p&gt;
+&lt;p&gt;Computationally, we can see that we can get the solution by multiplying both
+sides by the inverse:&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \cvec{a}{b} = \mat{2}{-1}
                   {1}{1}^{-1} \cvec{3}{2}.
@@ -517,12 +540,13 @@ $$&lt;/div&gt;
 &lt;div class="math"&gt;$$
 \mat{2}{-1}
     {1}{1} =
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$&lt;/div&gt;
-&lt;p&gt;and so the role played by the inverse is&lt;/p&gt;
+&lt;p&gt;where "their representation" means the vector expressed using their coordinate
+system. So the role played by the inverse is&lt;/p&gt;
 &lt;div class="math"&gt;$$
 \cvec{a}{b} =
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \cvec{3}{2}.
 $$&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;When we state a transformation, what is it in their coordinates?&lt;/strong&gt;&lt;/p&gt;
@@ -533,14 +557,15 @@ $$&lt;/div&gt;
 $$&lt;/div&gt;
 &lt;p&gt;what is that transformation in their coordinates? The answer is&lt;/p&gt;
 &lt;div class="math"&gt;$$
-\begin{bmatrix}\text{matrix converting our}\\\text{language to theirs} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 \mat{1}{-1}
     {0}{0}
-\begin{bmatrix}\text{matrix converting their}\\\text{language to ours} \\ \end{bmatrix}
+\begin{bmatrix}\text{matrix converting their}\\\text{representation to ours} \\ \end{bmatrix}
 $$&lt;/div&gt;
 &lt;p&gt;since the composition of those three transformations defines a single
-transformation that takes in a vector in their language, converts it to ours,
-transforms it as requested, and then converts back to theirs.&lt;/p&gt;
+transformation that takes in a vector expressed in their coordinate system,
+converts it to our coordinate system, transforms it as requested, and then
+converts back to theirs.&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
