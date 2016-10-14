@@ -598,6 +598,10 @@ transforms it as requested, and then converts back to theirs.&lt;/p&gt;
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;</summary></entry><entry><title>Classical Mechanics by John R. Taylor</title><link href="http://dandavison.github.io/taylor-classical-mechanics.html" rel="alternate"></link><published>2016-05-29T00:00:00-07:00</published><author><name>Dan Davison</name></author><id>tag:dandavison.github.io,2016-05-29:taylor-classical-mechanics.html</id><summary type="html">&lt;p&gt;Notes on &lt;a href="http://www.amazon.com/Classical-Mechanics-John-R-Taylor/dp/189138922X"&gt;Classical Mechanics&lt;/a&gt; by John R. Taylor.&lt;/p&gt;
+&lt;style type="text/css"&gt;
+body {color: black;}
+&lt;/style&gt;
+
 &lt;div class="math"&gt;$$
 \newcommand{\xhat}{\vec{e_x}}
 \newcommand{\yhat}{\vec{e_y}}
