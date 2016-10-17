@@ -76,12 +76,12 @@ matrices (remember that one reads these things right-to-left):&lt;/p&gt;
 \begin{bmatrix}\text{matrix that does the A transformation}\\\text{in the alternative basis} \\ \end{bmatrix}^n
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 $$&lt;/div&gt;
-&lt;p&gt;The key part of all this -- the crux of the trick -- is that the exponentiation
-is efficient in the eigenbasis. That's because, in the eigenbasis, the
-transformation is just stretching space in the directions of the two basis
-vectors. So to do the transformation &lt;span class="math"&gt;\(n\)&lt;/span&gt; times in the eigenbasis, you just
-stretch by the stretch-factor raised to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power, rather than doing &lt;span class="math"&gt;\(n\)&lt;/span&gt;
-matrix multiplications.&lt;/p&gt;
+&lt;p&gt;The crux of all this is that the exponentiation is efficient in the
+eigenbasis. That's because, in the eigenbasis, the transformation is just
+stretching space in the directions of the two basis vectors. So to do the
+transformation &lt;span class="math"&gt;\(n\)&lt;/span&gt; times in the eigenbasis, you just stretch by the
+stretch-factor raised to the &lt;span class="math"&gt;\(\nth\)&lt;/span&gt; power, rather than doing &lt;span class="math"&gt;\(n\)&lt;/span&gt; matrix
+multiplications.&lt;/p&gt;
 &lt;h4 id="solution-details"&gt;&lt;strong&gt;Solution details&lt;/strong&gt;&lt;/h4&gt;
 &lt;p&gt;Let's suppose we've already found the eigenvectors, and that there are two of
 them, and that we've arranged them as the two columns of a matrix &lt;span class="math"&gt;\(V\)&lt;/span&gt;. &lt;span class="math"&gt;\(V\)&lt;/span&gt; holds
