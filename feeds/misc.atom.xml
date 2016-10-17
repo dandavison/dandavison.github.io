@@ -203,9 +203,11 @@ numbers.&lt;/p&gt;
 &lt;p&gt;The formula is known as
 &lt;a href="https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression"&gt;Binet's formula&lt;/a&gt;
 (1843) but was apparently known to Euler, Daniel Bernoulli and de Moivre more
-than a century earlier. It can be written as&lt;/p&gt;
+than a century earlier. It can be derived without using linear algebra
+techniques; I don't know when the style of proof attempted here would first
+have been done. The result can be written as&lt;/p&gt;
 &lt;div class="math"&gt;$$
-\frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
+F_n = \frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
 $$&lt;/div&gt;
 &lt;p&gt;where &lt;span class="math"&gt;\(\phi = \frac{1+\sqrt{5}}{2}\)&lt;/span&gt; is the
 &lt;a href="https://en.wikipedia.org/wiki/Golden_ratio"&gt;golden ratio&lt;/a&gt;.&lt;/p&gt;
