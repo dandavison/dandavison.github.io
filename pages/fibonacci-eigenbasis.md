@@ -95,12 +95,12 @@ $$
 \begin{bmatrix}\text{matrix converting our}\\\text{representation to theirs} \\ \end{bmatrix}
 $$
 
-The key part of all this -- the crux of the trick -- is that the exponentiation
-is efficient in the eigenbasis. That's because, in the eigenbasis, the
-transformation is just stretching space in the directions of the two basis
-vectors. So to do the transformation $n$ times in the eigenbasis, you just
-stretch by the stretch-factor raised to the $\nth$ power, rather than doing $n$
-matrix multiplications.
+The crux of all this is that the exponentiation is efficient in the
+eigenbasis. That's because, in the eigenbasis, the transformation is just
+stretching space in the directions of the two basis vectors. So to do the
+transformation $n$ times in the eigenbasis, you just stretch by the
+stretch-factor raised to the $\nth$ power, rather than doing $n$ matrix
+multiplications.
 
 #### **Solution details**
 
