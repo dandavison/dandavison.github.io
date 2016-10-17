@@ -244,10 +244,12 @@ Yes.
 The formula is known as
 [Binet's formula](https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression)
 (1843) but was apparently known to Euler, Daniel Bernoulli and de Moivre more
-than a century earlier. It can be written as
+than a century earlier. It can be derived without using linear algebra
+techniques; I don't know when the style of proof attempted here would first
+have been done. The result can be written as
 
 $$
-\frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
+F_n = \frac{\phi^n - (1-\phi)^n}{\sqrt{5}}
 $$
 
 where $\phi = \frac{1+\sqrt{5}}{2}$ is the
