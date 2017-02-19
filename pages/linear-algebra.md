@@ -15,6 +15,7 @@ $$
 \newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
 \newcommand{\nth}{n^{\text{th}}}
 \newcommand{\R}{\mathbb{R}}
+\renewcommand{\vec}[1]{\mathbf{#1}}
 $$
 
 Notes from the
@@ -163,6 +164,41 @@ since the composition of those three transformations defines a single
 transformation that takes in a vector expressed in their coordinate system,
 converts it to our coordinate system, transforms it as requested, and then
 converts back to theirs.
+
+-------------------------------------------------------------------------------
+### Linear and quadratic approximations to a function
+
+<!-- https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/quadratic-approximations/v/vector-form-of-multivariable-quadratic-approximation -->
+
+**Linear approximation to a function $f(x, y)$ near $(x_0, y_0)$:**
+
+\begin{align*}
+f(x, y) &\approx
+~
+f(x_0, y_0) ~+
+(x - x_0)f_x(x_0,y_0) +
+(y - y_0)f_y(x_0,y_0)
+\\\\
+&= f(\vec x) + (\vec x - \vec x_0) \cdot \nabla_f(\vec x_0)
+\end{align*}
+
+
+**Quadratic approximation to a function $f(x, y)$ near $(x_0, y_0)$:**
+
+
+\begin{align*}
+Q(x, y) =
+~
+&f(x_0, y_0) ~+
+\\
+&(x - x_0)f_x(x_0,y_0) +
+(y - y_0)f_y(x_0,y_0) ~+
+\\
+&(x - x_0)^2 f_{xx}(x_0, y_0) ~+
+\\
+&(y - y_0)^2 f_{yy}(x_0, y_0) ~+
+\end{align*}
+
 
 -------------------------------------------------------------------------------
 ### Positive definiteness
