@@ -14,6 +14,7 @@ $$
 \newcommand{\scvec}[2]{\tiny{\cvec{#1}{#2}}}
 \newcommand{\smat}[4]{\tiny{\mat{#1}{#2}{#3}{#4}}}
 \newcommand{\nth}{n^{\text{th}}}
+\newcommand{\R}{\mathbb{R}}
 $$
 
 Notes from the
@@ -162,3 +163,34 @@ since the composition of those three transformations defines a single
 transformation that takes in a vector expressed in their coordinate system,
 converts it to our coordinate system, transforms it as requested, and then
 converts back to theirs.
+
+-------------------------------------------------------------------------------
+### Positive definiteness
+
+A square matrix $A \in \R^{n \times n}$ is positive definite if $x^TAx > 0$ for
+every $x \in \R^n - \{0\}$. Basically, this means that the image of the vector
+$x$ is correlated with the original vector; has some component in the same
+direction.
+
+<!-- https://www.reddit.com/r/math/comments/3uoa6d/motivation_for_positive_definite_matrices_brief/cxh21jg/ -->
+
+Consider first two terms of Taylor approximation to $f$ at $x_0$:
+
+$$
+f(x_0) \approx x_0 + f'(x_0)(x - x_0) + \frac{1}{2}f''(x_0) (x - x_0)^2
+$$
+
+Now suppose $x_0$ is a critical point (local minimum/maximum) and consider the difference $f(x_0) - f(x)$:
+$$
+f(x_0) - f(x) \approx \frac{1}{2}f''(x_0) (x - x_0)^2.
+$$
+
+So if the second derivative is negative, then $f$ has decreased as we moved
+away from $x_0$, showing that it was a maximum. Similarly, positive second
+derivative indicates minimum.
+
+The multivariable analog of the second derivative condition uses the Hessian
+$H$ of $f$, evaluated at $x_0$.
+$$ (x - x_0)^T H (x - x_0) $$
+So a positive definite Hessian indicates a minimum, and negative definite
+Hessian indicates a maximum.
