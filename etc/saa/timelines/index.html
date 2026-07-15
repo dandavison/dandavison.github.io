@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAA — animated timelines (frames)</title>
+<style>
+  body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;max-width:1000px;margin:2rem auto;padding:0 1rem;color:#1c2024;background:#fff}
+  h1{font-size:1.5rem} h2{font-size:1.05rem;margin:2rem 0 .4rem}
+  .lead{color:#555} a{color:#2d6cdf}
+  img{max-width:100%;height:auto;border:1px solid #e3e6ea;border-radius:8px;background:#0e1116}
+  figure{margin:0 0 1.5rem}
+</style>
+</head>
+<body>
+<p><a href="../">&larr; SAA behavior projections</a></p>
+<h1>Animated timelines</h1>
+<p class="lead">Each trace sweeps left→right through its phases as timer-window bands; event markers
+sit on phase boundaries; probe markers below show which operator actions the spec would accept /
+defer / reject at that phase. All derived from <code>saaspec.Model</code>; the same reusable
+<code>animateTrace</code> primitive renders every trace. Key frames below (the scene renders to
+video via canvas-commons).</p>
+
+<h2>1 — Happy path with a start delay</h2>
+<figure><img src="frame-1-happy-start-delay.png" alt="happy path, start delay"></figure>
+<h2>2 — Retryable failure and backoff</h2>
+<figure><img src="frame-2-retry-backoff.png" alt="retry backoff"></figure>
+<h2>3 — Pending pause resolves at the attempt boundary (comes back Paused)</h2>
+<figure><img src="frame-3-pending-pause.png" alt="pending pause"></figure>
+<h2>4 — Pending cancel: failure → Failed (retry suppressed)</h2>
+<figure><img src="frame-4-pending-cancel-failed.png" alt="pending cancel, failure"></figure>
+<h2>5 — Pending cancel: timeout → TimedOut (not Canceled)</h2>
+<figure><img src="frame-5-pending-cancel-timedout.png" alt="pending cancel, timeout"></figure>
+<h2>6 — Pending reset vs completion: completion wins</h2>
+<figure><img src="frame-6-pending-reset-completion-wins.png" alt="pending reset, completion wins"></figure>
+</body>
+</html>

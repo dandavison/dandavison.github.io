@@ -26,13 +26,17 @@ against. Nothing on this page is hand-authored behavior, and none of it can drif
 <b>deferred</b> to the next attempt boundary, or <b>not permitted</b>.</p>
 <p><img src="lifecycle.svg" alt="Standalone Activity lifecycle and operations diagram"></p>
 
-<h2>Interactive explorer</h2>
-<p class="soon">Lay an activity down along a time axis, choose its start delay (which shifts the
-timeouts), and send operations — each styled up-front as allowed or not, including what resolves at
-an attempt boundary. (Coming.)</p>
+<h2><a href="explorer/">Interactive explorer &rarr;</a></h2>
+<p>Lay an activity down along a time axis, choose its start delay (which shifts the timeouts), and
+send operations — each styled up-front as allowed / deferred / not-permitted. An attempt-boundary
+grid shows how a pending pause / reset / cancel resolves at the end of an attempt, versus no pending
+request.</p>
+<p><a href="explorer/"><img src="explorer/preview.png" alt="interactive explorer preview"></a></p>
 
-<h2>Animated timelines</h2>
-<p class="soon">Traces running along a timeline, including what happens at the end of an attempt with
-and without a pending pause / reset / cancel. (Coming.)</p>
+<h2><a href="timelines/">Animated timelines &rarr;</a></h2>
+<p>Each trace sweeps along a timeline through its timer-window phases, with a reusable
+<code>animateTrace</code> primitive. Comparative traces show what happens at the end of an attempt
+with and without a pending pause / reset / cancel (e.g. a pending cancel suppresses the retry).</p>
+<p><a href="timelines/"><img src="timelines/preview.png" alt="animated timeline preview"></a></p>
 </body>
 </html>
