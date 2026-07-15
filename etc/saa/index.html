@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Standalone Activity — behavior projections</title>
+<style>
+  body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;max-width:1120px;margin:2rem auto;padding:0 1rem;color:#1c2024}
+  h1{font-size:1.7rem;margin-bottom:.2rem}
+  h2{margin-top:2.6rem;border-bottom:1px solid #e3e6ea;padding-bottom:.3rem}
+  .lead{color:#555}
+  img{max-width:100%;height:auto;border:1px solid #e3e6ea;border-radius:8px}
+  a{color:#2d6cdf}
+  .soon{color:#8a8f96;font-style:italic}
+  code{background:#f2f4f7;padding:.1em .35em;border-radius:4px;font-size:.92em}
+</style>
+</head>
+<body>
+<h1>Standalone Activity — behavior projections</h1>
+<p class="lead">Every artifact here is generated deterministically from the executable behavior
+spec (<code>saaspec.Model</code>) — the same spec the conformance tests check the real server
+against. Nothing on this page is hand-authored behavior, and none of it can drift from the spec.</p>
+
+<h2>Lifecycle &amp; operations diagram</h2>
+<p>What each operator action does in each phase of an activity's life: <b>immediate</b>,
+<b>deferred</b> to the next attempt boundary, or <b>not permitted</b>.</p>
+<p><img src="lifecycle.svg" alt="Standalone Activity lifecycle and operations diagram"></p>
+
+<h2>Interactive explorer</h2>
+<p class="soon">Lay an activity down along a time axis, choose its start delay (which shifts the
+timeouts), and send operations — each styled up-front as allowed or not, including what resolves at
+an attempt boundary. (Coming.)</p>
+
+<h2>Animated timelines</h2>
+<p class="soon">Traces running along a timeline, including what happens at the end of an attempt with
+and without a pending pause / reset / cancel. (Coming.)</p>
+</body>
+</html>
